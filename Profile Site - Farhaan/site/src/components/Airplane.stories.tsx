@@ -18,7 +18,7 @@ const meta = {
       },
     },
   },
-  args: { variant: "top", mode: "scrub", progress: 0 },
+  args: { variant: "fighter", mode: "scrub", progress: 0 },
   argTypes: {
     progress: { control: { type: "range", min: 0, max: 1, step: 0.01 } },
     mode: { table: { disable: true } },
@@ -36,9 +36,21 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TopDown: Story = {
+export const FighterSketch: Story = {
   parameters: {
-    docs: { description: { story: "Default rail drawing: top-down exploded plan." } },
+    docs: {
+      description: {
+        story:
+          "The default geometry: a MiG-21-family jet in 3/4 view, from the owner's reference sketch. Shock cone, bubble canopy, delta wings, swept fin, underwing stores. Used by Pages/Landing and the contact finale.",
+      },
+    },
+  },
+};
+
+export const TopDown: Story = {
+  args: { variant: "top" },
+  parameters: {
+    docs: { description: { story: "Alternate: top-down exploded plan." } },
   },
 };
 

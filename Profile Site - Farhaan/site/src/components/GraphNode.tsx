@@ -15,6 +15,17 @@ export type GraphNodeData = {
   href?: string;
   variant?: GraphNodeVariant;
   center?: boolean;
+  /**
+   * Which side of the ring the text sits on. Left-hemisphere radial nodes
+   * (and left-column constellation nodes) use "left" so edges meet the ring
+   * without crossing the label text.
+   */
+  labelSide?: "left" | "right";
+  /**
+   * Wrap the note to a narrow measure (constellation): keeps node widths
+   * small so the rings form clean rails and edges never cross upper text.
+   */
+  noteClamp?: boolean;
 };
 
 const LEAF_OFF = "rgba(52, 204, 115, 0)";
@@ -31,6 +42,8 @@ export function GraphNodeVisual({
   href,
   variant = "ring",
   center = false,
+  labelSide = "right",
+  noteClamp = false,
 }: GraphNodeData) {
   const ring = (e: React.MouseEvent<HTMLElement>, on: boolean) => {
     if (prefersReducedMotion()) return;
@@ -46,6 +59,32 @@ export function GraphNodeVisual({
   };
 
   const markSize = center ? 26 : 16;
+  const textLeft = labelSide === "left";
+
+  const mark =
+    variant === "dot" ? (
+      <svg width={markSize} height={markSize} viewBox="0 0 16 16" aria-hidden="true">
+        <circle data-node-mark cx="8" cy="8" r="4" fill="#065F46" stroke="#065F46" strokeWidth="1.5" />
+      </svg>
+    ) : (
+      <svg width={markSize} height={markSize} viewBox="0 0 16 16" aria-hidden="true">
+        <circle
+          data-node-mark
+          cx="8"
+          cy="8"
+          r="5.5"
+          fill={LEAF_OFF}
+          stroke="#065F46"
+          strokeWidth={center ? 2.5 : 1.5}
+        />
+      </svg>
+    );
+
+  const titleEl = (
+    <span className={`font-mono text-mono ${center ? "font-medium" : ""} text-ink`}>
+      {title}
+    </span>
+  );
 
   const body =
     variant === "pill" ? (
@@ -57,35 +96,33 @@ export function GraphNodeVisual({
         {title}
       </span>
     ) : (
+      // Text on the outward side of the ring so edges never cross it.
       <span className="flex items-center gap-2">
-        {variant === "dot" ? (
-          <svg width={markSize} height={markSize} viewBox="0 0 16 16" aria-hidden="true">
-            <circle data-node-mark cx="8" cy="8" r="4" fill="#065F46" stroke="#065F46" strokeWidth="1.5" />
-          </svg>
+        {textLeft ? (
+          <>
+            {titleEl}
+            {mark}
+          </>
         ) : (
-          <svg width={markSize} height={markSize} viewBox="0 0 16 16" aria-hidden="true">
-            <circle
-              data-node-mark
-              cx="8"
-              cy="8"
-              r="5.5"
-              fill={LEAF_OFF}
-              stroke="#065F46"
-              strokeWidth={center ? 2.5 : 1.5}
-            />
-          </svg>
+          <>
+            {mark}
+            {titleEl}
+          </>
         )}
-        <span className={`font-mono text-mono ${center ? "font-medium" : ""} text-ink`}>
-          {title}
-        </span>
       </span>
     );
 
   const content = (
-    <span className="inline-flex flex-col items-start gap-1">
+    <span className={`inline-flex flex-col gap-1 ${textLeft ? "items-end" : "items-start"}`}>
       {body}
       {note ? (
-        <span className={`font-mono text-label text-steel ${variant === "pill" ? "pl-3" : "pl-6"}`}>
+        // max-w-[19ch]: deliberate arbitrary value (no token for a node-note
+        // measure); only active in the constellation via noteClamp.
+        <span
+          className={`font-mono text-label text-steel ${noteClamp ? "max-w-[19ch]" : ""} ${
+            variant === "pill" ? "pl-3" : textLeft ? "pr-6 text-right" : "pl-6"
+          }`}
+        >
           {note}
         </span>
       ) : null}
@@ -138,11 +175,15 @@ const hiddenHandle: React.CSSProperties = {
 export function FlowGraphNode({ data }: NodeProps<FlowNode>) {
   // Anchor edges on the ring mark itself, not the center of the whole
   // node (which includes labels): edges meet the circles, not the text.
+  // With labelSide "left" the ring sits at the node's right edge, so the
+  // anchor flips with it.
   const markOffset = data.center ? 13 : 8;
   const anchor: React.CSSProperties =
     data.variant === "pill"
       ? hiddenHandle
-      : { ...hiddenHandle, left: markOffset, top: markOffset };
+      : data.labelSide === "left"
+        ? { ...hiddenHandle, left: "auto", right: markOffset, top: markOffset }
+        : { ...hiddenHandle, left: markOffset, top: markOffset };
   return (
     <div className="relative">
       <Handle type="target" position={Position.Top} style={anchor} isConnectable={false} />

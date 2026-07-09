@@ -60,7 +60,7 @@ export function LandingPage({ background = "none" }: { background?: LandingBackg
         className="pointer-events-none fixed right-0 top-0 z-[5] h-svh w-rail-sm md:w-rail"
       >
         <Airplane
-          variant="top"
+          variant="fighter"
           mode={railStatic ? "static" : "scroll"}
           scrollTarget={scrollSpanRef}
         />

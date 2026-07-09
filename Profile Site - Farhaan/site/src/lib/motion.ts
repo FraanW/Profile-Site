@@ -1,5 +1,5 @@
 import { createSpring, cubicBezier } from "animejs";
-import { useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useSyncExternalStore } from "react";
 
 /**
  * Motion constants, hand-copied from design/tokens.md §4 (the source of
@@ -66,6 +66,17 @@ export function useReducedMotion(): boolean {
     () => false // server snapshot: assume motion; the client corrects at hydration
   );
 }
+
+/**
+ * useLayoutEffect on the client, useEffect during SSR (avoids React's
+ * server warning). Reveal components set their pre-animation state through
+ * this hook so the hide runs BEFORE the browser's first paint: no flash of
+ * visible content. The server HTML carries no inline hiding, so a no-JS
+ * visitor (or anyone whose observers never attach) sees everything: content
+ * is visible by default and motion is progressive enhancement.
+ */
+export const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 /**
  * How a component should run its entry animation.

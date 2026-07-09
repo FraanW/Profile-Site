@@ -2,6 +2,7 @@
 
 import { createTimeline, onScroll, svg, utils, type Timeline } from "animejs";
 import { useCallback, useEffect, useRef } from "react";
+import { FighterGlyph } from "@/components/Airplane";
 import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
 import {
@@ -16,20 +17,6 @@ import { identity } from "@/content/profile";
 
 export type ContactVariant = "solid" | "outline" | "bar";
 
-/** The small assembled plane, side profile, nose pointing +x. */
-function PlaneGlyph() {
-  return (
-    <svg width="46" height="30" viewBox="0 0 46 30" aria-hidden="true">
-      <g fill="none" stroke="#065F46" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round">
-        <path d="M44 17 C 36 12, 18 11, 8 13 L 2 15 C 6 20, 20 22, 32 21 Z" />
-        <path d="M22 13 L 12 4 L 17 3 L 28 12 Z" />
-        <path d="M9 13 L 4 7 L 8 6 L 13 12 Z" />
-        <path d="M20 20 L 16 26 L 21 25 L 26 20 Z" />
-      </g>
-    </svg>
-  );
-}
-
 /**
  * The flight is authored at runtime: the stage covers the whole section
  * (its SVG has no viewBox, so user units are pixels, 1:1 at any size) and
@@ -41,8 +28,8 @@ function PlaneGlyph() {
 function buildFlightPath(stage: HTMLElement, cta: HTMLElement): string {
   const s = stage.getBoundingClientRect();
   const b = cta.getBoundingClientRect();
-  const ex = b.right - s.left - 34; // land near the CTA's right end
-  const ey = b.top - s.top - 17; // glyph half-height above the button edge
+  const ex = b.right - s.left - 24; // settle on the CTA's right corner, clear of the line text
+  const ey = b.top - s.top - 19; // glyph half-height above the button edge
   const sx = s.width + 60; // enter from beyond the right rail
   const sy = Math.max(10, ey - 170);
   return [
@@ -156,8 +143,8 @@ export function Contact({
           {staticFrame ? (
             // Reduced-motion final frame: the plane parked on the CTA,
             // nose-left (mirrored), no observers anywhere.
-            <div aria-hidden="true" className="absolute -top-8 right-3" style={{ transform: "scaleX(-1)" }}>
-              <PlaneGlyph />
+            <div aria-hidden="true" className="absolute -top-10 right-2" style={{ transform: "scaleX(-1)" }}>
+              <FighterGlyph />
             </div>
           ) : null}
         </div>
@@ -200,9 +187,9 @@ export function Contact({
             <svg className="absolute inset-0 h-full w-full overflow-visible">
               <path ref={pathRef} d="M 0 0" fill="none" stroke="none" />
             </svg>
-            <div ref={planeRef} className="absolute left-0 top-0 -ml-[23px] -mt-[15px] opacity-0">
+            <div ref={planeRef} className="absolute left-0 top-0 -ml-[36px] -mt-[17px] opacity-0">
               <div style={{ transform: "scaleY(-1)" }}>
-                <PlaneGlyph />
+                <FighterGlyph />
               </div>
             </div>
           </div>

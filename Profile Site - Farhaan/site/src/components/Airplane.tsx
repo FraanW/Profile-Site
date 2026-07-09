@@ -11,7 +11,7 @@ import {
   useReducedMotion,
 } from "@/lib/motion";
 
-export type AirplaneVariant = "top" | "side" | "paper";
+export type AirplaneVariant = "fighter" | "top" | "side" | "paper";
 
 export type AirplaneMode =
   /** Controlled by the `progress` prop (Storybook scrubber). */
@@ -24,19 +24,122 @@ export type AirplaneMode =
 type PlanePart = {
   id: string;
   label: string;
-  /** Assembled geometry, viewBox 0 0 96 640, plane parked at the bottom. */
+  /** Assembled geometry. Rail viewBox 0 0 96 640 unless the variant has a
+      frame transform, in which case coordinates are the variant's own
+      design space and scatter offsets are local units. */
   d: string;
   /** Exploded offset up the rail: translate + rotate start values. */
   scatter: { x: number; y: number; r: number };
+  /** Always rail-space (labels render outside the frame). */
   labelPos: { x: number; y: number; anchor?: "start" | "end" };
 };
 
 /**
+ * The fighter sketch (owner reference image, 2026-07-10): a MiG-21-family
+ * jet in 3/4 view. Authored nose-right in a 480×220 design space so the
+ * finale's mirrored flight shows it nose-left like the ink sketch; the rail
+ * frame below rotates it nose-down. Loose double strokes carry the
+ * hand-drawn character; no filters, no fills.
+ */
+const FIGHTER_FRAME = "translate(97 418) rotate(90) scale(0.42)";
+
+const FIGHTER_PARTS: PlanePart[] = [
+  {
+    id: "wing-far",
+    label: "far wing",
+    d: [
+      "M322 104 L244 56 L230 63 L270 98", // far delta, beyond the fuselage
+      "M268 86 L230 77 M266 91 L232 82 M230 77 C 226 77, 225 81, 232 82", // far store sliver
+    ].join(" "),
+    scatter: { x: -879, y: -19, r: 20 },
+    labelPos: { x: 6, y: 142 },
+  },
+  {
+    id: "fuselage",
+    label: "fuselage",
+    d: [
+      "M446 136 C 402 122, 335 106, 272 99 C 215 93, 145 88, 88 88", // top contour
+      "M448 163 C 412 164, 362 158, 318 151 C 255 141, 165 122, 96 110", // belly
+      "M88 88 L74 90 C 69 93, 69 102, 75 106 L96 110", // tailpipe
+      "M88 88 C 82 93, 82 103, 96 110", // aft bulkhead
+      "M382 130 L378 158 M312 108 L307 147 M235 97 L231 131", // panel lines
+      "M430 132 C 390 119, 340 107, 290 101", // sketch double-stroke on the spine
+    ].join(" "),
+    scatter: { x: -793, y: 0, r: 5 },
+    labelPos: { x: 90, y: 188, anchor: "end" },
+  },
+  {
+    id: "fin",
+    label: "tail fin",
+    d: [
+      "M185 92 L112 30 L90 36 L98 86", // swept stabilizer
+      "M110 40 L100 80", // rudder line
+    ].join(" "),
+    scatter: { x: -538, y: 14, r: -12 },
+    labelPos: { x: 6, y: 232 },
+  },
+  {
+    id: "tailplane",
+    label: "tailplane",
+    d: [
+      "M140 105 L92 132 L84 124 L120 100", // near tailplane, swept
+    ].join(" "),
+    scatter: { x: -424, y: -19, r: 14 },
+    labelPos: { x: 90, y: 276, anchor: "end" },
+  },
+  {
+    id: "wing-near",
+    label: "delta wing",
+    d: [
+      "M366 157 L256 214 L234 201 L248 141", // near delta, straight swept leading edge
+      "M344 154 L262 205", // surface line
+    ].join(" "),
+    scatter: { x: -519, y: -19, r: -18 },
+    labelPos: { x: 6, y: 320 },
+  },
+  {
+    id: "stores",
+    label: "pylons · stores",
+    d: [
+      "M336 199 L258 209 M335 205 L259 214 M336 199 C 342 200, 341 204, 335 205", // outer missile
+      "M266 208 L258 201 M267 213 L259 220 M300 190 L298 200", // outer fins + pylon
+      "M362 174 L292 183 M361 179 L293 188 M362 174 C 368 175, 367 178, 361 179", // inner missile
+      "M300 182 L293 175 M336 166 L334 174", // inner fin + pylon
+    ].join(" "),
+    scatter: { x: -424, y: -24, r: -8 },
+    labelPos: { x: 90, y: 364, anchor: "end" },
+  },
+  {
+    id: "canopy",
+    label: "canopy",
+    d: [
+      "M418 133 C 413 114, 398 100, 384 99 C 368 97, 352 104, 344 113", // bubble
+      "M402 102 L410 130", // windshield frame
+      "M344 113 C 328 109, 312 106, 296 103", // fairing into the spine
+    ].join(" "),
+    scatter: { x: -395, y: 24, r: 22 },
+    labelPos: { x: 6, y: 408 },
+  },
+  {
+    id: "shock-cone",
+    label: "shock cone",
+    d: [
+      "M449 134 C 456 136, 457 161, 451 164 C 444 162, 443 137, 449 134", // intake lip
+      "M450 140 L470 151 L451 160", // cone
+      "M455 144 L465 151 L456 157", // cone shading
+    ].join(" "),
+    scatter: { x: -360, y: -24, r: -28 },
+    labelPos: { x: 90, y: 452, anchor: "end" },
+  },
+];
+
+/**
  * Blueprint line-art (blueprint §8): thin emerald strokes, mono part labels,
- * no fills, no gradients. Geometry is hand-authored prototype line-work;
- * Riker refines the drawing at polish phase.
+ * no fills, no gradients. The fighter implements the owner's reference
+ * sketch; the other three geometries stay as alternates.
  */
 const PLANES: Record<AirplaneVariant, PlanePart[]> = {
+  fighter: FIGHTER_PARTS,
   top: [
     {
       id: "fuselage",
@@ -150,8 +253,14 @@ const PLANES: Record<AirplaneVariant, PlanePart[]> = {
  * createTimeline + svg.createDrawable + stagger; scroll mode pins the
  * timeline to scroll with the site-wide smooth sync value.
  */
+/** Per-variant wrapper transform: parts authored in a design space get
+    placed into the rail here; labels stay in rail space. */
+const FRAMES: Partial<Record<AirplaneVariant, string>> = {
+  fighter: FIGHTER_FRAME,
+};
+
 export function Airplane({
-  variant = "top",
+  variant = "fighter",
   mode = "scrub",
   progress = 0,
   scrollTarget,
@@ -234,6 +343,27 @@ export function Airplane({
     tl.seek(Math.min(Math.max(progress, 0), 1) * tl.duration);
   }, [progress, mode, variant]);
 
+  const frame = FRAMES[variant];
+  const partGroups = parts.map((p) => (
+    <g
+      key={p.id}
+      data-part={p.id}
+      // Framed variants rotate scattered parts around their own centers;
+      // the default view-box origin lands elsewhere once a frame scales it.
+      style={frame ? { transformBox: "fill-box", transformOrigin: "center" } : undefined}
+    >
+      <path
+        d={p.d}
+        fill="none"
+        stroke="#065F46"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        style={{ vectorEffect: "non-scaling-stroke" }}
+      />
+    </g>
+  ));
+
   return (
     <svg
       ref={svgRef}
@@ -242,19 +372,7 @@ export function Airplane({
       aria-hidden="true"
       className={`h-full w-full ${className}`}
     >
-      {parts.map((p) => (
-        <g key={p.id} data-part={p.id}>
-          <path
-            d={p.d}
-            fill="none"
-            stroke="#065F46"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            style={{ vectorEffect: "non-scaling-stroke" }}
-          />
-        </g>
-      ))}
+      {frame ? <g transform={frame}>{partGroups}</g> : partGroups}
       {parts.map((p) => (
         <text
           key={`${p.id}-label`}
@@ -272,6 +390,36 @@ export function Airplane({
         >
           {p.label}
         </text>
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * The assembled fighter at glyph size, nose-right, for the contact finale.
+ * Same geometry as the rail's FIGHTER_PARTS; non-scaling strokes keep the
+ * line weight at sketch thinness.
+ */
+export function FighterGlyph({ width = 72 }: { width?: number }) {
+  const height = Math.round((width * 200) / 420);
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="60 20 420 200"
+      aria-hidden="true"
+    >
+      {FIGHTER_PARTS.map((p) => (
+        <path
+          key={p.id}
+          d={p.d}
+          fill="none"
+          stroke="#065F46"
+          strokeWidth="1.25"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          style={{ vectorEffect: "non-scaling-stroke" }}
+        />
       ))}
     </svg>
   );

@@ -1,12 +1,13 @@
 "use client";
 
 import { animate, onScroll, utils } from "animejs";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import {
   DURATION,
   easeDraw,
   prefersReducedMotion,
+  useIsomorphicLayoutEffect,
   type RevealMode,
 } from "@/lib/motion";
 
@@ -14,11 +15,13 @@ import {
  * The section-opening statement rule (tokens.md §3.2: one per section,
  * maximum). Draws in left-to-right once via anime.js scaleX (transform only;
  * reads as drawing without SVG overhead). Reduced motion: rendered at rest.
+ * The pre-draw collapse runs in a layout effect, before first paint (no
+ * flash); server HTML keeps the rule visible for no-JS visitors.
  */
 export function StatementRule({ mode = "scroll" }: { mode?: RevealMode }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = ref.current;
     if (!el || mode === "none" || prefersReducedMotion()) return;
 

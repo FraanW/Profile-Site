@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { animate, onScroll, stagger, utils } from "animejs";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Section } from "@/components/Section";
 import {
   DURATION,
@@ -10,6 +10,7 @@ import {
   STAGGER_STEP,
   easeGlide,
   prefersReducedMotion,
+  useIsomorphicLayoutEffect,
   type RevealMode,
 } from "@/lib/motion";
 import { caseTiles } from "@/content/copy";
@@ -32,7 +33,9 @@ export function CaseTiles({
 }) {
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // Layout effect: the pre-reveal hide lands before first paint (no flash);
+  // server HTML keeps tiles visible for no-JS visitors.
+  useIsomorphicLayoutEffect(() => {
     const grid = gridRef.current;
     if (!grid || mode === "none" || prefersReducedMotion()) return;
 

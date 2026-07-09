@@ -56,10 +56,16 @@ function buildGraph(layout: RadialGraphLayout, nodeVariant: GraphNodeVariant) {
       y = Math.sin(angle) * 220;
     } else {
       // Constellation (< lg): center node top, nodes cascading down,
-      // edges still drawn (blueprint §6.5 mobile reflow).
-      x = i % 2 === 0 ? -120 : 90;
+      // edges still drawn (blueprint §6.5 mobile reflow). Symmetric rails
+      // plus clamped notes keep every ring near its rail, so the edge fan
+      // runs between the rails, clear of all text.
+      x = i % 2 === 0 ? -140 : 140;
       y = 110 + i * 96;
     }
+    // Text sits on the outward side: left-hemisphere (radial) and
+    // left-column (constellation) nodes flip their labels left so the
+    // edges, which run toward the center, never cross the text.
+    const labelSide: "left" | "right" = x < -1 ? "left" : "right";
     nodes.push({
       id: p.slug,
       type: "graphNode",
@@ -69,6 +75,8 @@ function buildGraph(layout: RadialGraphLayout, nodeVariant: GraphNodeVariant) {
         note: p.graphNote,
         href: `/projects#${p.slug}`,
         variant: nodeVariant,
+        labelSide,
+        noteClamp: layout === "constellation",
       },
       draggable: false,
       selectable: false,

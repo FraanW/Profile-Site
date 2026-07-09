@@ -1,12 +1,13 @@
 "use client";
 
 import { animate, onScroll, utils } from "animejs";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import {
   DURATION,
   REVEAL_RISE,
   easeGlide,
   prefersReducedMotion,
+  useIsomorphicLayoutEffect,
   type RevealMode,
 } from "@/lib/motion";
 
@@ -15,6 +16,9 @@ import {
  * then stillness. mode="scroll" plays on scroll-into-view (landing page),
  * mode="mount" plays immediately (Storybook stories). Reduced motion or
  * mode="none" renders the final frame with no observers created.
+ *
+ * The pre-reveal hide runs in a layout effect, before first paint, so
+ * content never flashes; server HTML stays visible for no-JS visitors.
  */
 export function Reveal({
   children,
@@ -29,7 +33,7 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = ref.current;
     if (!el || mode === "none" || prefersReducedMotion()) return;
 
@@ -51,7 +55,7 @@ export function Reveal({
   }, [mode, delay]);
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} data-reveal="" className={className}>
       {children}
     </div>
   );

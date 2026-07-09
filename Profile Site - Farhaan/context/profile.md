@@ -6,13 +6,15 @@
 >
 > Primary sources: `D:\github repos\job-hunt-system\resume\master.md` (authoritative),
 > `D:\github repos\job-hunt-system\linkedin\profile.md` (tested positioning), owner statements
-> dated inline. Last updated: 2026-07-10.
+> dated inline. Last updated: 2026-07-10. **Status: Phase 1 (context) locked — all open items
+> resolved by owner 2026-07-10.**
 
 ## Identity
 
 - **Name:** Muhammad Farhaan
 - **Location:** Chennai, India (open to Bengaluru / Hyderabad / Remote)
-- **Email:** mdfarhaanhere@gmail.com (work: farhaan@theproductcreator.com — ask before using on site)
+- **Email:** both go on the site: mdfarhaanhere@gmail.com and farhaan@theproductcreator.com
+  *(confirmed by Farhaan 2026-07-10)*
 - **GitHub:** github.com/FraanW
 - **LinkedIn:** linkedin.com/in/muhammadfarhaan
 - **Old portfolio:** muhammad-farhaan.netlify.app — predecessor built when he had far less
@@ -21,7 +23,8 @@
 ## Positioning (the one-liner space)
 
 Forward-deployed full-stack AI engineer. Dropped into a venture studio as an intern; came out
-having driven the research and MVP builds behind products that raised investor money in the UAE.
+having driven the research and MVP builds behind ventures that raised investor money in the UAE
+(Adloom.ai documented; Deals24.ai raise in progress at DIFC).
 Now builds Entopo and the open-source Unified Product Graph standard at The Product Creator.
 Ships fast enough for founders, engineers properly enough for what comes after funding.
 
@@ -32,9 +35,10 @@ Node · FastAPI · Python | LLMs · RAG · Agents · MCP | Open-Source Contribut
 
 **Chapter 1 — The venture studio year (Dec 2024 to Jan 2026, Venture Cube, Dubai, remote).**
 Title on paper: EIR Full-Stack Intern. Reality: he spearheaded business research and MVP
-development for Adloom.ai and Sanady.ai and helped develop Deals24.ai — ventures that went on to
-attract investor funding in the UAE *(stated by Farhaan 2026-07-10; Adloom seed funding + decks
-contribution independently confirmed in master.md 2026-06-06)*. The gap between the title and the
+development for Adloom.ai and Sanady.ai and built the investor, seller, and admin dashboards for
+Deals24.ai end to end — ventures that raised (Adloom.ai, documented) or are raising (Deals24.ai,
+in progress at DIFC) investor money in the UAE *(stated by Farhaan 2026-07-10; Adloom seed funding
++ decks contribution independently confirmed in master.md 2026-06-06)*. The gap between the title and the
 scope IS the story: forward-deployed from day one.
 
 **Chapter 2 — Proving depth in parallel.** While shipping for the studio: published an IEEE paper
@@ -43,13 +47,18 @@ BS Data Science at IIT Madras), and built serious solo systems (LedgerLine's dou
 the research orchestration platform).
 
 **Chapter 3 — Building the tools builders use (Apr 2026 to present, The Product Creator).**
-Individual contributor building Entopo (commercial, NDA-scoped — see guardrails) and the
-Unified Product Graph, an open-source standard for structured product knowledge. Working
+Core Founding Engineer building the Entopo full-stack app (commercial, NDA-scoped — see
+guardrails) and the Unified Product Graph, an open-source standard for structured product
+knowledge. Working
 AI-native daily: multi-agent development workflows, MCP tooling, agent-driven engineering.
 
 ## Experience inventory (verified)
 
-### Venture Cube — SDE Intern / EIR, Full-Stack & AI (Dec 2024 to Jan 2026, Dubai, remote)
+### Venture Cube — EIR, Full-Stack and Founding Engineer, Adloom.ai (Dec 2024 to Jan 2026, Dubai, remote)
+
+> Site title framing, decided 2026-07-10: **"EIR, Full-Stack and Founding Engineer, Adloom.ai"**,
+> used everywhere. Within master.md's permitted truthful framings ("EIR" and "Founding engineer
+> for Adloom.ai" are both sanctioned alternates).
 
 **Adloom.ai** — AI-driven billboard advertising platform. The flagship case study.
 - Scaled and engineered the platform: 20,000+ live advertising assets, active client campaigns,
@@ -62,23 +71,30 @@ AI-native daily: multi-agent development workflows, MCP tooling, agent-driven en
 - Business side: conducted market research and crafted the pitch decks; **Adloom.ai attracted
   seed funding, with those decks contributing** (confirmed 2026-06-06)
 
-**Sanady.ai** — micro-lending platform for UAE expatriates.
+**Sanady.ai** — fintech startup: quick small-ticket loans for UAE expatriates.
 - Ideated and designed it: end-to-end product flow, system architecture, transaction workflows,
   lending lifecycle, e-wallet integration strategy
+- Designed the backend architecture aligned with PCI DSS compliance for lending *(stated by
+  Farhaan 2026-07-10; "PCI DSS awareness" corroborated in master.md skills; architecture scope
+  corroborated in master.md experience bullet)*
 - Business and market research + pitch deck (as with Adloom)
 
-**Deals24.ai** — helped develop *(stated by Farhaan 2026-07-10)*.
-- ⚠️ EVIDENCE GAP: not in master.md. Before it appears on the site, Farhaan must supply: what he
-  built on it, stack, his scope, and the funding status. Until then it may be mentioned only as
-  "helped develop" with no specifics.
+**Deals24.ai** — platform for distressed real estate deals (deals24.ai) *(scope, stack, and
+funding status stated by Farhaan 2026-07-10; not yet in master.md — backfill it there)*.
+- Built complete end-to-end dashboards for all three roles: investor, seller, and admin
+- Stack: FastAPI backend + React.js frontend + PostgreSQL, deployed on AWS with IAM
+- Funding: **in progress** at DIFC, UAE. Site copy says "raising" or "funding in progress",
+  never "raised" or "funded", until Farhaan confirms a close.
 
-**Funding claim discipline:** "All three attracted investor funding in the UAE" is Farhaan's
-2026-07-10 statement. Adloom's is independently documented. Before site copy asserts funding for
-Sanady or Deals24 specifically, get Farhaan's written confirmation of what each raised (or soften
-to the documented framing: "ventures that went on to raise investor funding" collectively, with
-Adloom named).
+**Funding claim discipline (per venture, as of 2026-07-10):**
+- **Adloom.ai — raised seed funding.** Independently documented (master.md, confirmed 2026-06-06).
+  May be stated plainly.
+- **Deals24.ai — raising, at DIFC, UAE.** In progress per Farhaan 2026-07-10. Never phrase as
+  closed until he confirms.
+- **Sanady.ai — no funding statement on record.** Attach no funding claim to it. The safe
+  collective framing names Adloom's raise and Deals24's in-progress round only.
 
-### The Product Creator / Arkheiev UG — Engineer, IC (Apr 2026 to present, remote)
+### The Product Creator / Arkheiev UG — Core Founding Engineer (Apr 2026 to present, remote)
 
 **Unified Product Graph (UPG)** — open source, full detail allowed.
 - Open-source, full-stack TypeScript standard for structured product knowledge
@@ -89,15 +105,17 @@ Adloom named).
   properties; authored guided AI skills that turn natural-language sessions into structured
   product graphs
 
-**Entopo** — commercial product, NDA. See guardrails below before writing a word.
+**Entopo** — commercial product, NDA. Farhaan's role: **Core Founding Engineer, building the
+full-stack app** *(confirmed by Farhaan 2026-07-10)*. See guardrails below before writing a word.
 
 ## NDA guardrails — Entopo (ABSOLUTE)
 
 Farhaan works on Entopo under NDA with its founder ("Captain San"). Public site copy may say:
 
-- ✅ He is an engineer at The Product Creator, building **Entopo** (entopo.app), an AI-native
-  product creation tool — canvas + AI + graph. (This matches the public marketing site; nothing
-  beyond it.)
+- ✅ He is a Core Founding Engineer at The Product Creator, building the full-stack app for
+  **Entopo** (entopo.app), an AI-native product creation tool — canvas + AI + graph. (Role
+  framing confirmed by Farhaan 2026-07-10; product description matches the public marketing
+  site; nothing beyond it.)
 - ✅ That he works as a full-stack, AI-native developer there: TypeScript/Next.js, AI agent
   systems, MCP, multi-agent development workflows — described as craft, not as Entopo internals
 - ✅ Full detail on UPG (open source, published on npm)
@@ -118,6 +136,7 @@ UPG work carries the "builds developer tools and standards" argument on its own.
 | Proof | Detail | Anchor |
 |-------|--------|--------|
 | Funding outcome | Adloom.ai raised seed funding; Farhaan's research + decks contributed | master.md, confirmed 2026-06-06 |
+| Venture scope | Deals24.ai: investor, seller, and admin dashboards built end to end (FastAPI, React, PostgreSQL, AWS + IAM); funding in progress at DIFC | owner statement 2026-07-10 |
 | Production scale | 20,000+ live advertising assets on Adloom.ai | master.md |
 | Automation outcome | ~60% less manual SDR effort per campaign cycle | master.md |
 | Speed outcome | Location scouting 5 hours → 5 minutes | master.md |
@@ -167,18 +186,24 @@ Built early, with little experience behind it: template look, list-of-skills fra
 outcomes, no case studies, no voice. The new site leads with funded products and production
 numbers, reads like a person, and treats engineering depth as evidence rather than a tag cloud.
 
-## Open items (owner input needed)
+## Open items — all resolved 2026-07-10 (Phase 1 locked)
 
-1. **Deals24.ai:** scope, stack, funding status — before it gets more than a passing mention.
-2. **Sanady/Deals24 funding:** written confirmation per venture, or the site uses the collective
-   framing with only Adloom named.
-3. **Entopo sayable-scope:** show Captain San the NDA guardrails above; tighten or loosen on his
-   word.
-4. **Work email on site:** personal, TPC address, or both?
-5. **Domain:** Darryl proposes candidates at launch phase (muhammadfarhaan.dev is the obvious
-   check).
-6. **Photo / visual assets:** does Farhaan want a photo on the site? (Persona works with or
-   without; Riker decides layout implications.)
-7. **Venture Cube title on site:** "EIR (Entrepreneur in Residence), Full-Stack" vs "SDE Intern"
-   vs "Founding Engineer, Adloom.ai" — master.md permits all three truthful framings; pick one
-   and use it everywhere.
+Answered by Farhaan 2026-07-10; substance folded into the sections above. Kept here as the
+decision record.
+
+1. **Deals24.ai** ✅ Resolved. Full scope, stack, and funding status recorded in the Experience
+   inventory. Evidence gap closed by owner statement; backfill master.md when convenient.
+2. **Sanady/Deals24 funding** ✅ Resolved. Per-venture rules recorded under "Funding claim
+   discipline": Adloom raised (documented), Deals24 raising at DIFC, Sanady carries no funding
+   claim.
+3. **Entopo sayable-scope** ✅ Resolved. Role confirmed: Core Founding Engineer building the
+   full-stack app. Internals scope unchanged; the guardrails above stand until Captain San
+   explicitly loosens them.
+4. **Work email on site** ✅ Resolved. Both: mdfarhaanhere@gmail.com and
+   farhaan@theproductcreator.com.
+5. **Domain** ✅ Resolved as deferred: no owner preference stated; Darryl proposes candidates at
+   launch phase (muhammadfarhaan.dev is the first check).
+6. **Photo / visual assets** ✅ Resolved. Yes, photo on the site. Riker accounts for it in the
+   layout language; Farhaan supplies the actual asset before build.
+7. **Venture Cube title on site** ✅ Resolved. "EIR, Full-Stack and Founding Engineer, Adloom.ai",
+   used everywhere.

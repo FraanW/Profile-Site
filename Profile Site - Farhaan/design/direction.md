@@ -1,5 +1,14 @@
 # Design direction — Farhaan's profile site
 
+> **DECISION (owner, 2026-07-10): none of the three chosen as-is.** In an interactive session
+> Farhaan built a fresh blend, recorded as the binding plan in `design/blueprint.md`: identity
+> "The Graph" (radial project graph, static React Flow), Emerald ink palette, Double Entry's
+> type stack (Josefin Sans / Erode / Spline Sans Mono), node cards on a separate /projects page,
+> anime.js as the sole engine for every animation, transition, and scroll feature, headlined by
+> a scroll-assembled blueprint-line-art airplane. This file stays as the
+> exploration record; where it conflicts with blueprint.md, blueprint.md wins. Riker's next
+> deliverable: tokens from the blueprint.
+
 > **Status: proposal. Three named directions; owner picks one, then it binds.**
 > Written by Riker, 2026-07-10. Inputs: root `CLAUDE.md`, `shared/persona.md`,
 > `shared/writing-style.md`, `Profile Site - Farhaan/context/profile.md` (Phase 1 locked).

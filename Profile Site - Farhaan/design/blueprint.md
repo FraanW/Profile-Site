@@ -38,7 +38,7 @@ Owner direction, 2026-07-10, which Mimir must fold into the content map:
 
 | Register | Face | Duty |
 |----------|------|------|
-| Display | **Josefin Sans** (Google Fonts) | Name, headlines, section heads, card titles. Display sizes only (~28px+, or letterspaced caps small); never body text. Owner's requested face. |
+| Display | **Playfair Display** (Google Fonts) | Name, headlines, section heads, card titles. Display sizes only (~28px+, or letterspaced caps small); never body text. Owner's requested face (replaced Josefin Sans, owner decision 2026-07-11). |
 | Body | **Erode** (Indian Type Foundry, Fontshare) | All reading text: about, one-liners, card descriptions. Sharp editorial serif, Indian foundry, deliberate. |
 | Technical | **Spline Sans Mono** (Google Fonts) | Node labels, stack rows, captions, figures, nav links, part labels on the airplane. The graph speaks machine. |
 
@@ -76,7 +76,8 @@ at token phase; the intent above binds.
 └── node-card grid        every project, 2-up desktop, 1-up mobile
 ```
 
-The airplane assembles along the right edge across the whole landing scroll (§9).
+The camera assembles along the right edge across the whole landing scroll (§8). (Owner decision
+2026-07-11: the airplane is retired; a DSLR camera is the rail device — see §8.)
 
 ## 6. Landing page, viewport by viewport
 
@@ -88,7 +89,7 @@ Disappears into the design; navigation should be conventional.
 ### 6.2 Hero — emerald field, living graph
 
 - Full-viewport deep-emerald color field. This is the bold color statement.
-- Name huge in Josefin Sans, bone-white, with room to breathe.
+- Name huge in Playfair Display, bone-white, with room to breathe.
 - Capability claim under it (Lefler writes it; the raw material is: AI-native full-stack
   development, product thinking, product management; under 10 words headline + under 25 words
   support, per the writing law).
@@ -107,7 +108,7 @@ Disappears into the design; navigation should be conventional.
 ### 6.4 Case tiles — minimal 2×2 grid
 
 - Four tiles, owner-picked set: **Adloom.ai, UPG, Entopo, LedgerLine.**
-- Very minimal per owner: Josefin title, one serif line, one mono proof/stack fragment, an
+- Very minimal per owner: Playfair title, one serif line, one mono proof/stack fragment, an
   arrow link. No images, no boxes-in-boxes.
 - Tiles link to the corresponding full card (or case anchor) on `/projects`.
 - Deals24.ai and Sanady.ai do NOT get tiles; they live as cards on `/projects` (funding
@@ -141,11 +142,12 @@ serif detail. Content per Mimir's reworked map.
 
 - One tiny ask, both emails (mdfarhaanhere@gmail.com primary pending owner confirmation,
   farhaan@theproductcreator.com alongside), GitHub, LinkedIn, location.
-- **The airplane lands here** (§9): the assembled plane flies from the right rail, settles on
-  the CTA button, and delivers one short line. Owner's intent for the line: "let's lift off,
-  reach out to me with your ideas, let's build." **Lefler writes the shipped wording** so it
-  carries exactly that energy while passing the writing law (no exclamation marks, no banned
-  constructions); the sentiment is owner-locked, the letters are not.
+- **The camera lands here** (§8): the assembled camera glides from the right rail, settles by
+  the CTA button, fires its shutter once with a capture flash-sparkle (owner revision
+  2026-07-11), and delivers one short line. Owner's locked sentiment: "reach out to me with your ideas, let's build."
+  (The lift-off flavor retired with the airplane, 2026-07-11.) **Lefler writes the shipped
+  wording** so it carries exactly that energy while passing the writing law (no exclamation
+  marks, no banned constructions); the sentiment is owner-locked, the letters are not.
 
 ### 6.8 Footer
 
@@ -157,7 +159,7 @@ The graph's nodes, grown into cards. Grid: 2-up desktop, 1-up mobile.
 
 **Node card anatomy (top to bottom):**
 
-1. Emerald ring marker ◉ + project name in Josefin Sans (ring fills leaf-green on hover)
+1. Emerald ring marker ◉ + project name in Playfair Display (ring fills leaf-green on hover)
 2. One- to two-line serif description (what it is, why it's hard)
 3. Mono stack row (java 21 · spring · postgres rls · no orm)
 4. Thin emerald rule
@@ -174,7 +176,7 @@ check before shipping.
 
 **Owner decision (2026-07-10, emphatic):** anime.js is the site's ONLY animation engine, and it
 handles **every** scroll feature, **every** animation, **every** transition on the site — not
-just the aircraft. This fully supersedes the repo's CSS-first motion default. No Framer Motion,
+just the camera. This fully supersedes the repo's CSS-first motion default. No Framer Motion,
 no CSS keyframes, no one-off CSS transitions: if it moves, anime.js moves it.
 
 **Everything anime.js owns:**
@@ -187,7 +189,7 @@ no CSS keyframes, no one-off CSS transitions: if it moves, anime.js moves it.
 - Case tiles: staggered entry (`stagger()`)
 - Page transition between `/` and `/projects` (View Transitions triggered/choreographed through
   anime.js where the browser allows; graceful cut where not)
-- The aircraft: full mapping below
+- The camera: full mapping below
 - Signals/contact reveals, footer, all of it
 
 **Discipline (how "animate everything" stays tasteful instead of becoming slop):**
@@ -200,28 +202,47 @@ no CSS keyframes, no one-off CSS transitions: if it moves, anime.js moves it.
 - One shared easing vocabulary (2 or 3 named eases max, defined at token phase) so the whole
   site moves like one system, not a demo reel.
 - **Reduced motion:** every animated element has a final-frame static state;
-  `prefers-reduced-motion` gets all final frames and a plain CTA (no plane flight).
+  `prefers-reduced-motion` gets all final frames and a plain CTA (no camera glide).
 - **Performance guardrails:** SVG line-work only for the plane and graph, lazy-mount below-fold
   animation, no scroll-jacking (native scroll speed is never hijacked), Lighthouse stays green
   or Darryl bounces it.
 
-### The airplane — blueprint line-art, scroll-assembled
+### The camera — blueprint line-art, scroll-assembled
+
+> **Owner decision, 2026-07-11: the fighter jet is retired.** The rail device is now a DSLR
+> camera, modeled on the exploded camera sequence on animejs.com (the "A lightweight and
+> modular API" section, verified in-browser 2026-07-11: the lens tips into 3/4 view, explodes
+> into a pencil-style engineering drawing with small labeled callouts per part, and scroll
+> scrubs the assembly together and apart bidirectionally, smoothed — never a one-shot play).
+> The rail-journey structure below is unchanged; the object, its finale, and the scrub
+> behavior change.
 
 The site's storytelling device, owner-specified, styled to read as an engineer's artifact:
 
-- **Style:** an exploded engineering drawing in thin emerald strokes with small mono part
-  labels (wing, fuselage, tail). Not a cartoon, no fills beyond the palette, no gradients.
-- **Behavior:** parts start scattered along the right rail; as the user scrolls the landing
-  page, parts drift together, labels fading as pieces join; by the signals section it is a
-  clean line-silhouette aircraft.
-- **Finale:** at the contact section the finished plane pops out of the right rail, banks, and
-  lands on the CTA button, delivering its one Lefler-written line (§6.7).
+- **Style:** an exploded engineering drawing of a DSLR camera in thin emerald strokes (lens
+  barrel, aperture ring, body, pentaprism, shutter). **No part labels** (owner revision
+  2026-07-11: the drawing carries itself; the mono callouts are removed). Not a cartoon, no
+  fills beyond the palette, no gradients.
+- **Behavior (camera-demo scrub):** parts **fade into existence** and drift together as the
+  visitor scrolls, scrubbed with ScrollObserver smoothing; scrolling back up **undoes the
+  assembly** — parts drift apart and fade back out (bidirectional, must be verified in a real
+  browser both directions). By the signals section it is a clean line-silhouette camera.
+- **One camera only:** the finale camera is a hand-off from the rail silhouette, never a
+  duplicate. At no scroll position do two cameras render at once (owner caught the rail copy
+  still visible at the footer while the finale camera sat at the CTA, 2026-07-11).
+- **Finale:** at the contact section the finished camera glides out of the right rail, settles
+  by the CTA button, and fires its shutter once **with a capture flash: the aperture blink
+  plus a brief flash-sparkle burst radiating from the lens** to pull the viewer's eye to the
+  CTA (owner revision 2026-07-11, supersedes the earlier no-flash rule; it fires once, stays
+  in the palette, and is drawn with transform/opacity only). Then it delivers its one
+  Lefler-written line (§6.7).
 - **Mobile (owner choice: slim right edge):** the full assembly runs on mobile too, smaller,
   hugging the right margin, **never overlapping text** — collision-checked at every breakpoint
   with real copy. If a breakpoint cannot guarantee clean separation, that breakpoint degrades
   to finale-only rather than overlapping content.
-- The metaphor earns its place: parts → assembled aircraft → lift-off is exactly the
-  zero-to-one story the persona sells.
+- **Metaphor note (for Dwight):** the camera is owner-chosen aesthetic-first, from the
+  anime.js reference. The sayable story is "assemble the instrument, then take the shot":
+  build it properly first, capture the moment when it counts. No factual claim rides on it.
 
 ### anime.js v4 implementation mapping (verified against animejs.com docs, 2026-07-10)
 
@@ -229,13 +250,13 @@ The library covers every beat of the device natively; no second animation depend
 
 | Beat | anime.js v4 API |
 |------|-----------------|
-| Emerald line-work drawing itself (plane parts, graph edges, section rules) | `svg.createDrawable()` on `<path>/<line>/<polyline>/<rect>`, animating the `draw` property (`'0 0' → '0 1'`) |
+| Emerald line-work drawing itself (camera parts, graph edges, section rules) | `svg.createDrawable()` on `<path>/<line>/<polyline>/<rect>`, animating the `draw` property (`'0 0' → '0 1'`) |
 | Scroll-linked assembly progress | `autoplay: onScroll({ ... })` on a `createTimeline()`; `enter`/`leave` thresholds pin the assembly to the landing scroll range |
 | The "buttery" feel | ScrollObserver's smooth-scroll `sync` mode: a 0–1 smoothing value makes progress ease toward scroll position instead of tracking it 1:1 |
 | Parts drifting together + labels fading | one master `createTimeline()`: per-part transform/opacity tweens, `stagger()` for the mono labels |
-| The finale flight onto the CTA | `svg.createMotionPath(flightPath)` returns `translateX/translateY/rotate` tweens; spread into an `animate()` call and the plane banks along an authored SVG path onto the button |
+| The finale glide onto the CTA | `svg.createMotionPath(glidePath)` returns `translateX/translateY/rotate` tweens; spread into an `animate()` call and the camera glides along an authored SVG path to the button, then the aperture blink + capture flash-sparkle plays as a short timeline |
 | React integration + responsive variants | `createScope()` with media queries: desktop full-assembly vs. mobile slim-edge variants declared once, cleaned up on unmount |
-| Reduced motion | gate every scope behind `prefers-reduced-motion`; matching users get final-frame statics (`draw: '0 1'`, plane pre-landed, no ScrollObservers created) |
+| Reduced motion | gate every scope behind `prefers-reduced-motion`; matching users get final-frame statics (`draw: '0 1'`, camera pre-assembled at rest by the CTA, no ScrollObservers created) |
 
 ## 9. Rules that still bind (unchanged by any of the above)
 
@@ -244,7 +265,7 @@ The library covers every beat of the device natively; no second animation depend
 2. **Entopo NDA guardrails:** absolute, everywhere the name appears (tiles, cards, graph nodes).
 3. **Writing law:** `shared/writing-style.md` governs every visitor-facing word, including the
    plane's line, node one-liners, and card microcopy. No em dashes in site copy.
-4. **Accessibility:** the graph and plane are decorative-plus; all content they carry is also
+4. **Accessibility:** the graph and camera are decorative-plus; all content they carry is also
    available as text/links. Keyboard and screen-reader paths never depend on hover, motion, or
    the graph. Contrast AA minimum on every pairing.
 5. **Dwight gates before ship**, as three hostile readers, against this blueprint + the ledger.
@@ -256,9 +277,9 @@ The library covers every beat of the device natively; no second animation depend
    parts of `direction.md` with a decision note.
 3. **Mimir:** rework `context/content-map.md` to the §5 page map and §2 positioning shift
    (capability-led, 4 tiles, /projects page, de-emphasized assets figure) — then owner re-approves.
-4. **Lefler:** hero claim, tile one-liners, card copy, the plane's line — after the reworked map.
+4. **Lefler:** hero claim, tile one-liners, card copy, the camera's line — after the reworked map.
 5. **Sindri:** scaffold Next.js 16 + Tailwind v4; build order: layout + tokens → hero → tiles →
-   graph → cards page → plane choreography last (it touches everything).
+   graph → cards page → camera choreography last (it touches everything).
 6. Still open from Mimir's earlier questions: primary mailto confirmation, what Contact invites,
    decision color for Adloom/Deals24, Remedify repo tidy-up, current UPG API count, deals24.ai
    link check, photo asset delivery.

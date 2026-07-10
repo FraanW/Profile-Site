@@ -1,0 +1,17 @@
+<!-- Prototype font loading for Storybook only. The app loads Fraunces
+     (variable, opsz + wght), IBM Plex Mono, and Playfair Display (500 italic
+     ONLY — the roman is never loaded, tokens.md §2.3) via next/font/google
+     (src/app/layout.tsx); Sentient comes from Fontshare's CDN in both
+     contexts (tokens.md §2.1, Erode precedent on Farhaan's site).
+     PRODUCTION TODO: self-host Sentient woff2 via next/font/local (tokens.md §2.1). -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500&display=swap"
+/>
+<link
+  rel="stylesheet"
+  href="https://api.fontshare.com/v2/css?f[]=sentient@400,500&display=swap"
+/>

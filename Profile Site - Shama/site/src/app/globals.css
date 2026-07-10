@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   Design tokens — pasted VERBATIM from design/tokens.md §5 (Riker, palette v2,
+   2026-07-11). tokens.md is the source of truth; edit it first, then mirror
+   here.
+   ========================================================================== */
+
+@theme {
+  /* ---- closed sets: wipe Tailwind defaults ---- */
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial; /* no shadows; the one glow is bg-emission, a gradient, not a shadow */
+
+  /* ---- color: palette v2 — black canvas, white stars, violet light.
+          (tokens.md 1 for the audit; the v1 inks are retired) ---- */
+  --color-night: #000000;       /* ground; literal black, ground ONLY (1.3 rule 2) */
+  --color-card: #0D0D10;        /* plaque surface; always rule-faint border  */
+  --color-star: #F7F5FA;        /* stars + display text — 19.40:1 on night   */
+  --color-moon: #E9E6F0;        /* reading text — 17.04:1 night, 15.75 card  */
+  --color-dim: #C8C1DC;         /* quote register ONLY — 12.12:1 on night    */
+  --color-violet: #A886FF;      /* ALIVE ONLY — 7.52:1 night, 6.95:1 card    */
+  --color-violet-ink: #9165FF;  /* drawn/labeled at rest — 5.51:1 night, 5.09:1 card */
+  --color-violet-deep: #7C3AED; /* receded line-work, NEVER text — 3.69/3.41 non-text */
+  --color-rule: #2B2340;        /* quiet ruling, decorative                  */
+  --color-rule-faint: #1B1626;  /* faintest ruling: card borders, frames     */
+  --color-selection: #2E2452;   /* ::selection ONLY — transient, user-cast   */
+
+  /* ---- type: four faces, four registers ---- */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-serif: "Sentient", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --font-quote: "Playfair Display", Georgia, "Times New Roman", serif; /* 500 italic ONLY is loaded; pull-quotes only (tokens.md 2.3) */
+  --default-font-family: var(--font-serif); /* Sentient is the default voice */
+  --default-mono-font-family: var(--font-mono);
+
+  /* ---- type scale: the only Fraunces steps are folio/display/title (32px floor);
+          quote is the only Playfair step (24px floor, italic only) ---- */
+  --text-folio: clamp(3.25rem, 1.9rem + 6.75vw, 7.5rem);
+  --text-folio--line-height: 1;
+  --text-folio--letter-spacing: -0.01em;
+  --text-folio--font-weight: 560;
+
+  --text-display: clamp(2rem, 1.55rem + 2.25vw, 3.25rem); /* min = 32px floor */
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.005em;
+  --text-display--font-weight: 560;
+
+  --text-title: 2rem; /* fixed on the 32px floor */
+  --text-title--line-height: 1.15;
+  --text-title--font-weight: 600;
+
+  /* quote: Playfair 500 italic, dim ink. text-quote sets size/leading/weight
+     only — the component pairs it with `font-quote italic` (family and style
+     are not text-* sub-tokens). Black ground only. */
+  --text-quote: clamp(1.5rem, 1.125rem + 0.9375vw, 1.875rem); /* 24 -> 30px */
+  --text-quote--line-height: 1.5;
+  --text-quote--letter-spacing: 0em;
+  --text-quote--font-weight: 500;
+
+  --text-lede: clamp(1.25rem, 1.14rem + 0.55vw, 1.4375rem);
+  --text-lede--line-height: 1.6;
+
+  --text-body: 1.125rem;
+  --text-body--line-height: 1.75;
+
+  --text-body-sm: 1rem;
+  --text-body-sm--line-height: 1.65;
+
+  --text-figure: 1.5rem; /* proof figures: mono 500 */
+  --text-figure--line-height: 1.3;
+  --text-figure--font-weight: 500;
+
+  --text-mono: 0.875rem; /* nav, stack rows, top-bar name */
+  --text-mono--line-height: 1.5;
+  --text-mono--letter-spacing: 0.01em;
+
+  --text-plaque: 0.8125rem; /* fig. captions, star labels; lowercase */
+  --text-plaque--line-height: 1.6;
+  --text-plaque--letter-spacing: 0.02em;
+
+  /* ---- measures ---- */
+  --container-prose: 58ch;
+  --container-narrow: 40ch;
+  --container-site: 72rem;
+
+  /* ---- semantic spacing (default 4px scale stays) ---- */
+  --spacing-section: clamp(6rem, 4rem + 8vw, 10rem);
+  --spacing-sky: 5rem;    /* camera rail margin, >= md (slimmer than Farhaan's 96px) */
+  --spacing-sky-sm: 3rem; /* slim rail, < md; below this, finale-only */
+
+  /* ---- radii: squared system; the only circles are points of light ---- */
+  --radius-star: 9999px;
+
+  /* ---- motion eases (anime.js reads these; see tokens.md section 4) ---- */
+  --ease-velvet: cubic-bezier(0.45, 0.05, 0.15, 1); /* entries, reveals, idle shimmer swell */
+  --ease-trace: cubic-bezier(0.6, 0.05, 0.25, 1);   /* SVG line drawing only */
+  --ease-kindle: cubic-bezier(0.3, 1.35, 0.45, 1);  /* triggered emission + stars only */
+}
+
+/* Non-utility tokens: the emission recipe + motion scalars + SVG strokes.
+   Source of truth for the anime.js constants module. [palette v2: the v1
+   field gradient is RETIRED — nothing may reintroduce it.] */
+:root {
+  /* The only gradient and the only glow in the system (tokens.md 1.4):
+     violet emission bleeding into black. Applied ONLY via .bg-emission,
+     ONLY on star-emission elements. Never behind text, never a surface. */
+  --gradient-emission: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--color-violet) 32%, transparent),
+    transparent 70%
+  );
+  --halo-scale: 6;           /* halo diameter <= 6x its star's diameter (tokens.md 1.4) */
+
+  /* PROPOSAL, off by default (tokens.md 1.4): Shama's tentative "maybe purple
+     gradient" (02:11). Ships flat black unless they pick it at review; if not
+     picked, DELETE this comment. Hero only, top edge to 60% of hero height:
+     --gradient-breath: linear-gradient(to bottom, #0E0918 0%, #000000 60%); */
+
+  --duration-glint: 260ms;
+  --duration-enter: 700ms;
+  --duration-draw: 1400ms;
+  --duration-finale: 2600ms; /* hard budget: camera glide + aperture blink + capture flash */
+  --duration-shimmer: 2400ms; /* one idle swell, opacity only, velvet (tokens.md 4.4) */
+  --shimmer-lull: 9000ms;     /* mean quiet between swells; jitter +/-40% in code */
+  --stagger-step: 110ms;
+  --reveal-rise: 20px;
+  --scroll-sync: 0.15;       /* site-wide ScrollObserver smooth sync value (camera scrub) */
+  --stroke-sky: 1;           /* SVG units; sky line-work + camera detail strokes;
+                                pair with vector-effect: non-scaling-stroke */
+  --stroke-instrument: 1.25; /* camera primary strokes only; same non-scaling rule;
+                                the ceiling on the instrument's ink (tokens.md 3.2) */
+}
+
+/* The one way to apply the emission halo. Greppable: every glow on the site
+   answers to a search for "bg-emission". Star-emission elements only. */
+@utility bg-emission {
+  background-image: var(--gradient-emission);
+}
+
+/* Base-layer recipes: system-level, ship with the tokens. */
+@layer base {
+  /* Focus: double ring — violet carries 3:1+ on night AND card (7.52 / 6.95);
+     the black inner ring separates it from white or violet elements
+     (tokens.md 1.3). Focus is attention; attention is alive; alive is violet. */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-night),
+      0 0 0 4px var(--color-violet);
+  }
+
+  /* Selection: the deep end at surface weight, transient and user-cast — the
+     one violet-tinted surface (tokens.md 1.3 rule 6). Never the loud violet. */
+  ::selection {
+    background: var(--color-selection);
+    color: var(--color-star);
+  }
+}
+
+/* ============================================================================
+   End of the verbatim tokens.md block. Sindri additions below: build wiring
+   only, no new design decisions.
+   ========================================================================== */
+
+/* Prototype font wiring. In the app, next/font/google serves Fraunces
+   (variable: wght axis + opsz, per tokens.md §2.2), IBM Plex Mono, and
+   Playfair Display (500 italic ONLY, per tokens.md §2.3) under hashed family
+   names exposed as CSS variables on <html>; in Storybook the same faces load
+   via <link> under their literal names (.storybook/preview-head.html). The
+   var() fallback makes both contexts resolve through the same tokens.
+   Sentient loads from Fontshare's CDN in both contexts at prototype phase.
+   PRODUCTION TODO: self-host Sentient woff2 via next/font/local (tokens.md §2.1). */
+@theme inline {
+  --font-display: var(--font-fraunces, "Fraunces"), "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-plex-mono, "IBM Plex Mono"), "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --font-quote: var(--font-playfair, "Playfair Display"), "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-night);
+    color: var(--color-moon);
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+}

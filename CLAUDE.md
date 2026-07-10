@@ -9,7 +9,7 @@ Two sites live here:
 | Site | Directory | Owner | Status |
 |------|-----------|-------|--------|
 | Farhaan | `Profile Site - Farhaan/` | Muhammad Farhaan | Context phase |
-| Shama | `Profile Site - Shama/` | Shama (Farhaan's friend) | Awaiting intake |
+| Shama | `Profile Site - Shama/` | Shama Anjum (Farhaan's friend; **non-binary, they/them — always**) | Design phase (intake pending) |
 
 ## Prime directives
 
@@ -33,7 +33,9 @@ Two sites live here:
 4. **Deployment** — Vercel, custom domain, OG/SEO, analytics.
 
 Farhaan's site goes first, start to finish. Shama's follows, reusing the crew and the tooling but
-with her own context and her own visual identity (the two sites must not look like the same template).
+with their own context and their own visual identity (the two sites must not look like the same
+template). Shama is non-binary: they/them in every document, every commit message, every word of
+site copy. They take it seriously; so does this repo.
 
 ## The crew
 

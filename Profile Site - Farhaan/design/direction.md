@@ -352,4 +352,4 @@ balance.
 
 Once the owner picks, the chosen direction binds; I write `design/tokens.md` and the Tailwind v4
 token config next, and the unchosen directions are retired (not recycled for Shama's site, whose
-identity starts from her own context, not from Farhaan's leftovers).
+identity starts from their own context, not from Farhaan's leftovers).

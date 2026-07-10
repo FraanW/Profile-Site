@@ -9,11 +9,11 @@ mkdirSync(out, { recursive: true });
 const shots = [
   { id: "sections-hero--graph-beside", wait: 2500, name: "hero-beside" },
   { id: "sections-hero--graph-behind", wait: 2500, name: "hero-behind" },
-  { id: "components-airplane--top-down", args: "progress:0", wait: 800, name: "plane-top-0" },
-  { id: "components-airplane--top-down", args: "progress:0.55", wait: 800, name: "plane-top-55" },
-  { id: "components-airplane--top-down", args: "progress:1", wait: 800, name: "plane-top-100" },
-  { id: "components-airplane--side-profile", args: "progress:1", wait: 800, name: "plane-side-100" },
-  { id: "components-airplane--paper-dart", args: "progress:0.5", wait: 800, name: "plane-paper-50" },
+  { id: "components-camera--exploded-scrub", args: "progress:0.2", wait: 800, name: "camera-20" },
+  { id: "components-camera--exploded-scrub", args: "progress:0.55", wait: 800, name: "camera-55" },
+  { id: "components-camera--exploded-scrub", args: "progress:1", wait: 800, name: "camera-100" },
+  { id: "components-camera--assembled", wait: 800, name: "camera-assembled" },
+  { id: "components-camera--finale-glyph", wait: 800, name: "camera-glyph" },
   { id: "sections-radialgraph--radial", wait: 2500, name: "graph-radial" },
   {
     id: "sections-radialgraph--constellation",
@@ -46,7 +46,7 @@ for (const s of shots) {
   await page.close();
 }
 
-// landing mid-scroll + bottom (plane assembly progress)
+// landing mid-scroll + bottom (camera assembly progress)
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
 await page.goto(`${base}/iframe.html?id=pages-landing--default&viewMode=story`, {
   waitUntil: "networkidle",

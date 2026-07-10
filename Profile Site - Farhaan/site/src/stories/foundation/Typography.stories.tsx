@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 /**
- * Three faces, three registers, strict separation (tokens.md §2).
+ * Three faces, three registers, strict separation (tokens.md §2, rev
+ * 2026-07-11: display face is Playfair Display).
  * Sample lines are draft copy, pending Lefler.
  */
 const meta = {
@@ -11,7 +12,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Josefin Sans (display, 600 only), Erode (body serif, the default voice), Spline Sans Mono (technical). No neutral grotesk anywhere. Erode loads from Fontshare's CDN at prototype phase; self-hosting is a production TODO.",
+          "Playfair Display (display, 500 hero + 600 below), Erode (body serif, the default voice), Spline Sans Mono (technical). Two serifs that never meet at the same size: the display floor is 28px, the largest body step tops out at 22px. Erode loads from Fontshare's CDN at prototype phase; self-hosting is a production TODO.",
       },
     },
   },
@@ -24,7 +25,7 @@ export const Faces: Story = {
   render: () => (
     <div className="space-y-8">
       <div className="border border-rule-faint bg-card p-6">
-        <p className="font-mono text-label text-steel">display · josefin sans 600 · google fonts</p>
+        <p className="font-mono text-label text-steel">display · playfair display 500/600 · google fonts</p>
         <p className="mt-2 font-display text-display text-ink">Muhammad Farhaan</p>
       </div>
       <div className="border border-rule-faint bg-card p-6">
@@ -51,10 +52,10 @@ const SCALE: Array<{
   note: string;
   sample: string;
 }> = [
-  { step: "hero", cls: "text-hero", face: "display", note: "46→96px · josefin 600", sample: "Muhammad Farhaan" },
-  { step: "display", cls: "text-display", face: "display", note: "28→42px · josefin 600", sample: "The evidence" },
-  { step: "title", cls: "text-title", face: "display", note: "28px fixed · josefin 600", sample: "LedgerLine" },
-  { step: "eyebrow", cls: "text-eyebrow uppercase", face: "display", note: "13px caps 0.14em · the only small josefin", sample: "the caps branch" },
+  { step: "hero", cls: "text-hero", face: "display", note: "46→96px · playfair 500", sample: "Muhammad Farhaan" },
+  { step: "display", cls: "text-display", face: "display", note: "28→42px · playfair 600", sample: "The evidence" },
+  { step: "title", cls: "text-title", face: "display", note: "28px fixed · playfair 600", sample: "LedgerLine" },
+  { step: "eyebrow", cls: "text-eyebrow uppercase", face: "display", note: "14px caps 0.12em · the only small playfair", sample: "the caps branch" },
   { step: "lede", cls: "text-lede", face: "serif", note: "19→22px · erode 400", sample: "Full-stack AI engineering with product judgment." },
   { step: "body", cls: "text-body", face: "serif", note: "18px/1.7 · erode 400", sample: "My title at Venture Cube said intern. The scope said otherwise." },
   { step: "body-sm", cls: "text-body-sm", face: "serif", note: "16px/1.6 · erode 400", sample: "Dense serif moments: tile one-liners if space demands." },
@@ -83,13 +84,13 @@ export const Scale: Story = {
   ),
 };
 
-export const JosefinLaw: Story = {
-  name: "Josefin's law",
+export const PlayfairLaw: Story = {
+  name: "Playfair's law",
   parameters: {
     docs: {
       description: {
         story:
-          "Josefin exists only at hero/display/title (28px floor) and as eyebrow caps. The scale makes violation structurally impossible: no other step carries the display face.",
+          "Playfair exists only at hero/display/title (28px floor) and as eyebrow caps (14px, 0.12em). The scale makes violation structurally impossible: no other step carries the display face. The hero runs 500, one step lighter than the smaller display steps: bone-on-emerald halation adds about a half-weight for free, and Playfair 600 at 96px turns lush where 500 keeps the hairline contrast working.",
       },
     },
   },
@@ -103,11 +104,11 @@ export const JosefinLaw: Story = {
       </div>
       <div className="border border-rule-faint bg-card p-6">
         <p className="font-mono text-label text-steel">
-          banned: josefin as body text. Its low x-height gives out below the floor; the answer is
-          eyebrow caps or a different face, never a smaller Josefin.
+          banned: playfair as body text. Its hairlines are a liability below the floor; the answer
+          is eyebrow caps or a different face, never smaller Playfair lowercase.
         </p>
         <p className="mt-2 font-display text-body-sm text-steel line-through">
-          Josefin Sans pretending to be a reading face at 16 pixels.
+          Playfair Display pretending to be a reading face at 16 pixels.
         </p>
       </div>
     </div>

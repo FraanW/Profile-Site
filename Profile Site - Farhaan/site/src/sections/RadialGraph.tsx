@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   ReactFlow,
   type Edge,
@@ -33,6 +33,27 @@ export type RadialGraphLayout = "radial" | "constellation";
 const nodeTypes: NodeTypes = { graphNode: FlowGraphNode };
 const edgeTypes: EdgeTypes = { emerald: EmeraldEdge };
 
+/* Breakpoint mapping (tokens.md §3.5): radial >= lg, constellation below.
+   A layout choice, not motion, so it is not gated by reduced-motion. The
+   server snapshot assumes lg (radial); a mobile client corrects during
+   hydration and the ReactFlow `key` remounts with a fresh fitView, well
+   before the section scrolls into view. */
+const LG_QUERY = "(min-width: 1024px)";
+
+function subscribeLg(callback: () => void) {
+  const mql = window.matchMedia(LG_QUERY);
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+
+function useIsLg(): boolean {
+  return useSyncExternalStore(
+    subscribeLg,
+    () => window.matchMedia(LG_QUERY).matches,
+    () => true
+  );
+}
+
 function buildGraph(layout: RadialGraphLayout, nodeVariant: GraphNodeVariant) {
   const center: FlowNode = {
     id: "farhaan",
@@ -57,9 +78,14 @@ function buildGraph(layout: RadialGraphLayout, nodeVariant: GraphNodeVariant) {
     } else {
       // Constellation (< lg): center node top, nodes cascading down,
       // edges still drawn (blueprint §6.5 mobile reflow). Symmetric rails
-      // plus clamped notes keep every ring near its rail, so the edge fan
-      // runs between the rails, clear of all text.
-      x = i % 2 === 0 ? -140 : 140;
+      // plus clamped text (title and note, GraphNode noteClamp) keep every
+      // ring near its rail, so the edge fan runs between the rails, clear
+      // of all text. Rails +-90 (was +-140): with the clamped card measure
+      // (~161px) the whole cascade fits a 360px viewport at fitView zoom
+      // ~0.75 instead of hitting the minZoom clamp and clipping cards
+      // off-screen; box edges stay short of x=0 so the fan corridor
+      // survives the narrower rails.
+      x = i % 2 === 0 ? -90 : 90;
       y = 110 + i * 96;
     }
     // Text sits on the outward side: left-hemisphere (radial) and
@@ -100,17 +126,25 @@ function buildGraph(layout: RadialGraphLayout, nodeVariant: GraphNodeVariant) {
  * scroll-into-view via anime.js svg.createDrawable.
  */
 export function RadialGraph({
-  layout = "radial",
+  layout = "auto",
   nodeVariant = "ring",
   mode = "scroll",
 }: {
-  layout?: RadialGraphLayout;
+  /** "auto" (default) follows tokens.md §3.5: radial >= lg, constellation
+      below. Explicit values pin a layout (Storybook variants). */
+  layout?: RadialGraphLayout | "auto";
   nodeVariant?: GraphNodeVariant;
   mode?: RevealMode;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-  const { nodes, edges } = buildGraph(layout, nodeVariant);
+  // Counts ReactFlow inits (0 = none yet). A counter, not a boolean: the
+  // layout `key` remounts ReactFlow, and each new instance must re-trigger
+  // the edge draw-in effect against its own freshly rendered paths.
+  const [ready, setReady] = useState(0);
+  const isLg = useIsLg();
+  const resolved: RadialGraphLayout =
+    layout === "auto" ? (isLg ? "radial" : "constellation") : layout;
+  const { nodes, edges } = buildGraph(resolved, nodeVariant);
 
   useEffect(() => {
     if (!ready || mode === "none" || prefersReducedMotion()) return;
@@ -135,27 +169,43 @@ export function RadialGraph({
     return () => {
       anim.revert();
     };
-    // graph rebuilds on layout/variant change; ready flips back via key remount
-  }, [ready, mode, layout, nodeVariant]);
+    // graph rebuilds on layout/variant change; each remounted instance
+    // re-triggers this effect through the `ready` init counter
+  }, [ready, mode, resolved, nodeVariant]);
 
   return (
     <Section id="graph" heading={graphSection.heading} mode={mode}>
       <p className="max-w-narrow text-body text-ink">{graphSection.intro}</p>
 
+      {/* Constellation heights: h-[760px] keeps fitView width-constrained at
+          phone widths (no dead vertical band); md:h-[900px] lets tablets
+          render the cascade near token-true zoom 1. Deliberate arbitrary
+          values: the wrap is sized to the graph's drawing, no spacing token
+          applies. */}
       <div
         ref={wrapRef}
-        className={layout === "constellation" ? "mx-auto mt-6 h-[900px] max-w-sm" : "mt-6 h-[560px]"}
+        className={
+          resolved === "constellation"
+            ? "mx-auto mt-6 h-[760px] max-w-sm md:h-[900px]"
+            : "mt-6 h-[560px]"
+        }
       >
         <ReactFlow
-          key={`${layout}-${nodeVariant}`}
+          key={`${resolved}-${nodeVariant}`}
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           nodeOrigin={[0.5, 0.5]}
           fitView
-          fitViewOptions={{ padding: 0.12 }}
-          onInit={() => requestAnimationFrame(() => setReady(true))}
+          // Constellation: tighter padding spends the scarce phone width on
+          // the drawing; maxZoom 1 pins text at token size (never inflated).
+          fitViewOptions={
+            resolved === "constellation"
+              ? { padding: 0.06, maxZoom: 1 }
+              : { padding: 0.12 }
+          }
+          onInit={() => requestAnimationFrame(() => setReady((n) => n + 1))}
           nodesDraggable={false}
           nodesConnectable={false}
           nodesFocusable={false}

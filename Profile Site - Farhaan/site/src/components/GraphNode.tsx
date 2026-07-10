@@ -22,8 +22,10 @@ export type GraphNodeData = {
    */
   labelSide?: "left" | "right";
   /**
-   * Wrap the note to a narrow measure (constellation): keeps node widths
-   * small so the rings form clean rails and edges never cross upper text.
+   * Wrap the node's text (note AND long titles) to a narrow measure
+   * (constellation): keeps node widths small so the rings form clean rails
+   * and edges never cross upper text. Text wraps at token size; it never
+   * shrinks.
    */
   noteClamp?: boolean;
 };
@@ -81,7 +83,14 @@ export function GraphNodeVisual({
     );
 
   const titleEl = (
-    <span className={`font-mono text-mono ${center ? "font-medium" : ""} text-ink`}>
+    // max-w-[16ch]: deliberate arbitrary value, the constellation's narrow
+    // title measure (pairs with the note's 19ch below; no token exists for
+    // a node measure). Long titles wrap instead of widening the rail.
+    <span
+      className={`font-mono text-mono ${center ? "font-medium" : ""} ${
+        noteClamp ? "max-w-[16ch]" : ""
+      } ${noteClamp && textLeft ? "text-right" : ""} text-ink`}
+    >
       {title}
     </span>
   );
@@ -97,7 +106,9 @@ export function GraphNodeVisual({
       </span>
     ) : (
       // Text on the outward side of the ring so edges never cross it.
-      <span className="flex items-center gap-2">
+      // Clamped (constellation) rows top-align: a wrapped title must not
+      // push the ring off the edge-anchor point at the row's first line.
+      <span className={`flex ${noteClamp ? "items-start" : "items-center"} gap-2`}>
         {textLeft ? (
           <>
             {titleEl}

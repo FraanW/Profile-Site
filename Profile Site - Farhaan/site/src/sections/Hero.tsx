@@ -120,7 +120,7 @@ function LivingGraph({ className = "" }: { className?: string }) {
 }
 
 /**
- * Hero (blueprint §6.2): full-viewport emerald field, huge Josefin name,
+ * Hero (blueprint §6.2): full-viewport emerald field, huge Playfair name,
  * capability claim, the living graph. One primary action + GitHub link.
  * Copy is DRAFT, pending Lefler.
  */

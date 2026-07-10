@@ -46,7 +46,7 @@ export function RingMark({
 
 /**
  * The /projects node card (blueprint §7 anatomy, top to bottom):
- * ring ◉ + Josefin title → serif one-liner → mono stack row → thin emerald
+ * ring ◉ + Playfair title → serif one-liner → mono stack row → thin emerald
  * rule → mono proof figures → links row. Ring fill on hover runs through
  * anime.js only.
  */

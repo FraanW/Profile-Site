@@ -48,11 +48,13 @@ export const contact = {
   ask: "One email starts it. Tell me what you want to build.",
   cta: "email farhaan",
   /**
-   * The airplane's landing line. Sentiment is owner-locked ("let's lift off,
-   * reach out to me with your ideas, let's build"); the wording below is a
-   * DRAFT carrier for that sentiment. Lefler writes the shipped line.
+   * TODO(Lefler): the camera's one line, delivered after the shutter blink.
+   * Sentiment is owner-locked: "reach out to me with your ideas, let's
+   * build" (blueprint §6.7). The lift-off flavor retired with the airplane,
+   * 2026-07-11. The wording below is a placeholder carrier only; Lefler
+   * writes the shipped line.
    */
-  planeLine: "Cleared for takeoff. Send an idea and let's build.",
+  cameraLine: "Bring me your idea and let's build it.",
 } as const;
 
 export const projectsPage = {

@@ -15,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Ring ◉ + Josefin title → serif one-liner → mono stack row → thin emerald rule → mono proof figures (exact ledger numbers) → links row. Draft copy, pending Lefler.",
+          "Ring ◉ + Playfair title → serif one-liner → mono stack row → thin emerald rule → mono proof figures (exact ledger numbers) → links row. Draft copy, pending Lefler.",
       },
     },
   },

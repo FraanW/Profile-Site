@@ -33,7 +33,7 @@ export const CapsLinks: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Nav links in the eyebrow caps branch, the only sanctioned small Josefin.",
+        story: "Nav links in the eyebrow caps branch, the only sanctioned small Playfair.",
       },
     },
   },

@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import { Josefin_Sans, Spline_Sans_Mono } from "next/font/google";
+import { Playfair_Display, Spline_Sans_Mono } from "next/font/google";
 import "./globals.css";
 
-/* Faces per design/tokens.md §2.1: Josefin Sans 600 only, Spline Sans Mono
-   400 + 500. The variables feed the @theme inline wiring in globals.css. */
-const josefin = Josefin_Sans({
-  weight: "600",
+/* Faces per design/tokens.md §2.1 (rev 2026-07-11): Playfair Display 500 +
+   600 only — two static slices, no italic axis, no 700-900, no latin-ext
+   (display-only duty cannot justify shipping the 400-900 variable range).
+   Spline Sans Mono 400 + 500. The variables feed the @theme inline wiring
+   in globals.css. */
+const playfair = Playfair_Display({
+  weight: ["500", "600"],
+  style: "normal",
   subsets: ["latin"],
-  variable: "--font-josefin",
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -31,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${josefin.variable} ${splineMono.variable} antialiased`}>
+    <html lang="en" className={`${playfair.variable} ${splineMono.variable} antialiased`}>
       <body className="min-h-screen">
         {/* Erode via Fontshare CDN, hoisted to <head> by React 19.
             PRODUCTION TODO: self-host woff2 via next/font/local (tokens.md §2.1). */}

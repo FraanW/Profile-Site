@@ -50,7 +50,7 @@ function NavLink({
 /**
  * Thin persistent top bar (blueprint §6.1): mono name left, "projects ·
  * contact" right. Variants: "ruled" (default, hairline bottom rule),
- * "floating" (no rule), "caps" (eyebrow-caps links, the Josefin caps branch).
+ * "floating" (no rule), "caps" (eyebrow-caps links, the Playfair caps branch).
  */
 export function TopBar({
   variant = "ruled",

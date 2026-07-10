@@ -102,7 +102,7 @@ export const Eases: Story = {
 
       <DemoTile
         label="lift"
-        note="spring 1/80/14 · the plane's finale, nothing else"
+        note="spring 1/80/14 · the camera's finale, nothing else"
         onPlay={(stage) => {
           const box = stage.querySelector("[data-demo]");
           if (!box) return;
@@ -153,7 +153,7 @@ export const ReducedMotion: Story = {
       <p className="font-mono text-mono font-medium text-ink">prefers-reduced-motion: reduce</p>
       <p className="mt-3 text-body-sm text-ink">
         Every animated element has a final-frame static state. Matching users get all final
-        frames: rules at full width, edges drawn, the plane pre-landed on the CTA, and no
+        frames: rules at full width, edges drawn, the camera at rest by the CTA, and no
         ScrollObservers are created at all. The scopes are gated, not paused.
       </p>
       <p className="mt-3 font-mono text-label text-steel">

@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Contact } from "./Contact";
 
 /**
- * Blueprint §6.7: one tiny ask, both emails, and the finale: the assembled
- * plane banks in along an SVG motion path (svg.createMotionPath + the lift
- * spring) and lands on the CTA with its one line.
+ * Blueprint §6.7 + §8: one tiny ask, both emails, and the finale: the
+ * assembled camera glides in along an SVG motion path (svg.createMotionPath
+ * + the lift spring), settles by the CTA, fires its shutter once (aperture
+ * blink + capture flash-sparkle from the lens), and delivers its one line.
  */
 const meta = {
   title: "Sections/Contact",
@@ -14,7 +15,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "The plane's line and every other string here are DRAFT copy, pending Lefler; the line's sentiment (lift off, send ideas, build) is owner-locked. Use the replay button to re-run the flight. Reduced motion parks the plane and shows the line.",
+          "The camera's line and every other string here are DRAFT copy, pending Lefler; the line's sentiment (reach out with your ideas, let's build) is owner-locked. Use the replay button to re-run the finale, capture flash included. Reduced motion shows the camera at rest, no flash, line readable.",
       },
     },
   },
@@ -27,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 
 export const SolidCta: Story = {
   parameters: {
-    docs: { description: { story: "Default: solid emerald CTA; the plane lands on it." } },
+    docs: { description: { story: "Default: solid emerald CTA; the camera settles by it." } },
   },
 };
 
@@ -48,7 +49,7 @@ export const ReducedMotionFrame: Story = {
   parameters: {
     docs: {
       description: {
-        story: "The final frame: plane pre-landed, line visible, no observers created.",
+        story: "The final frame: camera pre-assembled at rest, line visible, no observers created.",
       },
     },
   },

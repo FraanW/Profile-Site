@@ -66,7 +66,7 @@ await page.goto(`${base}/iframe.html?id=foundation-typography--faces&viewMode=st
 const fonts = await page.evaluate(async () => {
   await document.fonts.ready;
   return {
-    josefin: document.fonts.check('16px "Josefin Sans"'),
+    playfair: document.fonts.check('16px "Playfair Display"'),
     erode: document.fonts.check('16px "Erode"'),
     spline: document.fonts.check('16px "Spline Sans Mono"'),
   };

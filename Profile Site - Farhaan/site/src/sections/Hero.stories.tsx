@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Hero } from "./Hero";
 
 /**
- * Blueprint §6.2: emerald field, huge Josefin name, the living graph drawing
+ * Blueprint §6.2: emerald field, huge Playfair name, the living graph drawing
  * itself once on mount (anime.js svg.createDrawable + createTimeline, under
  * the 1800ms flight budget), then complete stillness.
  */

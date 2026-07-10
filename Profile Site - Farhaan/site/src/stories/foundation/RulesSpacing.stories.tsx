@@ -70,7 +70,7 @@ export const Measures: Story = {
       </div>
       <div>
         <p className="font-mono text-label text-steel">
-          rails · 96px at md+ / 44px below · the airplane&apos;s reserved edge
+          rails · 96px at md+ / 44px below · the camera&apos;s reserved edge
         </p>
         <div className="mt-2 flex gap-4">
           <div className="h-24 w-rail border border-rule bg-card text-center font-mono text-label text-steel">rail</div>

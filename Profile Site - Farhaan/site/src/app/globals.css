@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 /* ============================================================================
-   Design tokens — pasted VERBATIM from design/tokens.md §5 (Riker, 2026-07-10).
+   Design tokens — pasted VERBATIM from design/tokens.md §5 (Riker, 2026-07-10,
+   revised 2026-07-11: display face is Playfair Display).
    tokens.md is the source of truth; edit it first, then mirror here.
    ========================================================================== */
 
@@ -26,31 +27,31 @@
   --color-bone-muted: #B7CFC2;   /* secondary text on emerald field only — 4.65:1 */
 
   /* ---- type: three faces, three registers ---- */
-  --font-display: "Josefin Sans", "Century Gothic", Futura, sans-serif;
+  --font-display: "Playfair Display", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --font-serif: "Erode", Georgia, "Times New Roman", serif;
   --font-mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --default-font-family: var(--font-serif); /* Erode is the default voice */
   --default-mono-font-family: var(--font-mono);
 
-  /* ---- type scale: the only Josefin steps are hero/display/title/eyebrow ---- */
+  /* ---- type scale: the only Playfair steps are hero/display/title/eyebrow ---- */
   --text-hero: clamp(2.875rem, 1.5rem + 6.9vw, 6rem);
-  --text-hero--line-height: 1.02;
-  --text-hero--letter-spacing: 0.005em;
-  --text-hero--font-weight: 600;
+  --text-hero--line-height: 1.05;
+  --text-hero--letter-spacing: -0.015em;
+  --text-hero--font-weight: 500; /* one step lighter than display/title: see tokens.md 2.3 */
 
-  --text-display: clamp(1.75rem, 1.35rem + 2vw, 2.625rem); /* min = 28px Josefin floor */
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: 0.005em;
+  --text-display: clamp(1.75rem, 1.35rem + 2vw, 2.625rem); /* min = 28px display floor */
+  --text-display--line-height: 1.12;
+  --text-display--letter-spacing: -0.01em;
   --text-display--font-weight: 600;
 
   --text-title: 1.75rem; /* fixed on the 28px floor */
-  --text-title--line-height: 1.2;
-  --text-title--letter-spacing: 0.01em;
+  --text-title--line-height: 1.25;
+  --text-title--letter-spacing: 0;
   --text-title--font-weight: 600;
 
-  --text-eyebrow: 0.8125rem; /* the letterspaced-caps branch: use with uppercase */
+  --text-eyebrow: 0.875rem; /* the letterspaced-caps branch: use with uppercase */
   --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--letter-spacing: 0.12em;
   --text-eyebrow--font-weight: 600;
 
   --text-lede: clamp(1.1875rem, 1.05rem + 0.7vw, 1.375rem);
@@ -70,7 +71,7 @@
   --text-mono--line-height: 1.5;
   --text-mono--letter-spacing: 0.01em;
 
-  --text-label: 0.75rem; /* plane part labels, captions */
+  --text-label: 0.75rem; /* camera part labels, captions */
   --text-label--line-height: 1.4;
   --text-label--letter-spacing: 0.03em;
 
@@ -81,7 +82,7 @@
 
   /* ---- semantic spacing (default 4px scale stays) ---- */
   --spacing-section: clamp(4.5rem, 3rem + 7vw, 8rem);
-  --spacing-rail: 6rem;       /* airplane right rail, >= md */
+  --spacing-rail: 6rem;       /* camera right rail, >= md */
   --spacing-rail-sm: 2.75rem; /* slim right edge, < md */
 
   /* ---- radii: squared system; the only circles are the graph's nodes ---- */
@@ -98,11 +99,11 @@
   --duration-micro: 150ms;
   --duration-enter: 450ms;
   --duration-draw: 900ms;
-  --duration-flight: 1800ms; /* hard budget: hero self-draw AND finale flight */
+  --duration-flight: 1800ms; /* hard budget: hero self-draw AND finale glide */
   --stagger-step: 60ms;
   --reveal-rise: 14px;
   --scroll-sync: 0.2;        /* site-wide ScrollObserver smooth sync value */
-  --spring-lift-mass: 1;     /* createSpring params for the plane finale only */
+  --spring-lift-mass: 1;     /* createSpring params for the camera finale only */
   --spring-lift-stiffness: 80;
   --spring-lift-damping: 14;
   --stroke-draw: 1.5;        /* SVG units; pair with vector-effect: non-scaling-stroke */
@@ -130,15 +131,15 @@
    only, no new design decisions.
    ========================================================================== */
 
-/* Prototype font wiring. In the app, next/font/google serves Josefin Sans and
-   Spline Sans Mono under hashed family names exposed as CSS variables on
+/* Prototype font wiring. In the app, next/font/google serves Playfair Display
+   and Spline Sans Mono under hashed family names exposed as CSS variables on
    <html>; in Storybook the same faces load via <link> under their literal
    names (.storybook/preview-head.html). The var() fallback makes both
    contexts resolve through the same tokens. Erode loads from Fontshare's CDN
    in both contexts at prototype phase.
    PRODUCTION TODO: self-host Erode woff2 via next/font/local (tokens.md §2.1). */
 @theme inline {
-  --font-display: var(--font-josefin, "Josefin Sans"), "Josefin Sans", "Century Gothic", Futura, sans-serif;
+  --font-display: var(--font-playfair, "Playfair Display"), "Playfair Display", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --font-mono: var(--font-spline-mono, "Spline Sans Mono"), "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 }
 

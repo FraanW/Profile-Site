@@ -4,8 +4,8 @@ import { LandingPage } from "./LandingPage";
 /**
  * The full landing composition in blueprint §5 order, with the real scroll
  * choreography: every section reveals once via anime.js ScrollObservers
- * (smooth sync site-wide) and the airplane assembles along the right rail
- * across the whole scroll. Scroll the canvas top to bottom to preview.
+ * (smooth sync site-wide) and the camera assembles along the right rail
+ * across the whole scroll, both directions. Scroll the canvas to preview.
  */
 const meta = {
   title: "Pages/Landing",

@@ -20,7 +20,7 @@ export type CaseTilesVariant = "open" | "hairline" | "numbered";
 
 /**
  * Case tiles (blueprint §6.4): the owner-picked four — Adloom.ai, UPG,
- * Entopo, LedgerLine — in a minimal 2×2. Josefin title, one serif line, one
+ * Entopo, LedgerLine — in a minimal 2×2. Playfair title, one serif line, one
  * mono fragment, an arrow link. Staggered entry via anime.js stagger().
  * Tile copy is DRAFT, pending Lefler.
  */

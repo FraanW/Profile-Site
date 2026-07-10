@@ -46,8 +46,8 @@ export function StatementRule({ mode = "scroll" }: { mode?: RevealMode }) {
 }
 
 /**
- * Landing-section shell: statement rule, Josefin section head, revealed
- * content. Right padding leaves the airplane's rail clear (blueprint §8:
+ * Landing-section shell: statement rule, Playfair section head, revealed
+ * content. Right padding leaves the camera's rail clear (blueprint §8:
  * slim edge below md, full rail at md and up).
  */
 export function Section({
@@ -62,7 +62,7 @@ export function Section({
   heading?: string;
   mode?: RevealMode;
   children: React.ReactNode;
-  /** Reserve the airplane right rail. Off for /projects (no plane there). */
+  /** Reserve the camera right rail. Off for /projects (no camera there). */
   rail?: boolean;
   className?: string;
 }) {

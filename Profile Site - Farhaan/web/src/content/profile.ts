@@ -101,12 +101,18 @@ export const about = [
  * is open source, so there is no NDA question here. Nothing about Entopo.
  */
 export const harness = {
-  heading: "A team of two, carrying the context of a team of ten.",
+  /*
+    The heading used to be "A team of two, carrying the context of a team of
+    ten", which stated a capability at the reader rather than offering them
+    anything. "Two of us" keeps the same 2-against-10 argument, which is the
+    actual point of the section, and makes the reader the second person.
+  */
+  heading: "Two of us could build what used to take ten.",
   body: [
     "AI expanded what you can produce, not what you can hold in your head. One person now ships in a week what used to take a team a quarter, and almost none of it is connected by design. The documents pile up and the context does not.",
     "So I stopped handing agents documents and started handing them a graph. Product knowledge goes into UPG as typed entities with explicit relationships: a persona connects to a need, a need to an opportunity, an opportunity to the solution and the experiment that tested it. 324 entity types across 37 domains, joined by six kinds of edge.",
     "Then I build the harness on top of it. Agents read that graph through a Model Context Protocol server rather than guessing from prose, so they start already knowing what the product is and what was decided about it last week. The same graph renders as an opportunity solution tree, a business model canvas, or a roadmap, so nobody rebuilds the context to answer a different question.",
-    "That is what makes a small team fast. Planning stops being a meeting where everyone reloads the same background, and the work of staying on the same page is done by the graph instead of by people.",
+    "That is what makes a small team fast. Planning stops being a meeting where everyone reloads the same background, and the work of staying on the same page is done by the graph instead of by people. Which means two people and an idea is now a real team, not a compromise.",
   ],
   link: { label: "unifiedproductgraph.org", href: "https://unifiedproductgraph.org" },
 };

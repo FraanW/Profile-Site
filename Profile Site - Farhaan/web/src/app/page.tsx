@@ -403,8 +403,9 @@ export default function Home() {
         />
         <div className="relative">
           <div className="mx-auto flex min-h-dvh max-w-6xl flex-col justify-center px-6 pb-24 pt-32 sm:px-10">
-            <h2 className="display max-w-[18ch] text-[clamp(2.25rem,6vw,4.5rem)] text-ivory">
-              Bring me something half-formed.
+            {/* Wider and a touch looser: a longer line at 0.94 leading crowds. */}
+            <h2 className="display max-w-[20ch] text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04] text-ivory">
+              Bring me something half-formed, and let&rsquo;s build it together.
             </h2>
             <p className="prose-serif mt-8 text-ivory/80">{contact.invitation}</p>
 

@@ -615,6 +615,104 @@ function Book({
   );
 }
 
+/**
+ * The board the books stand on.
+ *
+ * Grain runs along the length, because a plank is cut that way and a shelf with
+ * vertical grain reads as wrong even to people who could not say why. Built
+ * once and cached: it is the same board every time.
+ */
+let woodTextureCache: THREE.CanvasTexture | null = null;
+
+function getWoodTexture(): THREE.CanvasTexture | null {
+  if (typeof document === "undefined") return null;
+  if (woodTextureCache) return woodTextureCache;
+
+  const width = 1024;
+  const height = 128;
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  if (!context) return null;
+  const random = seeded(0xc0ffee);
+
+  context.fillStyle = "#6b4c33";
+  context.fillRect(0, 0, width, height);
+
+  // Grain: long, near-horizontal lines that wander slightly, as rings do.
+  for (let index = 0; index < 220; index += 1) {
+    const y = random() * height;
+    const dark = random() > 0.72;
+    context.strokeStyle = dark
+      ? `rgba(32, 20, 11, ${0.18 + random() * 0.24})`
+      : `rgba(150, 116, 82, ${0.07 + random() * 0.12})`;
+    context.lineWidth = dark ? 0.7 + random() * 1.5 : 0.5 + random() * 1.1;
+    context.beginPath();
+    context.moveTo(-10, y);
+    let x = -10;
+    let cursor = y;
+    while (x < width + 10) {
+      const step = 60 + random() * 120;
+      cursor += (random() - 0.5) * 6;
+      context.quadraticCurveTo(x + step / 2, cursor + (random() - 0.5) * 5, x + step, cursor);
+      x += step;
+    }
+    context.stroke();
+  }
+
+  // A couple of knots, so the board is not a uniform pattern.
+  for (let index = 0; index < 3; index += 1) {
+    const kx = random() * width;
+    const ky = random() * height;
+    for (let ring = 0; ring < 7; ring += 1) {
+      context.strokeStyle = `rgba(28, 17, 9, ${0.2 - ring * 0.022})`;
+      context.lineWidth = 0.8;
+      context.beginPath();
+      context.ellipse(kx, ky, 3 + ring * 3.4, 2 + ring * 1.7, 0, 0, Math.PI * 2);
+      context.stroke();
+    }
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 8;
+  texture.needsUpdate = true;
+  woodTextureCache = texture;
+  return texture;
+}
+
+function Shelf({ span }: { span: { min: number; max: number } }) {
+  const wood = useMemo(() => getWoodTexture(), []);
+  // Run well past the last book on both sides, so the board leaves the frame
+  // rather than stopping in mid air.
+  const width = span.max - span.min + 26;
+  const centre = (span.min + span.max) / 2;
+  const thickness = 0.34;
+  const depth = 3.1;
+
+  return (
+    <group position={[centre, -thickness / 2, 0]}>
+      <mesh>
+        <boxGeometry args={[width, thickness, depth]} />
+        <meshStandardMaterial
+          map={wood ?? undefined}
+          color={wood ? "#ffffff" : "#6b4c33"}
+          roughness={0.82}
+          metalness={0}
+          bumpMap={wood ?? undefined}
+          bumpScale={0.012}
+        />
+      </mesh>
+      {/* A darker line where the board meets the books, so they sit rather than hover. */}
+      <mesh position={[0, thickness / 2 + 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[width, depth * 0.62]} />
+        <meshBasicMaterial color="#3a2614" transparent opacity={0.16} />
+      </mesh>
+    </group>
+  );
+}
+
 function CameraRig({ target }: { target: React.RefObject<number> }) {
   const { camera } = useThree();
   useFrame((_, delta) => {
@@ -895,6 +993,7 @@ export function Bookshelf({ items, className, height = 620, onOpen, onFocus }: B
           }}
         >
           <CameraRig target={cameraX} />
+          <Shelf span={{ min: books[0]?.x ?? 0, max: books.at(-1)?.x ?? 0 }} />
           <ambientLight intensity={1.45} />
           <hemisphereLight args={["#ffffff", "#c3c9da", 1.2]} />
           <directionalLight position={[5, 8, 7]} intensity={2.1} />

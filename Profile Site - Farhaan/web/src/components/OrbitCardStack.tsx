@@ -149,8 +149,11 @@ export function OrbitCardStack({
     offset: ["start end", "start center"],
   });
 
-  // Narrow screens cannot hold a three-card fan. Shrink the spread to fit
-  // rather than letting cards sail off the edge.
+  // Below this, a three-card fan has nowhere to go: the cards end up stacked on
+  // top of each other and two of the three are unreachable. Phones get a plain
+  // column instead.
+  const [narrow, setNarrow] = useState(false);
+
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
@@ -158,6 +161,7 @@ export function OrbitCardStack({
       const stageWidth = stage.clientWidth;
       const cardWidth = Math.min(stageWidth * 0.78, 320);
       const room = (stageWidth - cardWidth) / 2;
+      setNarrow(room < 120);
       setFitSpread(Math.max(14, Math.min(spread, room)));
     };
     measure();
@@ -171,18 +175,63 @@ export function OrbitCardStack({
       ref={sectionRef}
       className={cn("relative flex w-full items-center justify-center", className)}
     >
-      <div ref={stageRef} className="relative h-[380px] w-full max-w-[980px]">
-        {items.map((item, index) => (
-          <StackCard
-            key={item.href}
-            item={item}
-            index={index}
-            total={items.length}
-            spread={fitSpread}
-            progress={scrollYProgress}
-            reduceMotion={reduceMotion}
-          />
-        ))}
+      <div
+        ref={stageRef}
+        className={cn("relative w-full max-w-[980px]", narrow ? "" : "h-[380px]")}
+      >
+        {narrow ? (
+          <div className="flex flex-col gap-4">
+            {items.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={item.href.startsWith("mailto:") ? undefined : "noreferrer noopener"}
+                className="group block border border-ivory/12 bg-plasma-b/85 p-6 backdrop-blur-sm transition-colors hover:border-signal/45"
+              >
+                <div className="flex items-start justify-between">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="26"
+                    height="26"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    style={{ color: item.accent }}
+                  >
+                    {marks[item.mark]}
+                  </svg>
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" className="text-ivory/40">
+                    <path
+                      d="M4 12L12 4M12 4H5.5M12 4v6.5"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    />
+                  </svg>
+                </div>
+                <p className="display mt-5 text-[23px] leading-none text-ivory">{item.label}</p>
+                <p className="mt-2 text-[13px] text-ivory/50">{item.handle}</p>
+                <p className="mt-4 border-t border-ivory/12 pt-4 text-[14.5px] leading-relaxed text-ivory/75">
+                  {item.description}
+                </p>
+              </a>
+            ))}
+          </div>
+        ) : (
+          items.map((item, index) => (
+            <StackCard
+              key={item.href}
+              item={item}
+              index={index}
+              total={items.length}
+              spread={fitSpread}
+              progress={scrollYProgress}
+              reduceMotion={reduceMotion}
+            />
+          ))
+        )}
       </div>
     </div>
   );

@@ -142,6 +142,12 @@ export const signals = [
 ];
 
 export const contact = {
+  /*
+    Rewritten so it stops echoing the heading above it. That heading now
+    carries "half-formed" and "together", and this paragraph used to repeat
+    both within about twenty words, which reads as a writer who liked a phrase
+    too much. It earns its place by adding the claim instead.
+  */
   invitation:
-    "I am looking for people with an idea worth building. Bring it early, bring it half-formed. We can take it from ideation to product to scale together.",
+    "I am looking for people with an idea worth building. The earlier you bring it the better, because the part I am best at is the stretch before anyone is sure what the thing even is. Ideation to product to scale is an arc I have walked before.",
 };

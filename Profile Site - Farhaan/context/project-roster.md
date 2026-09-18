@@ -46,10 +46,10 @@ The old framing, kept only as the evidence layer beneath the claim:
 > standards team. Solo systems of real depth. Security for a global fintech by day, building
 > alongside it.
 
-**Employer naming.** Default to **unnamed**: "a global fintech", never the real company name.
-`CyberSecurity-Repo` deliberately uses the FinCo codename *"so the real company name never appears
-in a public place"*, and a public site is the most public place there is. Farhaan can overrule
-this, but silence means unnamed. **[assumption, flag at copy review]**
+**Employer naming: RESOLVED 2026-09-19.** The employer is **Fiserv**, named openly, with its
+logo on the site. This overrules the earlier default-to-unnamed assumption recorded here, which
+was mine rather than his: I had inferred it from `CyberSecurity-Repo` using a FinCo codename. He
+supplied the logo and the name directly, so the site says Fiserv.
 
 Three claims the evidence actually supports, in the order that convinces people:
 
@@ -73,7 +73,7 @@ not only greenfield.
 |---|---|---|---|
 | Dec 2024 to Jan 2026 | **Venture Cube**, Dubai (remote) | EIR, Full-Stack and Founding Engineer, Adloom.ai | Closed [L] |
 | Apr 2026 to **present** | **The Product Creator / Arkheiev UG** | Core Founding Engineer (Entopo + UPG) | **Active, concurrent** (owner 2026-09-18) |
-| Jul 2026 to **present** | a global fintech, Chennai (unnamed) | Cybersecurity Analyst, IAM | **Active** (owner 2026-09-18) |
+| Jul 2026 to **present** | **Fiserv**, Chennai | Cybersecurity Analyst, IAM solutions | **Active** (owner 2026-09-18, named 2026-09-19) |
 
 **The two current roles run concurrently** (owner-confirmed 2026-09-18). That is the "now" line:
 security analyst at a global fintech by day, Core Founding Engineer on Entopo and UPG alongside it.

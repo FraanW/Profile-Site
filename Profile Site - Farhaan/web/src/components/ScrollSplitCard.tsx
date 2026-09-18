@@ -167,7 +167,12 @@ export function ScrollSplitCard({
                     backgroundRepeat: "repeat",
                   }}
                 />
-                {card.icon && <div className="relative z-10 mb-auto">{card.icon}</div>}
+                {card.icon && (
+                  // my-auto centres the mark in whatever space the text leaves.
+                  <div className="relative z-10 my-auto flex w-full justify-center">
+                    {card.icon}
+                  </div>
+                )}
                 <h3 className="display relative z-10 mb-3.5 text-[26px] leading-tight">
                   {card.title}
                 </h3>

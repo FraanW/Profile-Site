@@ -40,7 +40,7 @@ const skills = [
       "Agents, retrieval, and model tooling built into the product rather than bolted onto it. MCP servers, graph APIs, and pipelines that abstain instead of guessing.",
     bgColor: "#1b2340",
     textColor: "#f4efe2",
-    icon: <SkillMark mark="graph" />,
+    icon: <SkillMark mark="graph" size={96} />,
   },
   {
     title: "Product context, research and ideation",
@@ -48,7 +48,7 @@ const skills = [
       "Market research, pitch decks, system architecture, and deciding what is worth building before a line of it is written. Two of the products I researched raised money.",
     bgColor: "#f4efe2",
     textColor: "#101219",
-    icon: <SkillMark mark="compass" />,
+    icon: <SkillMark mark="compass" size={96} />,
   },
   {
     title: "Shipping, deployment and pipelining",
@@ -56,7 +56,7 @@ const skills = [
       "AWS, CI, containers, migrations, and the unglamorous work of keeping something alive after launch. Dependency sweeps, safe deletions, and provider migrations.",
     bgColor: "#0b0d16",
     textColor: "#f4efe2",
-    icon: <SkillMark mark="pipeline" />,
+    icon: <SkillMark mark="pipeline" size={96} />,
   },
 ];
 
@@ -203,7 +203,7 @@ export default function Home() {
               </h2>
               <div className="mt-8 space-y-5">
                 {harness.body.map((paragraph) => (
-                  <p key={paragraph.slice(0, 30)} className="prose-serif">
+                  <p key={paragraph.slice(0, 30)} className="prose-serif text-ivory/85">
                     {paragraph}
                   </p>
                 ))}
@@ -228,8 +228,12 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
+            {/* Gargantua, since the line reaches this page by way of Interstellar. */}
+            <OrgMark mark="blackhole" size={68} className="mb-8 text-signal/75" />
             <blockquote className="display max-w-[24ch] text-[clamp(1.9rem,5vw,3.4rem)] italic text-ivory">
+              {"“"}
               {quote.text}
+              {"”"}
             </blockquote>
             <figcaption className="smallcaps mt-6 text-[14px] text-muted">
               {quote.source}
@@ -250,7 +254,7 @@ export default function Home() {
           </h2>
           <div className="space-y-6">
             {about.map((paragraph) => (
-              <p key={paragraph.slice(0, 30)} className="prose-serif">
+              <p key={paragraph.slice(0, 30)} className="prose-serif text-ivory/85">
                 {paragraph}
               </p>
             ))}
@@ -295,7 +299,7 @@ export default function Home() {
           <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
             What my tech stack is.
           </h2>
-          <p className="prose-serif mt-6">
+          <p className="prose-serif mt-6 text-ivory/85">
             The interesting question is never which of these I know. It is which one a problem
             actually wants, and how much of it. So read this as range rather than ranking.
           </p>

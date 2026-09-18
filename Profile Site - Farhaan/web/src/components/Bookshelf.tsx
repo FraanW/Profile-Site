@@ -919,12 +919,18 @@ export function Bookshelf({ items, className, height = 620, onOpen, onFocus }: B
           ref={tooltipRef}
           aria-hidden
           className={cn(
-            "pointer-events-none absolute z-20 max-w-[320px] -translate-x-1/2 -translate-y-[calc(100%+18px)] whitespace-nowrap bg-ink px-3.5 py-2.5 text-paper shadow-xl transition-opacity duration-150",
+            "pointer-events-none absolute z-20 w-[290px] -translate-x-1/2 -translate-y-[calc(100%+18px)] bg-ink px-4 py-3 text-paper shadow-xl transition-opacity duration-150",
             hovered && selectedIndex === null ? "opacity-100" : "opacity-0",
           )}
         >
-          <span className="display text-[17px]">{hovered?.title}</span>
-          <span className="block text-[12px] text-paper/55">{hovered?.date}</span>
+          <span className="display text-[18px] leading-tight">{hovered?.title}</span>
+          <span className="tabular ml-2 text-[12px] text-paper/45">{hovered?.date}</span>
+          {/* What the project actually is, so a spine is not the only clue. */}
+          {hovered?.subtitle && (
+            <span className="mt-2 block border-t border-paper/15 pt-2 text-[13px] leading-snug text-paper/70">
+              {hovered.subtitle}
+            </span>
+          )}
         </div>
 
         {/* The instruction, only while a book is out and waiting to be opened. */}

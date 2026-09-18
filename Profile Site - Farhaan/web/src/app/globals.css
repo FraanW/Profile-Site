@@ -87,13 +87,19 @@ body {
   line-height: 0.9;
 }
 
-/* Reading text. Serif wants more line-height than a grotesk would. */
+/*
+  Reading text. Serif wants more line-height than a grotesk would.
+
+  Colour is deliberately NOT set here. It used to hardcode ivory, which was
+  invisible on the projects page, where the site inverts to dark ink on light
+  ground. Inheriting means the landing page picks up ivory from `body` and the
+  projects page picks up ink from its own `main`, with no override needed.
+*/
 .prose-serif {
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.75;
   max-width: 62ch;
-  color: color-mix(in srgb, var(--color-ivory) 88%, transparent);
 }
 
 /* Small-caps stands in for the monospace-label cliché. */

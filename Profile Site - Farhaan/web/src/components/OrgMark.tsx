@@ -13,7 +13,7 @@
  * is a one-line change at the call site.
  */
 
-export type OrgMarkId = "access" | "graph" | "cube";
+export type OrgMarkId = "access" | "graph" | "cube" | "blackhole";
 
 const marks: Record<OrgMarkId, { paths: React.ReactNode; title: string }> = {
   /**
@@ -41,6 +41,29 @@ const marks: Record<OrgMarkId, { paths: React.ReactNode; title: string }> = {
         <circle cx="37" cy="13" r="3.4" />
         <circle cx="24" cy="35" r="3.4" />
         <path d="M14.4 13h19.2M12.9 16.1 22.1 32M36.1 16.1 25.9 32" />
+      </>
+    ),
+  },
+  /**
+   * Gargantua, for the Dylan Thomas line that Interstellar carries.
+   *
+   * The distinctive thing about that black hole is not the dark disc, which
+   * any circle would give. It is the lensing: light from the far side of the
+   * accretion disk is bent up over the top and down under the bottom, so the
+   * ring appears to wrap around the sphere vertically as well as lying flat
+   * around it. Drawn without those two arcs it is just a planet.
+   */
+  blackhole: {
+    title: "A black hole, its accretion disk lensed over and under it",
+    paths: (
+      <>
+        {/* The disk, seen almost edge on. */}
+        <ellipse cx="24" cy="24" rx="22" ry="4.5" />
+        {/* Its far side, lensed up over the sphere and down under it. */}
+        <path d="M5 24C5 12.4 13.5 3 24 3s19 9.4 19 21" />
+        <path d="M5 24c0 11.6 8.5 21 19 21s19-9.4 19-21" />
+        {/* The horizon itself, which is the only part that is actually dark. */}
+        <circle cx="24" cy="24" r="8" />
       </>
     ),
   },

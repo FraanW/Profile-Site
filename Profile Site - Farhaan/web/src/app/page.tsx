@@ -150,7 +150,7 @@ export default function Home() {
             </div>
 
             <p
-              className="settle mx-auto max-w-[46ch] pb-10 text-center text-[14px] leading-relaxed text-ivory/55"
+              className="settle mx-auto max-w-[46ch] pb-[150px] text-center text-[14px] leading-relaxed text-ivory/55 sm:pb-10"
               style={{ animationDelay: "640ms" }}
             >
               {hero.now}
@@ -163,8 +163,10 @@ export default function Home() {
               rather than off it. A portrait looking out of the frame pulls the
               eye away from everything the hero is trying to say.
 
-              Hidden on the narrowest screens, where it would sit on top of the
-              line above rather than beside it.
+              On phones he sits at the bottom edge and the line above clears him
+              with extra padding, rather than being hidden: he is the only human
+              thing in the hero and dropping him on the smallest screens is
+              exactly backwards.
             */}
             <Image
               src="/farhaan-pixel.png"
@@ -172,7 +174,7 @@ export default function Home() {
               width={491}
               height={512}
               priority
-              className="settle pointer-events-none absolute bottom-0 right-6 hidden h-[190px] w-auto -scale-x-100 select-none sm:right-10 sm:block lg:h-[250px]"
+              className="settle pointer-events-none absolute bottom-0 right-4 h-[140px] w-auto -scale-x-100 select-none sm:right-10 sm:h-[190px] lg:h-[250px]"
               style={{ imageRendering: "pixelated", animationDelay: "760ms" }}
             />
           </div>
@@ -249,6 +251,14 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
+            {/*
+              The one all-caps label on the site. Everywhere else they were
+              removed as template chrome, but this one carries information the
+              reader cannot get otherwise: that the quote is his, chosen, and
+              not decoration. Tracked out hard so it reads as a plate rather
+              than as a heading.
+            */}
+            <p className="mb-7 text-[11px] uppercase tracking-[0.42em] text-muted">Motto</p>
             {/* Gargantua, since the line reaches this page by way of Interstellar. */}
             <OrgMark mark="blackhole" size={68} className="mb-8 text-signal/75" />
             {/*

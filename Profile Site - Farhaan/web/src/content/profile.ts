@@ -143,11 +143,33 @@ export const signals = [
 
 export const contact = {
   /*
-    Rewritten so it stops echoing the heading above it. That heading now
-    carries "half-formed" and "together", and this paragraph used to repeat
-    both within about twenty words, which reads as a writer who liked a phrase
-    too much. It earns its place by adding the claim instead.
+    Two jobs, both learned the hard way.
+
+    First, it must not echo the heading above it, which already carries
+    "half-formed" and "together".
+
+    Second, and more important: the heading skews early-stage, and on its own it
+    quietly turns away anyone whose product already exists. That is half of
+    Farhaan's actual range, since the maintenance, migration and security work
+    is real and is otherwise invisible on this page. So the paragraph widens the
+    door deliberately: already built and creaking is the same conversation.
+
+    Third: it closes on appetite rather than on a record. Owner 2026-09-19. He
+    is early in his career, so a closing line that lists what he has already
+    done invites the reader to measure it against people with ten more years.
+
+    "Bring it on!" is his wording and his call. It carries the only exclamation
+    mark on the site, which shared/writing-style.md otherwise bans outright, so
+    it is a deliberate exception rather than an oversight. The middle sentence
+    changed from "bring it early" to "show me early" so the closing lands as a
+    bookend to the heading's "Bring me something half-formed" instead of being
+    the third "bring" in four lines.
+
+    Two earlier drafts failed here. "The stretch before anyone is sure what the
+    thing even is" was overwritten and, worse, only invited idea-stage people,
+    which shuts out half his range. "I have done the first sketch and the year
+    after launch" fixed the range and reintroduced the CV boast.
   */
   invitation:
-    "I am looking for people with an idea worth building. The earlier you bring it the better, because the part I am best at is the stretch before anyone is sure what the thing even is. Ideation to product to scale is an arc I have walked before.",
+    "I am looking for people with something worth building. If it is still an idea, show me early. If it is already built and needs to hold up better than it does, that is the same conversation. Bring it on!",
 };

@@ -87,7 +87,45 @@ export function ScrollSplitCard({
   const startTextY = useTransform(scrollYProgress, [0, 0.1], [0, 20]);
 
   return (
-    <div ref={containerRef} className={cn("relative h-[500vh] w-full", className)}>
+    <>
+      {/*
+        Phones get the painting whole and the three skills stacked under it.
+
+        The split is a three-column effect, and at 390px each column is about
+        110px wide: the body text wraps to two or three words a line and the
+        titles are cut off entirely. An effect that destroys its own content at
+        a given width should not run at that width. This is CSS-only rather
+        than a media-query hook, so there is no hydration mismatch, and
+        display:none means the 500vh scroll container contributes no height on
+        mobile at all.
+      */}
+      <div className="px-6 py-20 sm:hidden">
+        <img
+          src={imageSrc}
+          alt=""
+          className="mx-auto w-full max-w-sm rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]"
+        />
+        <div className="mt-10 space-y-5">
+          {cards.slice(0, 3).map((card) => (
+            <div
+              key={card.title}
+              className="overflow-hidden rounded-2xl border border-white/5 p-7"
+              style={{ backgroundColor: card.bgColor, color: card.textColor }}
+            >
+              {card.icon && <div className="mb-6">{card.icon}</div>}
+              <h3 className="display text-[24px] leading-tight">{card.title}</h3>
+              <p className="mt-3 text-[14.5px] leading-relaxed opacity-80">{card.description}</p>
+            </div>
+          ))}
+        </div>
+        {closing && (
+          <p className="display mx-auto mt-12 max-w-[24ch] text-center text-[1.5rem] text-ivory/85">
+            {closing}
+          </p>
+        )}
+      </div>
+
+    <div ref={containerRef} className={cn("relative hidden h-[500vh] w-full sm:block", className)}>
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden [perspective:1200px]">
         <motion.div
           className="absolute left-0 right-0 top-[4%] text-center"
@@ -196,6 +234,7 @@ export function ScrollSplitCard({
         )}
       </div>
     </div>
+    </>
   );
 }
 

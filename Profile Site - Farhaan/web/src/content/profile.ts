@@ -63,17 +63,23 @@ export const process = [
 ];
 
 /**
- * Keating recites this to his class in Dead Poets Society. The line is Walt
- * Whitman's, from "O Me! O Life!", so both get named: attributing it only to
- * the film would be wrong, and only to Whitman would lose why it was chosen.
+ * Dylan Thomas, 1951, recited through Interstellar. Both are named because the
+ * words are Thomas's and the film is why most people know them; crediting only
+ * the film would be wrong.
  *
- * It earns its place because it is an invitation rather than a boast. The work
- * is already going on; you are asked to add to it. That is the same offer the
- * contact section makes.
+ * The pairing below joins the villanelle's first and third lines. Its second,
+ * "Old age should burn and rave at close of day", sits between them in the
+ * original. That elision is how the poem is normally quoted, and it is what
+ * Farhaan asked for.
+ *
+ * The gloss matters as much as the quote. A famous line dropped onto a page
+ * without a reason is decoration; this one has to earn its place by saying
+ * something about how he works.
  */
 export const quote = {
-  text: "That the powerful play goes on, and you may contribute a verse.",
-  source: "Walt Whitman, by way of Dead Poets Society",
+  text: "Do not go gentle into that good night. Rage, rage against the dying of the light.",
+  source: "Dylan Thomas, 1951. Recited through Interstellar.",
+  note: "Most products do not die loudly. They fade, and the first thing to go is the reason anyone started. Product thinking is the argument against that fade. Building is what makes the argument hold. Thomas wrote the line as a plea from one person to another, and that is the part I keep: the refusal works better with someone beside you.",
 };
 
 export const about = [

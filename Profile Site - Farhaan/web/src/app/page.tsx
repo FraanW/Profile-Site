@@ -7,6 +7,7 @@ import { OrbitCardStack, type OrbitStackItem } from "@/components/OrbitCardStack
 import { ProcessMorph } from "@/components/ProcessMorph";
 import { ProductGraph } from "@/components/ProductGraph";
 import { ScrollSplitCard } from "@/components/ScrollSplitCard";
+import { ScrollVelocityLogos } from "@/components/ScrollVelocityLogos";
 import { Starfield } from "@/components/Starfield";
 import {
   about,
@@ -222,12 +223,16 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
-            <blockquote className="display max-w-[20ch] text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">
+            <blockquote className="display max-w-[24ch] text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">
               {quote.text}
             </blockquote>
             <figcaption className="smallcaps mt-6 text-[14px] text-muted">
               {quote.source}
             </figcaption>
+            {/* Why it is here. A famous line with no reason attached is decoration. */}
+            <p className="mt-8 max-w-[58ch] text-[14.5px] leading-[1.8] text-ivory/60">
+              {quote.note}
+            </p>
           </figure>
         </div>
       </section>
@@ -274,6 +279,21 @@ export default function Home() {
             ))}
           </ol>
         </div>
+      </section>
+
+      {/* The stack, as marks rather than a tag cloud. */}
+      <section className="relative z-10 pb-28 sm:pb-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
+            What my tech stack is.
+          </h2>
+          <p className="prose-serif mt-6">
+            The interesting question is never which of these I know. It is which one a problem
+            actually wants, and how much of it. So read this as range rather than ranking.
+          </p>
+        </div>
+        {/* Full bleed: the row should run off both edges, not sit in a box. */}
+        <ScrollVelocityLogos className="mt-12" />
       </section>
 
       {/* The shelf, previewed. */}

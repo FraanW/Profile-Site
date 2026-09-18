@@ -302,6 +302,16 @@ is built against.
 | 4 | Deals24.ai funding? | **Raised, then the startup failed.** Both facts ship together. The old "never say raised" rule is retired and replaced by the disclosure rule in §2. |
 | 5 | Repo cleanup? | Rename `Kratos_Desk_Bot`; thicken the `Agentic-Research-Tool` and `Agentic-Fuzzy-Simulink-IoT` READMEs. Social Content Extractor is **not a project** and is off the roster. |
 
+### Later owner decisions (2026-09-19)
+
+| Item | Decision |
+|---|---|
+| Tech stack display | A scroll-velocity marquee of brand marks, not a tag cloud. 30 logos, two rows, names on hover. |
+| **NestJS** | Added to the stack by owner statement. **It does not appear anywhere in `master.md`, the repos swept, or any prior document.** It is the only claim on the site with no corroboration behind it. Backfill master.md, or drop it. |
+| Storybook | Added by owner statement, and corroborated independently: LedgerLine's frontend ships it, and Farhaan owns the Storybook setup in the TPC monorepo's `packages/ui`. No action needed. |
+| AWS | Deliberately absent from the logo strip. Amazon had its mark removed from simple-icons under its trademark policy, so AWS is named in the writing rather than drawn. |
+| Quote | Dylan Thomas, 1951, by way of Interstellar, replacing the Whitman line. Carries a short gloss tying it to product thinking and building with someone. |
+
 ### Open work items (not blocking design)
 
 - [ ] Rename `FraanW/Kratos_Desk_Bot` to something matching Remedify, and resolve the

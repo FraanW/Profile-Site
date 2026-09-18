@@ -145,6 +145,56 @@ body {
 }
 
 /*
+  Stack marks. Monochrome at rest so nearly thirty logos read as one material
+  rather than as a fruit salad, and each takes its brand colour when pointed at.
+*/
+.stack-logo {
+  color: color-mix(in srgb, var(--color-ivory) 42%, transparent);
+  transition: color 220ms ease;
+}
+
+.stack-logo:hover {
+  color: var(--color-ivory);
+}
+
+/*
+  The name, on hover. Not a title attribute: the native tooltip waits about a
+  second before appearing, which is longer than a logo stays under the cursor
+  in a row that is still moving.
+*/
+.stack-tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  white-space: nowrap;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--color-ivory);
+  background: var(--color-plasma-b);
+  border: 1px solid color-mix(in srgb, var(--color-ivory) 14%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.stack-logo:hover .stack-tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-tip {
+    transition: opacity 160ms ease;
+    transform: translate(-50%, 0);
+  }
+}
+
+/*
   The starfield behind the middle of the page. Fixed, so the sky holds still
   while the page scrolls past it, which is how a distant sky behaves.
 */

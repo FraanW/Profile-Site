@@ -90,6 +90,23 @@ function makeStars(): Star[] {
 const STARS = makeStars();
 
 /**
+ * Shooting stars.
+ *
+ * Each runs on a long loop and is only visible for a sliver of it, which is
+ * what makes them intermittent without any JavaScript deciding when to fire.
+ * The durations are deliberately awkward numbers rather than round ones, so
+ * the five of them drift out of phase and the combined pattern takes minutes
+ * to repeat. Round durations would sync up and start arriving in formation.
+ */
+const SHOOTERS = [
+  { top: "14%", left: "8%", angle: 24, travel: 460, duration: 17, delay: 2 },
+  { top: "62%", left: "-4%", angle: 13, travel: 520, duration: 23, delay: 9 },
+  { top: "8%", left: "56%", angle: 34, travel: 380, duration: 29, delay: 15 },
+  { top: "44%", left: "38%", angle: 18, travel: 430, duration: 31, delay: 5 },
+  { top: "76%", left: "22%", angle: 28, travel: 400, duration: 37, delay: 22 },
+];
+
+/**
  * `watch` is the stretch of page the sky belongs to, normally the middle
  * sections between the two plasma bookends.
  *
@@ -120,6 +137,23 @@ export function Starfield({ watch }: { watch: React.RefObject<HTMLElement | null
     <div className="starfield" aria-hidden="true">
       {/* A faint wash so the ground is deep space rather than flat black. */}
       <div className="starfield-wash" />
+
+      {SHOOTERS.map((shot, index) => (
+        <span
+          key={index}
+          className="shooting-star"
+          style={
+            {
+              top: shot.top,
+              left: shot.left,
+              "--angle": `${shot.angle}deg`,
+              "--travel": `${shot.travel}px`,
+              "--dur": `${shot.duration}s`,
+              "--delay": `${shot.delay}s`,
+            } as React.CSSProperties
+          }
+        />
+      ))}
 
       {/*
         Positioned elements rather than SVG circles. An SVG stretched to the

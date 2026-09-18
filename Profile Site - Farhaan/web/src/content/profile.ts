@@ -19,7 +19,7 @@ export const hero = {
   headline: "I turn ideas into systems that ship and hold up.",
   support:
     "Product thinking and full-stack engineering, with security designed in rather than bolted on.",
-  now: "Cybersecurity analyst at Fiserv in Chennai, working in identity and access, building AI into how the security team works. Contributing to the open Unified Product Graph alongside it.",
+  now: "Cybersecurity analyst at Fiserv in Chennai, working in IAM, building AI into how the security team works. Contributing to the open Unified Product Graph alongside it.",
 };
 
 /**
@@ -30,13 +30,15 @@ export const hero = {
 export const experience = [
   {
     org: "Fiserv",
-    role: "Cybersecurity analyst, identity and access",
+    mark: "access" as const,
+    role: "Cybersecurity analyst, IAM",
     period: "2026 to now",
     where: "Chennai",
     line: "I work in the IAM solutions domain and build AI systems for the security wing, which is where the product half of me and the security half finally do the same job.",
   },
   {
     org: "Unified Product Graph",
+    mark: "graph" as const,
     role: "Open source contributor",
     period: "2026 to now",
     where: "Remote",
@@ -44,6 +46,7 @@ export const experience = [
   },
   {
     org: "Venture Cube",
+    mark: "cube" as const,
     role: "Founding engineer",
     period: "2024 to 2026",
     where: "Dubai, remote",
@@ -84,7 +87,7 @@ export const quote = {
 
 export const about = [
   "I spent a year as a founding engineer in a Dubai venture studio, building products from the first conversation about them. I built Adloom.ai's platform and every dashboard behind Deals24.ai, and ran the research and the product process for Sanady.ai. Two of those ventures raised money. One of them did not survive anyway, and that taught me more than the raise did.",
-  "Now I work in identity and access security at Fiserv, and build AI systems for the security team there. I care about systems that are still correct at three in the morning, under load, when nobody is watching. That is the same instinct behind both halves of the job.",
+  "Now I work in IAM at Fiserv, and build AI systems for the security team there. I care about systems that are still correct at three in the morning, under load, when nobody is watching. That is the same instinct behind both halves of the job.",
 ];
 
 /**

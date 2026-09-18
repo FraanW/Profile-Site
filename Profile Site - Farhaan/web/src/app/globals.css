@@ -255,6 +255,58 @@ body {
 }
 
 /*
+  A streak, tapering back from its head. Rotating the element and then moving
+  it along its own X axis means one angle controls both the direction of travel
+  and the direction the tail points, so they can never disagree.
+*/
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 1.4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-ivory) 35%, transparent) 55%,
+    var(--color-ivory) 100%
+  );
+  opacity: 0;
+  transform: rotate(var(--angle)) translateX(0);
+  animation: shoot var(--dur) linear var(--delay) infinite;
+}
+
+/*
+  Visible for about 5% of the cycle. The long dead stretch afterwards is the
+  whole trick: it is what makes them occasional rather than a constant drizzle.
+*/
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(0);
+  }
+  1.2% {
+    opacity: 0.9;
+  }
+  4% {
+    opacity: 0.9;
+  }
+  5.5% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(var(--travel));
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(var(--travel));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shooting-star {
+    display: none;
+  }
+}
+
+/*
   The product graph. All of this is CSS so it runs on the compositor, and the
   whole thing is paused when the graph is not on screen.
 */

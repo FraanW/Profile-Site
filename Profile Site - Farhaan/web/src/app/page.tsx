@@ -4,10 +4,12 @@ import { useRef } from "react";
 import Link from "next/link";
 import { ClosingPlasma } from "@/components/ClosingPlasma";
 import { OrbitCardStack, type OrbitStackItem } from "@/components/OrbitCardStack";
+import { OrgMark } from "@/components/OrgMark";
 import { ProcessMorph } from "@/components/ProcessMorph";
 import { ProductGraph } from "@/components/ProductGraph";
 import { ScrollSplitCard } from "@/components/ScrollSplitCard";
 import { ScrollVelocityLogos } from "@/components/ScrollVelocityLogos";
+import { SkillMark } from "@/components/SkillMark";
 import { Starfield } from "@/components/Starfield";
 import {
   about,
@@ -38,6 +40,7 @@ const skills = [
       "Agents, retrieval, and model tooling built into the product rather than bolted onto it. MCP servers, graph APIs, and pipelines that abstain instead of guessing.",
     bgColor: "#1b2340",
     textColor: "#f4efe2",
+    icon: <SkillMark mark="graph" />,
   },
   {
     title: "Product context, research and ideation",
@@ -45,6 +48,7 @@ const skills = [
       "Market research, pitch decks, system architecture, and deciding what is worth building before a line of it is written. Two of the products I researched raised money.",
     bgColor: "#f4efe2",
     textColor: "#101219",
+    icon: <SkillMark mark="compass" />,
   },
   {
     title: "Shipping, deployment and pipelining",
@@ -52,6 +56,7 @@ const skills = [
       "AWS, CI, containers, migrations, and the unglamorous work of keeping something alive after launch. Dependency sweeps, safe deletions, and provider migrations.",
     bgColor: "#0b0d16",
     textColor: "#f4efe2",
+    icon: <SkillMark mark="pipeline" />,
   },
 ];
 
@@ -223,7 +228,7 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
-            <blockquote className="display max-w-[24ch] text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">
+            <blockquote className="display max-w-[24ch] text-[clamp(1.9rem,5vw,3.4rem)] italic text-ivory">
               {quote.text}
             </blockquote>
             <figcaption className="smallcaps mt-6 text-[14px] text-muted">
@@ -265,12 +270,15 @@ export default function Home() {
                 key={role.org}
                 className="grid gap-x-12 gap-y-3 border-b border-rule py-8 lg:grid-cols-[1fr_1.7fr]"
               >
-                <div>
-                  <p className="display text-[22px] text-ivory">{role.org}</p>
-                  <p className="mt-1.5 text-[14.5px] text-ivory/70">{role.role}</p>
-                  <p className="tabular mt-1 text-[13.5px] text-faint">
-                    {role.period}, {role.where}
-                  </p>
+                <div className="flex items-start gap-4">
+                  <OrgMark mark={role.mark} className="mt-1 shrink-0 text-signal/70" />
+                  <div>
+                    <p className="display text-[22px] text-ivory">{role.org}</p>
+                    <p className="mt-1.5 text-[14.5px] text-ivory/70">{role.role}</p>
+                    <p className="tabular mt-1 text-[13.5px] text-faint">
+                      {role.period}, {role.where}
+                    </p>
+                  </div>
                 </div>
                 <p className="max-w-[58ch] text-[15.5px] leading-[1.75] text-ivory/75">
                   {role.line}

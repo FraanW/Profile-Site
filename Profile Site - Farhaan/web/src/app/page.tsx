@@ -104,7 +104,7 @@ export default function Home() {
           turbulence={1.05}
         />
         <div className="relative h-full">
-          <div className="mx-auto flex h-full max-w-6xl flex-col px-6 sm:px-10">
+          <div className="relative mx-auto flex h-full max-w-6xl flex-col px-6 sm:px-10">
             <header className="flex items-baseline justify-between pt-8">
               <span className="display text-[19px] text-ivory">{identity.name}</span>
               <Link
@@ -150,11 +150,31 @@ export default function Home() {
             </div>
 
             <p
-              className="settle max-w-[52ch] pb-10 text-[14px] leading-relaxed text-ivory/55"
+              className="settle mx-auto max-w-[46ch] pb-10 text-center text-[14px] leading-relaxed text-ivory/55"
               style={{ animationDelay: "640ms" }}
             >
               {hero.now}
             </p>
+
+            {/*
+              Pixel art, so it must not be resampled: image-rendering pixelated
+              keeps the blocks hard instead of letting the browser smear them.
+              Mirrored, so that sitting on the right edge he faces into the page
+              rather than off it. A portrait looking out of the frame pulls the
+              eye away from everything the hero is trying to say.
+
+              Hidden on the narrowest screens, where it would sit on top of the
+              line above rather than beside it.
+            */}
+            <Image
+              src="/farhaan-pixel.png"
+              alt="Muhammad Farhaan, drawn as pixel art"
+              width={491}
+              height={512}
+              priority
+              className="settle pointer-events-none absolute bottom-0 right-6 hidden h-[190px] w-auto -scale-x-100 select-none sm:right-10 sm:block lg:h-[250px]"
+              style={{ imageRendering: "pixelated", animationDelay: "760ms" }}
+            />
           </div>
         </div>
       </section>
@@ -171,7 +191,7 @@ export default function Home() {
           imageSrc="/starry-night.jpg"
           cards={skills}
           cue="Keep scrolling"
-          closing="Three things, and I do all three on the same project."
+          closing="Three different skills, and I bring them all."
         />
       </section>
 

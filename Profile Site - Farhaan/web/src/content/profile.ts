@@ -18,7 +18,7 @@ export const identity = {
 export const hero = {
   headline: "I turn ideas into systems that ship and hold up.",
   support:
-    "Product thinking and full-stack engineering, with security designed in rather than bolted on.",
+    "Product thinking and full-stack engineering, with security designed in.",
   now: "Cybersecurity analyst at Fiserv in Chennai, working in IAM, building AI into how the security team works. Contributing to the open Unified Product Graph alongside it.",
 };
 
@@ -47,7 +47,7 @@ export const experience = [
     role: "Open source contributor",
     period: "2026 to now",
     where: "Remote",
-    line: "I build the Model Context Protocol server that lets AI agents read and write product knowledge as a typed graph, plus the local command line and parts of the spec. Eight packages on npm.",
+    line: "I help build the Model Context Protocol server that lets AI agents read and write product knowledge as a typed graph, and I have worked on the local command line and parts of the spec. Eight packages on npm.",
   },
   {
     org: "Venture Cube",

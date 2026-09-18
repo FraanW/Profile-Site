@@ -169,9 +169,9 @@ export const projectBooks: ProjectBook[] = [
     summary: "An open standard for product knowledge, and the tooling that makes it usable.",
     body: [
       "Product knowledge normally lives in documents that no machine can read: a strategy deck here, a spec there, a decision buried in somebody's messages. UPG is an open TypeScript standard that turns all of it into a graph with a real schema.",
-      "I build the tooling on top of it. The Model Context Protocol server is the piece I care about most: it lets an AI agent read and write that graph through typed, bounded operations instead of guessing at free text. An agent is only ever as good as the tools you hand it, and that is an API design problem before it is a model problem.",
-      "I also work on the local command line, the data-sync layer, and parts of the spec itself. Eight packages are published to npm and pull around twenty-eight thousand downloads a month.",
-      "Alongside the standard I build the full-stack app for Entopo, an AI-native product creation tool with a canvas, AI, and a graph.",
+      "I help build the tooling on top of it, as part of a team. The Model Context Protocol server is the piece I care about most: it lets an AI agent read and write that graph through typed, bounded operations instead of guessing at free text. An agent is only ever as good as the tools you hand it, and that is an API design problem before it is a model problem.",
+      "I have also contributed to the local command line, the data-sync layer, and parts of the spec itself. Eight packages are published to npm and pull around twenty-eight thousand downloads a month, which is the number I am proudest of, because none of it is mine alone.",
+      "Alongside the standard I help build the full-stack app for Entopo, an AI-native product creation tool with a canvas, AI, and a graph.",
     ],
   },
   {

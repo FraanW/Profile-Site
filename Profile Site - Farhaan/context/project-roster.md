@@ -320,6 +320,9 @@ is built against.
 - [ ] Thicken `Maderanx/Agentic-Fuzzy-Simulink-IoT`'s README (it backs the IEEE paper).
 - [ ] Backfill `master.md`: Deals24.ai, the current security role, TPC still active, UPG at v0.41.0.
 - [ ] Re-count the UPG MCP API surface, or publish the capability without a number.
-- [ ] Confirm employer-naming (item 2 above) before copy freeze.
+- [x] Employer naming resolved: Fiserv is named, and its logo is on the site.
+- [x] Photo resolved: an 8-bit pixel portrait, supplied 2026-09-19, background removed
+      and sitting bottom-right of the hero.
+- [ ] **NestJS still has no corroboration** in master.md or any repo. Backfill or drop.
 
 Nothing here blocks design. The roster is ready to build against.

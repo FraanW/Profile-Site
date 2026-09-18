@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>F</title>
+  <!--
+    The F is drawn as geometry rather than set as text. A favicon renders
+    outside the page, where the site's webfonts are not available, so a <text>
+    element would fall back to whatever the operating system happens to have
+    and look different on every machine.
+
+    Proportioned to sit optically centred: the arms extend right, so the whole
+    letter is nudged left of true centre to stop it reading as off-balance.
+  -->
+  <circle cx="32" cy="32" r="32" fill="#000000" />
+  <g fill="#ffffff">
+    <rect x="21" y="15" width="7.5" height="34" />
+    <rect x="21" y="15" width="22" height="7.5" />
+    <rect x="21" y="28.5" width="17" height="7" />
+  </g>
+</svg>

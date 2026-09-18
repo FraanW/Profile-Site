@@ -199,7 +199,7 @@ export default function Home() {
       <section className="relative z-10 py-28 sm:py-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="display text-[clamp(1.5rem,3vw,2.1rem)] text-ivory/70">
-            I follow the same steps for every system I build.
+            My playbook for building a good system.
           </h2>
           <div className="mt-10 border-y border-rule py-16">
             <ProcessMorph

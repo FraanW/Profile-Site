@@ -4,11 +4,13 @@ import Link from "next/link";
 import { ClosingPlasma } from "@/components/ClosingPlasma";
 import { OrbitCardStack, type OrbitStackItem } from "@/components/OrbitCardStack";
 import { ProcessMorph } from "@/components/ProcessMorph";
+import { ProductGraph } from "@/components/ProductGraph";
 import { ScrollSplitCard } from "@/components/ScrollSplitCard";
 import {
   about,
   contact,
   experience,
+  harness,
   hero,
   identity,
   process,
@@ -172,6 +174,37 @@ export default function Home() {
             Most of the value is decided in the first three, before anyone writes code. That is
             the part I want to be in the room for.
           </p>
+        </div>
+      </section>
+
+      {/* How a small team holds a whole product. */}
+      <section className="relative bg-void pb-28 sm:pb-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[1fr_1.05fr] lg:items-start">
+            <div>
+              <h2 className="display max-w-[18ch] text-[clamp(1.75rem,4vw,2.9rem)] text-ivory">
+                {harness.heading}
+              </h2>
+              <div className="mt-8 space-y-5">
+                {harness.body.map((paragraph) => (
+                  <p key={paragraph.slice(0, 30)} className="prose-serif">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <a
+                href={harness.link.href}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mt-8 inline-block border-b border-signal pb-1 text-[15px] text-ivory transition-colors hover:text-signal"
+              >
+                {harness.link.label}
+              </a>
+            </div>
+
+            {/* Sticky, so the graph is still moving while the text is read. */}
+            <ProductGraph className="lg:sticky lg:top-28 lg:-mr-6" />
+          </div>
         </div>
       </section>
 

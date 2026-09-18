@@ -81,6 +81,22 @@ export const about = [
   "Now I work in identity and access security at Fiserv, and build AI systems for the security team there. I care about systems that are still correct at three in the morning, under load, when nobody is watching. That is the same instinct behind both halves of the job.",
 ];
 
+/**
+ * The agentic-harness argument. Framing and figures come from
+ * unifiedproductgraph.org (324 entity types, 37 domains, 6 edge types), which
+ * is open source, so there is no NDA question here. Nothing about Entopo.
+ */
+export const harness = {
+  heading: "A team of two, carrying the context of a team of ten.",
+  body: [
+    "AI expanded what you can produce, not what you can hold in your head. One person now ships in a week what used to take a team a quarter, and almost none of it is connected by design. The documents pile up and the context does not.",
+    "So I stopped handing agents documents and started handing them a graph. Product knowledge goes into UPG as typed entities with explicit relationships: a persona connects to a need, a need to an opportunity, an opportunity to the solution and the experiment that tested it. 324 entity types across 37 domains, joined by six kinds of edge.",
+    "Then I build the harness on top of it. Agents read that graph through a Model Context Protocol server rather than guessing from prose, so they start already knowing what the product is and what was decided about it last week. The same graph renders as an opportunity solution tree, a business model canvas, or a roadmap, so nobody rebuilds the context to answer a different question.",
+    "That is what makes a small team fast. Planning stops being a meeting where everyone reloads the same background, and the work of staying on the same page is done by the graph instead of by people.",
+  ],
+  link: { label: "unifiedproductgraph.org", href: "https://unifiedproductgraph.org" },
+};
+
 export type Project = {
   name: string;
   year: string;

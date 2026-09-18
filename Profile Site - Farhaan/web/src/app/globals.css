@@ -144,6 +144,113 @@ body {
   }
 }
 
+/*
+  The product graph. All of this is CSS so it runs on the compositor, and the
+  whole thing is paused when the graph is not on screen.
+*/
+.upg-edge {
+  stroke: #39416b;
+  stroke-width: 1.1;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: upg-draw 900ms var(--ease-out-slow) var(--delay) forwards;
+}
+
+.upg-pulse {
+  stroke: var(--color-signal);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0;
+  /* A short dash chasing the length of the edge reads as context in transit. */
+  stroke-dasharray: 26 calc(var(--len) - 26);
+  stroke-dashoffset: var(--len);
+  animation: upg-travel 3.8s linear var(--delay) infinite;
+}
+
+.upg-node {
+  opacity: 0;
+  animation: upg-node-in 700ms var(--ease-out-slow) var(--delay) forwards;
+}
+
+.upg-dot {
+  fill: var(--color-void);
+  stroke: var(--color-signal);
+  stroke-width: 1.4;
+}
+
+.upg-dot-anchor {
+  fill: var(--color-signal);
+  stroke: var(--color-signal);
+}
+
+.upg-label {
+  fill: var(--color-ivory);
+  font-family: var(--font-body);
+  font-size: 14px;
+  opacity: 0.72;
+}
+
+.upg-label-anchor {
+  font-family: var(--font-display);
+  font-size: 19px;
+  opacity: 1;
+}
+
+/* Off screen: nothing animates. */
+.upg-graph[data-active="false"] .upg-pulse {
+  animation-play-state: paused;
+}
+
+@keyframes upg-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes upg-travel {
+  0% {
+    stroke-dashoffset: var(--len);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  88% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes upg-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .upg-edge,
+  .upg-node {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+  .upg-pulse {
+    display: none;
+  }
+}
+
 /* The one page-load moment: the hero settles once, then holds still. */
 @keyframes settle {
   from {

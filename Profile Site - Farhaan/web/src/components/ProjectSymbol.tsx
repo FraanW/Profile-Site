@@ -101,6 +101,18 @@ const marks: Record<SymbolId, { paths: React.ReactNode; title: string }> = {
       </>
     ),
   },
+  // A strongroom door: money held safely, which was the whole design problem.
+  vault: {
+    title: "A vault door, for money that has to be held safely",
+    paths: (
+      <>
+        <rect x="7" y="8" width="34" height="32" rx="2" />
+        <circle cx="24" cy="24" r="9" />
+        <circle cx="24" cy="24" r="2.5" />
+        <path d="M24 15v-3M24 36v-3M15 24h-3M36 24h-3" />
+      </>
+    ),
+  },
   // Speech, heard and answered.
   waveform: {
     title: "A voice, heard and answered",

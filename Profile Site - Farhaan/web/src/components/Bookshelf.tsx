@@ -96,7 +96,7 @@ function deriveLayout(items: ShelfItem[]) {
   return items.map<BookLayout>((item) => {
     const random = seeded(hash(item.id));
     const fallbackColor = PALETTE[Math.floor(random() * PALETTE.length)]!;
-    // Thicker books than the original: nine projects, not thirty newsletters.
+    // Thicker books than the original: a handful of projects, not thirty newsletters.
     const width = 0.44 + random() * 0.32;
     const bookHeight = 3.65 + (random() * 2 - 1) * 0.24;
     const color = item.color ?? fallbackColor;
@@ -108,36 +108,33 @@ function deriveLayout(items: ShelfItem[]) {
   });
 }
 
-function addTexture(
-  context: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  seed: number,
-) {
-  const image = context.getImageData(0, 0, width, height);
-  const random = seeded(seed);
-  for (let offset = 0; offset < image.data.length; offset += 4) {
-    const noise = (random() - 0.5) * 5;
-    image.data[offset] = Math.max(0, Math.min(255, image.data[offset]! + noise));
-    image.data[offset + 1] = Math.max(0, Math.min(255, image.data[offset + 1]! + noise));
-    image.data[offset + 2] = Math.max(0, Math.min(255, image.data[offset + 2]! + noise));
-  }
-  context.putImageData(image, 0, 0);
-}
+/**
+ * Cloth, grain and paper are identical between books, so they are built once
+ * and reused. Building them per book meant thirty per-pixel JavaScript noise
+ * passes on mount, which froze the page for seconds before a single book
+ * appeared.
+ */
 
-function drawClothWeave(
-  context: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  seed: number,
-) {
-  const random = seeded(seed);
-  context.save();
+/** A transparent grain-and-weave sheet, laid over each coloured cover. */
+let grainSheet: HTMLCanvasElement | null = null;
+
+function getGrainSheet(): HTMLCanvasElement | null {
+  if (typeof document === "undefined") return null;
+  if (grainSheet) return grainSheet;
+
+  const width = 320;
+  const height = 480;
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  if (!context) return null;
+  const random = seeded(0x9e3779b9);
+
+  // Warp threads.
   context.lineCap = "round";
-
-  context.globalCompositeOperation = "multiply";
   for (let x = 0.5; x < width; x += 3) {
-    context.strokeStyle = `rgba(18, 16, 14, ${0.03 + random() * 0.035})`;
+    context.strokeStyle = `rgba(18, 16, 14, ${0.06 + random() * 0.07})`;
     context.lineWidth = 0.35 + random() * 0.3;
     context.beginPath();
     context.moveTo(x + (random() - 0.5) * 0.5, 0);
@@ -145,9 +142,9 @@ function drawClothWeave(
     context.stroke();
   }
 
-  context.globalCompositeOperation = "screen";
+  // Weft threads.
   for (let y = 0.5; y < height; y += 3) {
-    context.strokeStyle = `rgba(255, 248, 232, ${0.035 + random() * 0.03})`;
+    context.strokeStyle = `rgba(255, 248, 232, ${0.07 + random() * 0.06})`;
     context.lineWidth = 0.3 + random() * 0.25;
     context.beginPath();
     context.moveTo(0, y + (random() - 0.5) * 0.5);
@@ -155,44 +152,40 @@ function drawClothWeave(
     context.stroke();
   }
 
-  context.globalCompositeOperation = "overlay";
-  for (let index = 0; index < Math.floor((width * height) / 850); index += 1) {
+  // Slubs: the short bright fibres that stop cloth reading as a grid.
+  for (let index = 0; index < Math.floor((width * height) / 900); index += 1) {
     const x = random() * width;
     const y = random() * height;
-    const length = 3 + random() * 13;
-    context.strokeStyle = `rgba(255, 255, 255, ${0.035 + random() * 0.055})`;
+    context.strokeStyle = `rgba(255, 255, 255, ${0.06 + random() * 0.09})`;
     context.lineWidth = 0.35 + random() * 0.4;
     context.beginPath();
     context.moveTo(x, y);
-    context.lineTo(x + (random() - 0.5) * 2, y + length);
+    context.lineTo(x + (random() - 0.5) * 2, y + 3 + random() * 13);
     context.stroke();
   }
 
-  context.globalCompositeOperation = "source-over";
-  const edgeShade = context.createLinearGradient(0, 0, width, 0);
-  edgeShade.addColorStop(0, "rgba(0,0,0,.16)");
-  edgeShade.addColorStop(0.045, "rgba(0,0,0,.025)");
-  edgeShade.addColorStop(0.5, "rgba(255,255,255,.025)");
-  edgeShade.addColorStop(0.955, "rgba(0,0,0,.025)");
-  edgeShade.addColorStop(1, "rgba(0,0,0,.18)");
-  context.fillStyle = edgeShade;
-  context.fillRect(0, 0, width, height);
-  context.restore();
+  grainSheet = canvas;
+  return canvas;
 }
 
-function paperTexture(book: BookLayout) {
+/** Page edges. The same stock in every book, which is also how books work. */
+let paperTextureCache: THREE.CanvasTexture | null = null;
+
+function getPaperTexture(): THREE.CanvasTexture | null {
   if (typeof document === "undefined") return null;
+  if (paperTextureCache) return paperTextureCache;
+
   const canvas = document.createElement("canvas");
-  canvas.width = 192;
-  canvas.height = 768;
+  canvas.width = 96;
+  canvas.height = 384;
   const context = canvas.getContext("2d");
   if (!context) return null;
-  const random = seeded(hash(`${book.id}-paper`));
+  const random = seeded(0x85ebca6b);
 
   context.fillStyle = "#eee9dc";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  addTexture(context, canvas.width, canvas.height, hash(`${book.id}-paper-noise`));
 
+  // Individual page edges, seen side on.
   for (let y = 0.5; y < canvas.height; y += 2) {
     const warm = Math.floor(116 + random() * 35);
     context.strokeStyle = `rgba(${warm}, ${warm - 6}, ${warm - 17}, ${0.09 + random() * 0.1})`;
@@ -210,11 +203,14 @@ function paperTexture(book: BookLayout) {
     context.stroke();
   }
 
-  for (let index = 0; index < 170; index += 1) {
-    const x = random() * canvas.width;
-    const y = random() * canvas.height;
+  for (let index = 0; index < 120; index += 1) {
     context.fillStyle = `rgba(112, 91, 59, ${0.025 + random() * 0.055})`;
-    context.fillRect(x, y, 0.5 + random() * 1.2, 0.5 + random() * 2.5);
+    context.fillRect(
+      random() * canvas.width,
+      random() * canvas.height,
+      0.5 + random() * 1.2,
+      0.5 + random() * 2.5,
+    );
   }
 
   const edgeShade = context.createLinearGradient(0, 0, canvas.width, 0);
@@ -228,23 +224,51 @@ function paperTexture(book: BookLayout) {
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 8;
+  texture.anisotropy = 4;
   texture.needsUpdate = true;
+  paperTextureCache = texture;
   return texture;
 }
 
+// The cover artwork is laid out in a 512x768 design space. The canvas is
+// smaller than that now, so everything after this point draws through a
+// uniform scale rather than having every coordinate rewritten.
+const COVER_DESIGN = { width: 512, height: 768 };
+const SPINE_DESIGN = { width: 112, height: 768 };
+const TEXTURE_SCALE = 0.625;
+
 function coverTexture(book: BookLayout, face: "cover" | "spine") {
   if (typeof document === "undefined") return null;
+  const design = face === "cover" ? COVER_DESIGN : SPINE_DESIGN;
   const canvas = document.createElement("canvas");
-  canvas.width = face === "cover" ? 512 : 112;
-  canvas.height = 768;
+  canvas.width = Math.round(design.width * TEXTURE_SCALE);
+  canvas.height = Math.round(design.height * TEXTURE_SCALE);
   const context = canvas.getContext("2d");
   if (!context) return null;
 
+  // Texture passes work off the real pixel size; artwork works in design units.
   context.fillStyle = book.color;
   context.fillRect(0, 0, canvas.width, canvas.height);
-  addTexture(context, canvas.width, canvas.height, hash(`${book.id}-${face}-noise`));
-  drawClothWeave(context, canvas.width, canvas.height, hash(`${book.id}-${face}-weave`));
+
+  const grain = getGrainSheet();
+  if (grain) {
+    context.save();
+    context.globalCompositeOperation = "overlay";
+    context.drawImage(grain, 0, 0, canvas.width, canvas.height);
+    context.restore();
+  }
+
+  // The shading that makes a flat rectangle read as a bound board.
+  const boardShade = context.createLinearGradient(0, 0, canvas.width, 0);
+  boardShade.addColorStop(0, "rgba(0,0,0,.16)");
+  boardShade.addColorStop(0.045, "rgba(0,0,0,.025)");
+  boardShade.addColorStop(0.5, "rgba(255,255,255,.025)");
+  boardShade.addColorStop(0.955, "rgba(0,0,0,.025)");
+  boardShade.addColorStop(1, "rgba(0,0,0,.18)");
+  context.fillStyle = boardShade;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  context.scale(TEXTURE_SCALE, TEXTURE_SCALE);
 
   context.fillStyle = book.foil;
   context.strokeStyle = book.foil;
@@ -265,7 +289,7 @@ function coverTexture(book: BookLayout, face: "cover" | "spine") {
     let line = "";
     for (const word of words) {
       const next = line ? `${line} ${word}` : word;
-      if (context.measureText(next).width < canvas.width - margin * 2 || !line) line = next;
+      if (context.measureText(next).width < design.width - margin * 2 || !line) line = next;
       else {
         lines.push(line);
         line = word;
@@ -283,7 +307,7 @@ function coverTexture(book: BookLayout, face: "cover" | "spine") {
       let l2 = "";
       for (const word of words2) {
         const next = l2 ? `${l2} ${word}` : word;
-        if (context.measureText(next).width < canvas.width - margin * 2 || !l2) l2 = next;
+        if (context.measureText(next).width < design.width - margin * 2 || !l2) l2 = next;
         else {
           sub.push(l2);
           l2 = word;
@@ -297,19 +321,19 @@ function coverTexture(book: BookLayout, face: "cover" | "spine") {
     context.font = "600 19px Georgia, serif";
     context.fillText("MUHAMMAD FARHAAN", margin, 690);
   } else {
-    const gradient = context.createLinearGradient(0, 0, canvas.width, 0);
+    const gradient = context.createLinearGradient(0, 0, design.width, 0);
     gradient.addColorStop(0, "rgba(0,0,0,.28)");
     gradient.addColorStop(0.18, "rgba(0,0,0,0)");
     gradient.addColorStop(0.82, "rgba(0,0,0,0)");
     gradient.addColorStop(1, "rgba(0,0,0,.28)");
     context.fillStyle = gradient;
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, design.width, design.height);
 
     context.fillStyle = book.foil;
-    context.fillRect(22, 26, canvas.width - 44, 3);
-    context.fillRect(22, 704, canvas.width - 44, 3);
+    context.fillRect(22, 26, design.width - 44, 3);
+    context.fillRect(22, 704, design.width - 44, 3);
     context.save();
-    context.translate(canvas.width / 2, 58);
+    context.translate(design.width / 2, 58);
     context.rotate(Math.PI / 2);
     context.font = "700 36px Georgia, serif";
     const title = book.title.length > 34 ? `${book.title.slice(0, 32)}…` : book.title;
@@ -396,7 +420,7 @@ function Book({
     () => ({
       cover: coverTexture(book, "cover"),
       spine: coverTexture(book, "spine"),
-      paper: paperTexture(book),
+      paper: getPaperTexture(),
     }),
     [book],
   );
@@ -415,7 +439,8 @@ function Book({
 
   useEffect(() => {
     return () => {
-      Object.values(textures).forEach((texture) => texture?.dispose());
+      textures.cover?.dispose();
+      textures.spine?.dispose();
       geometry.dispose();
     };
   }, [geometry, textures]);
@@ -619,6 +644,7 @@ export function Bookshelf({ items, className, height = 620, onOpen, onFocus }: B
   const [currentIndex, setCurrentIndex] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [stageWidth, setStageWidth] = useState(1000);
+  const [onScreen, setOnScreen] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const cameraX = useRef(0);
@@ -661,12 +687,22 @@ export function Bookshelf({ items, className, height = 620, onOpen, onFocus }: B
     motion.addEventListener("change", update);
     const stage = stageRef.current;
     if (!stage) return () => motion.removeEventListener("change", update);
+
     const resize = new ResizeObserver(([entry]) => {
       if (entry) setStageWidth(entry.contentRect.width);
     });
     resize.observe(stage);
+
+    // A shelf nobody is looking at should not be rendering three dimensions.
+    const visibility = new IntersectionObserver(
+      ([entry]) => setOnScreen(Boolean(entry?.isIntersecting)),
+      { rootMargin: "150px" },
+    );
+    visibility.observe(stage);
+
     return () => {
       resize.disconnect();
+      visibility.disconnect();
       motion.removeEventListener("change", update);
     };
   }, []);
@@ -851,7 +887,8 @@ export function Bookshelf({ items, className, height = 620, onOpen, onFocus }: B
       >
         <Canvas
           camera={{ fov: 35, near: 0.1, far: 60, position: [cameraX.current, 2.65, 10] }}
-          dpr={[1, 2]}
+          dpr={[1, 1]}
+          frameloop={onScreen ? "always" : "never"}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
           onPointerMissed={() => {
             if (selectedIndex !== null) close();

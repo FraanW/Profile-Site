@@ -19,8 +19,37 @@ export const hero = {
   headline: "I turn ideas into systems that ship and hold up.",
   support:
     "Product thinking and full-stack engineering, with security designed in rather than bolted on.",
-  now: "Identity and access security for a global fintech. Building Entopo and the open Unified Product Graph alongside it.",
+  now: "Cybersecurity analyst at Fiserv in Chennai, working in identity and access, building AI into how the security team works. Contributing to the open Unified Product Graph alongside it.",
 };
+
+/**
+ * The record, in the order it happened. Never the word "intern": owner
+ * instruction 2026-09-18, and it was never an accurate description of the work
+ * anyway. "Founding engineer" is a sanctioned framing in resume/master.md.
+ */
+export const experience = [
+  {
+    org: "Fiserv",
+    role: "Cybersecurity analyst, identity and access",
+    period: "2026 to now",
+    where: "Chennai",
+    line: "I work in the IAM solutions domain and build AI systems for the security wing, which is where the product half of me and the security half finally do the same job.",
+  },
+  {
+    org: "Unified Product Graph",
+    role: "Open source contributor",
+    period: "2026 to now",
+    where: "Remote",
+    line: "I build the Model Context Protocol server that lets AI agents read and write product knowledge as a typed graph, plus the local command line and parts of the spec. Eight packages on npm.",
+  },
+  {
+    org: "Venture Cube",
+    role: "Founding engineer",
+    period: "2024 to 2026",
+    where: "Dubai, remote",
+    line: "Four ventures. I built Adloom.ai and every dashboard behind Deals24.ai, ran the research and the decks for Sanady.ai, and shipped all of it against real deadlines with real money watching.",
+  },
+];
 
 /** The build sequence, for the morphing sequence component. */
 export const process = [
@@ -34,17 +63,22 @@ export const process = [
 ];
 
 /**
- * Homer, Iliad, Book 10. Diomedes, asked to go out alone at night, asks for a
- * companion instead. Not the Odyssey, though it is the same poet.
+ * Keating recites this to his class in Dead Poets Society. The line is Walt
+ * Whitman's, from "O Me! O Life!", so both get named: attributing it only to
+ * the film would be wrong, and only to Whitman would lose why it was chosen.
+ *
+ * It earns its place because it is an invitation rather than a boast. The work
+ * is already going on; you are asked to add to it. That is the same offer the
+ * contact section makes.
  */
 export const quote = {
-  text: "When two go together, one sees before the other.",
-  source: "Homer, the Iliad, Book 10",
+  text: "That the powerful play goes on, and you may contribute a verse.",
+  source: "Walt Whitman, by way of Dead Poets Society",
 };
 
 export const about = [
-  "I spent a year inside a venture studio in Dubai, an intern on paper and a founding engineer in practice. I built Adloom.ai's platform and every dashboard behind Deals24.ai. Two of those ventures raised money. One of them did not survive anyway, and that taught me more than the raise did.",
-  "Now I do identity and access work for a global fintech by day, and build Entopo and the open Unified Product Graph alongside it. I care about systems that are still correct at three in the morning, under load, when nobody is watching.",
+  "I spent a year as a founding engineer in a Dubai venture studio, building products from the first conversation about them. I built Adloom.ai's platform and every dashboard behind Deals24.ai, and ran the research and the product process for Sanady.ai. Two of those ventures raised money. One of them did not survive anyway, and that taught me more than the raise did.",
+  "Now I work in identity and access security at Fiserv, and build AI systems for the security team there. I care about systems that are still correct at three in the morning, under load, when nobody is watching. That is the same instinct behind both halves of the job.",
 ];
 
 export type Project = {

@@ -8,6 +8,7 @@ import { ScrollSplitCard } from "@/components/ScrollSplitCard";
 import {
   about,
   contact,
+  experience,
   hero,
   identity,
   process,
@@ -174,7 +175,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The invitation, carried by Homer. */}
+      {/* The invitation. */}
       <section className="relative bg-void pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
@@ -192,7 +193,7 @@ export default function Home() {
       <section className="relative bg-void pb-28 sm:pb-40">
         <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-8 px-6 sm:px-10 lg:grid-cols-[1fr_1.6fr]">
           <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
-            An intern on paper.
+            Two halves of the same instinct.
           </h2>
           <div className="space-y-6">
             {about.map((paragraph) => (
@@ -204,12 +205,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Where the work happened. */}
+      <section className="relative bg-void pb-28 sm:pb-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
+            Where I have done it.
+          </h2>
+          <ol className="mt-4">
+            {experience.map((role) => (
+              <li
+                key={role.org}
+                className="grid gap-x-12 gap-y-3 border-b border-rule py-8 lg:grid-cols-[1fr_1.7fr]"
+              >
+                <div>
+                  <p className="display text-[22px] text-ivory">{role.org}</p>
+                  <p className="mt-1.5 text-[14.5px] text-ivory/70">{role.role}</p>
+                  <p className="tabular mt-1 text-[13.5px] text-faint">
+                    {role.period}, {role.where}
+                  </p>
+                </div>
+                <p className="max-w-[58ch] text-[15.5px] leading-[1.75] text-ivory/75">
+                  {role.line}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* The shelf, previewed. */}
       <section className="relative bg-void pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-5">
             <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
-              Nine things I have built.
+              Things I have built.
             </h2>
             <Link
               href="/projects"

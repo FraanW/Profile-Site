@@ -17,7 +17,8 @@ export type SymbolId =
   | "sieve"
   | "kiln"
   | "dualLoop"
-  | "waveform";
+  | "waveform"
+  | "vault";
 
 export type ProjectBook = {
   id: string;
@@ -110,6 +111,29 @@ export const projectBooks: ProjectBook[] = [
       "Investors, sellers, and admins each needed their own view of the same set of deals, and each view disagreed about what mattered. An investor wants yield and risk. A seller wants speed and certainty. An admin wants to see everything and touch very little.",
       "I built all three dashboards end to end on one FastAPI backend, with access scoped through AWS IAM so that the boundary between those three views was infrastructure rather than a conditional in a template.",
       "The venture raised its round. The company did not survive. I am putting both facts on the same page because a portfolio that only lists the raises is not a portfolio, it is marketing. I built the product. I did not build the business, and the business is what ran out of road.",
+    ],
+  },
+  {
+    id: "sanady",
+    title: "Sanady.ai",
+    date: "2025",
+    symbol: "vault",
+    color: "#0b1e4b",
+    year: "2025",
+    role: "Ideation, research and product lead",
+    context: "Venture Cube, Dubai",
+    stack: ["System architecture", "PCI DSS alignment", "Product process"],
+    proof: [
+      { figure: "0 to MVP", label: "ideation through to a built product" },
+      { figure: "PCI DSS", label: "architecture aligned for lending" },
+    ],
+    links: [],
+    summary: "Small loans for expatriates, designed from the first conversation about it.",
+    body: [
+      "Expatriate workers in the UAE are among the least well served borrowers anywhere. They need small amounts quickly, they have thin credit files, and the products aimed at them are usually built by people who have never had to ask for two hundred dirhams before payday.",
+      "This one is mine from the idea outwards. I ran the market research, worked out who it was actually for, and designed the whole thing: the product flow, the system architecture, the transaction workflows, the lending lifecycle, and how an e-wallet would fit into it. The backend architecture was aligned to PCI DSS from the start, because retrofitting payment compliance onto a lending product is how you discover you have to rebuild it.",
+      "Then I ran the MVP development process to get it built. I also produced the business research and the pitch deck.",
+      "There is no funding claim attached to this one, and no repository to send you to. It is here because the work was real and because it is the clearest example of me doing the front half of the job rather than the engineering half.",
     ],
   },
   {

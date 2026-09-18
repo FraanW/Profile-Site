@@ -60,12 +60,15 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
+// Four octaves, not five. The fifth contributes detail finer than the grain
+// overlay hides anyway, and it costs a full simplex evaluation per pixel on a
+// shader that already runs a dozen of them.
 float fbm(vec2 p, float turbulence) {
   float total = 0.0;
   float amp = 0.5;
   float freq = 1.0;
   mat2 rot = mat2(cos(0.45), sin(0.45), -sin(0.45), cos(0.45));
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 4; i++) {
     total += snoise(p * freq) * amp;
     p = rot * p;
     freq *= mix(1.85, 2.35, clamp(turbulence, 0.0, 2.0) * 0.5);
@@ -149,6 +152,14 @@ const LIGHT_C = "#c3c9da";
 export interface ClosingPlasmaProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Which half of the palette drives the render. */
   mode?: "dark" | "light";
+  /**
+   * Fraction of CSS resolution the shader actually renders at, upscaled by the
+   * browser. This is a soft noise field with a grain overlay, so rendering at
+   * full device resolution buys nothing visible and costs pixels quadratically.
+   */
+  resolutionScale?: number;
+  /** Frames per second. A field this slow does not need 60. */
+  maxFps?: number;
   speed?: number;
   turbulence?: number;
   mouseInfluence?: number;
@@ -168,6 +179,8 @@ export interface ClosingPlasmaProps extends React.HTMLAttributes<HTMLDivElement>
 
 export function ClosingPlasma({
   mode = "dark",
+  resolutionScale = 0.6,
+  maxFps = 30,
   speed = 1,
   turbulence = 1,
   mouseInfluence = 1,
@@ -195,6 +208,8 @@ export function ClosingPlasma({
   const settings = useMemo(
     () => ({
       mode,
+      resolutionScale,
+      maxFps,
       speed,
       turbulence,
       mouseInfluence,
@@ -212,6 +227,8 @@ export function ClosingPlasma({
     }),
     [
       mode,
+      resolutionScale,
+      maxFps,
       speed,
       turbulence,
       mouseInfluence,
@@ -335,10 +352,13 @@ export function ClosingPlasma({
     const uLightC = gl.getUniformLocation(program, "u_lightC");
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      // Cap at 1x device pixels, then render a fraction of that. CSS scales the
+      // canvas back up; the grain overlay hides the difference entirely.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1);
+      const scale = Math.max(0.25, Math.min(1, settings.resolutionScale));
       const { width, height } = container.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
+      canvas.width = Math.max(1, Math.floor(width * dpr * scale));
+      canvas.height = Math.max(1, Math.floor(height * dpr * scale));
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uRes, canvas.width, canvas.height);
     };
@@ -378,37 +398,78 @@ export function ClosingPlasma({
     };
 
     let rafId = 0;
-    const start = performance.now();
+    let running = false;
+    let onScreen = true;
+    // Time the shader sees. Paused while off screen, so the field does not
+    // leap forward when you scroll back to it.
+    let shaderTime = 0;
+    let lastFrameAt = 0;
+    const minFrameGap = 1000 / Math.max(1, settings.maxFps);
 
     const render = (now: number) => {
-      const elapsed = (now - start) / 1000;
-      mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.05;
-      mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.05;
-      drawFrame(elapsed);
       rafId = requestAnimationFrame(render);
+
+      const sinceLast = now - lastFrameAt;
+      if (sinceLast < minFrameGap) return;
+      // Clamp so a long pause (a background tab) does not jump the animation.
+      shaderTime += Math.min(sinceLast, 100) / 1000;
+      lastFrameAt = now;
+
+      mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.12;
+      mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.12;
+      drawFrame(shaderTime);
+    };
+
+    const stopLoop = () => {
+      if (!running) return;
+      cancelAnimationFrame(rafId);
+      running = false;
     };
 
     const startLoop = () => {
       if (motionQuery.matches) {
+        stopLoop();
         // One still frame, chosen far enough into the noise to look composed.
         drawFrame(12);
         return;
       }
+      if (running || !onScreen || document.hidden) return;
+      running = true;
+      lastFrameAt = performance.now();
       rafId = requestAnimationFrame(render);
     };
 
-    startLoop();
+    // The single biggest saving: a plasma nobody can see renders nothing.
+    const visibility = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = Boolean(entry?.isIntersecting);
+        if (onScreen) startLoop();
+        else stopLoop();
+      },
+      { rootMargin: "80px" },
+    );
+    visibility.observe(container);
+
+    const handleTabVisibility = () => {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    };
+    document.addEventListener("visibilitychange", handleTabVisibility);
 
     const handleMotionChange = () => {
-      cancelAnimationFrame(rafId);
+      stopLoop();
       startLoop();
     };
     motionQuery.addEventListener("change", handleMotionChange);
 
+    startLoop();
+
     return () => {
       container.removeEventListener("pointermove", handlePointerMove);
       container.removeEventListener("pointerleave", handlePointerLeave);
+      document.removeEventListener("visibilitychange", handleTabVisibility);
       motionQuery.removeEventListener("change", handleMotionChange);
+      visibility.disconnect();
       cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
       gl.deleteBuffer(buffer);

@@ -1,0 +1,304 @@
+"use client";
+
+import Link from "next/link";
+import { ClosingPlasma } from "@/components/ClosingPlasma";
+import { OrbitCardStack, type OrbitStackItem } from "@/components/OrbitCardStack";
+import { ProcessMorph } from "@/components/ProcessMorph";
+import { ScrollSplitCard } from "@/components/ScrollSplitCard";
+import {
+  about,
+  contact,
+  hero,
+  identity,
+  process,
+  quote,
+  signals,
+} from "@/content/profile";
+import { projectBooks } from "@/content/projects";
+
+/**
+ * The landing page.
+ *
+ * Structure: plasma opens it, plasma closes it, and the argument sits still
+ * in the dark between the two. The only other motion on the page is the
+ * process sequence and the scroll-driven split card, both of which a person
+ * has to scroll to reach.
+ */
+
+const skills = [
+  {
+    title: "AI-native product building",
+    description:
+      "Agents, retrieval, and model tooling built into the product rather than bolted onto it. MCP servers, graph APIs, and pipelines that abstain instead of guessing.",
+    bgColor: "#1b2340",
+    textColor: "#f4efe2",
+  },
+  {
+    title: "Product context, research and ideation",
+    description:
+      "Market research, pitch decks, system architecture, and deciding what is worth building before a line of it is written. Two of the products I researched raised money.",
+    bgColor: "#f4efe2",
+    textColor: "#101219",
+  },
+  {
+    title: "Shipping, deployment and pipelining",
+    description:
+      "AWS, CI, containers, migrations, and the unglamorous work of keeping something alive after launch. Dependency sweeps, safe deletions, and provider migrations.",
+    bgColor: "#0b0d16",
+    textColor: "#f4efe2",
+  },
+];
+
+const findMe: OrbitStackItem[] = [
+  {
+    label: "GitHub",
+    handle: "github.com/FraanW",
+    description:
+      "The code behind most of what is on this site, including the ledger and the open standard.",
+    href: identity.github,
+    accent: "#c3c9da",
+    mark: "github",
+  },
+  {
+    label: "Email",
+    handle: identity.email,
+    description:
+      "The fastest way to reach me. Tell me what you are building and what is in your way.",
+    href: `mailto:${identity.email}`,
+    accent: "#7fd4d0",
+    mark: "mail",
+  },
+  {
+    label: "LinkedIn",
+    handle: "in/muhammadfarhaan",
+    description: "The formal version, with the roles and dates written out properly.",
+    href: identity.linkedin,
+    accent: "#6b7bff",
+    mark: "linkedin",
+  },
+];
+
+export default function Home() {
+  return (
+    <main className="relative">
+      {/* Hero: the plasma you arrive through. */}
+      <section className="relative h-dvh w-full overflow-hidden">
+        <ClosingPlasma
+          className="absolute inset-0 -z-10"
+          mode="dark"
+          speed={0.85}
+          turbulence={1.05}
+        />
+        <div className="relative h-full">
+          <div className="mx-auto flex h-full max-w-6xl flex-col px-6 sm:px-10">
+            <header className="flex items-baseline justify-between pt-8">
+              <span className="display text-[19px] text-ivory">{identity.name}</span>
+              <Link
+                href="/projects"
+                className="smallcaps text-[14px] text-ivory/70 transition-colors hover:text-ivory"
+              >
+                Projects
+              </Link>
+            </header>
+
+            <div className="flex flex-1 flex-col justify-center pb-24">
+              <h1
+                className="display-tight settle max-w-[16ch] text-[clamp(2.75rem,8vw,6.25rem)] text-ivory"
+                style={{ animationDelay: "120ms" }}
+              >
+                {hero.headline}
+              </h1>
+
+              <p
+                className="settle prose-serif mt-8 text-ivory/80"
+                style={{ animationDelay: "320ms" }}
+              >
+                {hero.support}
+              </p>
+
+              <div
+                className="settle mt-10 flex flex-wrap items-center gap-x-7 gap-y-3"
+                style={{ animationDelay: "480ms" }}
+              >
+                <a
+                  href={`mailto:${identity.email}`}
+                  className="border-b border-signal pb-1 text-[15px] text-ivory transition-colors hover:text-signal"
+                >
+                  Start a conversation
+                </a>
+                <Link
+                  href="/projects"
+                  className="border-b border-ivory/25 pb-1 text-[15px] text-ivory/75 transition-colors hover:border-ivory hover:text-ivory"
+                >
+                  See what I have built
+                </Link>
+              </div>
+            </div>
+
+            <p
+              className="settle max-w-[52ch] pb-10 text-[14px] leading-relaxed text-ivory/55"
+              style={{ animationDelay: "640ms" }}
+            >
+              {hero.now}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* The split card: one image becomes three skills. */}
+      <section className="relative bg-void">
+        <ScrollSplitCard
+          imageSrc="https://images.unsplash.com/photo-1773058373644-74e4120bfc77?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          cards={skills}
+          cue="Keep scrolling"
+          closing="Three things, and I do all three on the same project."
+        />
+      </section>
+
+      {/* How the work actually goes. */}
+      <section className="relative bg-void py-28 sm:py-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <h2 className="display text-[clamp(1.5rem,3vw,2.1rem)] text-ivory/70">
+            Every build I have done goes like this.
+          </h2>
+          <div className="mt-10 border-y border-rule py-16">
+            <ProcessMorph
+              steps={process}
+              className="display text-center text-[clamp(2rem,6vw,4.25rem)] text-ivory"
+            />
+          </div>
+          <p className="prose-serif mx-auto mt-10 text-center text-ivory/70">
+            Most of the value is decided in the first three, before anyone writes code. That is
+            the part I want to be in the room for.
+          </p>
+        </div>
+      </section>
+
+      {/* The invitation, carried by Homer. */}
+      <section className="relative bg-void pb-28 sm:pb-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
+            <blockquote className="display max-w-[20ch] text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">
+              {quote.text}
+            </blockquote>
+            <figcaption className="smallcaps mt-6 text-[14px] text-muted">
+              {quote.source}
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {/* About. */}
+      <section className="relative bg-void pb-28 sm:pb-40">
+        <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-8 px-6 sm:px-10 lg:grid-cols-[1fr_1.6fr]">
+          <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
+            An intern on paper.
+          </h2>
+          <div className="space-y-6">
+            {about.map((paragraph) => (
+              <p key={paragraph.slice(0, 30)} className="prose-serif">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* The shelf, previewed. */}
+      <section className="relative bg-void pb-28 sm:pb-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-5">
+            <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
+              Nine things I have built.
+            </h2>
+            <Link
+              href="/projects"
+              className="smallcaps border-b border-signal pb-1 text-[14px] text-ivory transition-colors hover:text-signal"
+            >
+              Open the shelf
+            </Link>
+          </div>
+          <ul className="mt-8 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+            {projectBooks.map((project) => (
+              <li key={project.id}>
+                <Link href="/projects" className="group block">
+                  <span className="display text-[20px] text-ivory">{project.title}</span>
+                  <span className="tabular ml-2.5 text-[13px] text-faint">{project.year}</span>
+                  <span className="mt-1 block text-[14.5px] leading-relaxed text-ivory/65">
+                    {project.summary}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Pedigree, for the reader who scans. */}
+      <section className="relative bg-void pb-28 sm:pb-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-10">
+          <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
+            Checkable by someone who does not know me.
+          </h2>
+          <div className="mt-8 grid gap-x-12 gap-y-10 sm:grid-cols-3">
+            {signals.map((signal) => (
+              <div key={signal.figure}>
+                <p className="display text-[21px] text-ivory">{signal.figure}</p>
+                <p className="mt-2.5 text-[14.5px] leading-relaxed text-ivory/70">
+                  {signal.href ? (
+                    <a
+                      href={signal.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="border-b border-ivory/30 transition-colors hover:border-signal hover:text-signal"
+                    >
+                      {signal.label}
+                    </a>
+                  ) : (
+                    signal.label
+                  )}
+                </p>
+                {signal.note && (
+                  <p className="mt-2 text-[13.5px] leading-relaxed text-faint">{signal.note}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact: the plasma you leave through. */}
+      <section className="relative w-full overflow-hidden">
+        <ClosingPlasma
+          className="absolute inset-0 -z-10"
+          mode="dark"
+          speed={0.55}
+          turbulence={0.9}
+        />
+        <div className="relative">
+          <div className="mx-auto flex min-h-dvh max-w-6xl flex-col justify-center px-6 pb-24 pt-32 sm:px-10">
+            <h2 className="display max-w-[18ch] text-[clamp(2.25rem,6vw,4.5rem)] text-ivory">
+              Bring me something half-formed.
+            </h2>
+            <p className="prose-serif mt-8 text-ivory/80">{contact.invitation}</p>
+
+            <OrbitCardStack items={findMe} className="mt-16" />
+
+            <footer className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-ivory/15 pt-8 text-[14px] text-ivory/60">
+              <a
+                href={`mailto:${identity.emailAlt}`}
+                className="transition-colors hover:text-ivory"
+              >
+                {identity.emailAlt}
+              </a>
+              <Link href="/projects" className="transition-colors hover:text-ivory">
+                Projects
+              </Link>
+              <span className="ml-auto">{identity.location}</span>
+            </footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

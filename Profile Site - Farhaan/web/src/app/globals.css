@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/*
+  Farhaan — palette and type tokens.
+
+  The three plasma tones are the page's ground colours. The plasma component
+  receives them as props, so if these change, ClosingPlasma's defaults change
+  with them. Everything else is built to sit on top of that ground.
+
+  The governing idea: cool ground, warm type. The only warmth on the page is
+  the writing.
+*/
+@theme {
+  /* ground */
+  --color-void: #08090f;
+  --color-plasma-a: #0b0d16;
+  --color-plasma-b: #1b2340;
+  --color-plasma-c: #4c6099;
+
+  /* type */
+  --color-ivory: #f4efe2;
+  --color-muted: #8e93a8;
+  --color-faint: #575c70;
+
+  /* the projects page inverts: the site turns its lights on for the shelf */
+  --color-paper: #f7f6f2;
+  --color-paper-mid: #e4e5e9;
+  --color-paper-far: #c3c9da;
+  --color-ink: #101219;
+  --color-ink-muted: #5a5f70;
+  --color-ink-faint: #9096a6;
+
+  /* leaf stock for the open-book modal */
+  --color-leaf: #f2ecdd;
+  --color-leaf-shade: #e5dcc7;
+
+  /* one accent, for state only */
+  --color-signal: #7fd4d0;
+  --color-signal-ink: #1d6f6b;
+
+  /* rules and edges */
+  --color-rule: #1e2231;
+  --color-rule-lit: #2c3350;
+
+  --font-display: var(--font-playfair), "Iowan Old Style", Georgia, serif;
+  --font-body: "Erode", "Iowan Old Style", Georgia, serif;
+
+  --ease-out-slow: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+  Playfair is a high-contrast face. At display sizes it needs its tracking
+  pulled in hard, or it reads as a word-processor default rather than a
+  deliberate setting.
+*/
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.94;
+}
+
+.display-tight {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* Reading text. Serif wants more line-height than a grotesk would. */
+.prose-serif {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  max-width: 62ch;
+  color: color-mix(in srgb, var(--color-ivory) 88%, transparent);
+}
+
+/* Small-caps stands in for the monospace-label cliché. */
+.smallcaps {
+  font-family: var(--font-body);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus: visible, in the accent, never removed. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-signal) 30%, transparent);
+  color: var(--color-ivory);
+}
+
+/*
+  Motion lives in two places only: the plasma, and a book opening.
+  Nothing else on this site moves unless a person asked it to.
+*/
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes book-open {
+  from {
+    opacity: 0;
+    transform: perspective(1800px) rotateX(9deg) translateY(22px) scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1800px) rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+/* The one page-load moment: the hero settles once, then holds still. */
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settle {
+  opacity: 0;
+  animation: settle 900ms var(--ease-out-slow) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settle {
+    opacity: 1;
+    animation: none;
+  }
+}

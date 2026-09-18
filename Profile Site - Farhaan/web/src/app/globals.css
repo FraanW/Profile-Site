@@ -145,6 +145,66 @@ body {
 }
 
 /*
+  The starfield behind the middle of the page. Fixed, so the sky holds still
+  while the page scrolls past it, which is how a distant sky behaves.
+*/
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/*
+  Two very large, very faint pools of colour. Without these the ground is flat
+  black and the stars look stuck onto it rather than suspended in it.
+*/
+.starfield-wash {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(
+      52% 40% at 22% 28%,
+      color-mix(in srgb, var(--color-plasma-b) 38%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      46% 38% at 78% 72%,
+      color-mix(in srgb, var(--color-plasma-c) 16%, transparent),
+      transparent 68%
+    );
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  /* Nudge each star onto its own coordinate rather than its top-left corner. */
+  transform: translate(-50%, -50%);
+}
+
+.star-twinkle {
+  animation: twinkle var(--dur) ease-in-out var(--delay) infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: var(--peak);
+  }
+  50% {
+    /* Dim and recover. Stars that blink out entirely read as broken pixels. */
+    opacity: calc(var(--peak) * 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-twinkle {
+    animation: none;
+  }
+}
+
+/*
   The product graph. All of this is CSS so it runs on the compositor, and the
   whole thing is paused when the graph is not on screen.
 */

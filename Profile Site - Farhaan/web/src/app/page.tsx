@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { ClosingPlasma } from "@/components/ClosingPlasma";
 import { OrbitCardStack, type OrbitStackItem } from "@/components/OrbitCardStack";
 import { ProcessMorph } from "@/components/ProcessMorph";
 import { ProductGraph } from "@/components/ProductGraph";
 import { ScrollSplitCard } from "@/components/ScrollSplitCard";
+import { Starfield } from "@/components/Starfield";
 import {
   about,
   contact,
@@ -82,12 +84,14 @@ const findMe: OrbitStackItem[] = [
 ];
 
 export default function Home() {
+  const middleRef = useRef<HTMLDivElement>(null);
+
   return (
     <main className="relative">
       {/* Hero: the plasma you arrive through. */}
-      <section className="relative h-dvh w-full overflow-hidden">
+      <section className="relative z-10 h-dvh w-full overflow-hidden bg-plasma-a">
         <ClosingPlasma
-          className="absolute inset-0 -z-10"
+          className="absolute inset-0"
           mode="dark"
           speed={0.85}
           turbulence={1.05}
@@ -148,8 +152,12 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Everything between the two plasma bookends shares one night sky. */}
+      <div ref={middleRef} className="relative">
+        <Starfield watch={middleRef} />
+
       {/* The split card: one image becomes three skills. */}
-      <section className="relative bg-void">
+      <section className="relative z-10">
         <ScrollSplitCard
           /* Van Gogh, The Starry Night, 1889. Public domain; self-hosted so it
              cannot break or lag. */
@@ -161,7 +169,7 @@ export default function Home() {
       </section>
 
       {/* How the work actually goes. */}
-      <section className="relative bg-void py-28 sm:py-40">
+      <section className="relative z-10 py-28 sm:py-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="display text-[clamp(1.5rem,3vw,2.1rem)] text-ivory/70">
             Every build I have done goes like this.
@@ -180,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* How a small team holds a whole product. */}
-      <section className="relative bg-void pb-28 sm:pb-40">
+      <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <div className="grid gap-x-16 gap-y-12 lg:grid-cols-[1fr_1.05fr] lg:items-start">
             <div>
@@ -211,7 +219,7 @@ export default function Home() {
       </section>
 
       {/* The invitation. */}
-      <section className="relative bg-void pb-28 sm:pb-40">
+      <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
             <blockquote className="display max-w-[20ch] text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">
@@ -225,7 +233,7 @@ export default function Home() {
       </section>
 
       {/* About. */}
-      <section className="relative bg-void pb-28 sm:pb-40">
+      <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-8 px-6 sm:px-10 lg:grid-cols-[1fr_1.6fr]">
           <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
             Two halves of the same instinct.
@@ -241,7 +249,7 @@ export default function Home() {
       </section>
 
       {/* Where the work happened. */}
-      <section className="relative bg-void pb-28 sm:pb-40">
+      <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
             Where I have done it.
@@ -269,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* The shelf, previewed. */}
-      <section className="relative bg-void pb-28 sm:pb-40">
+      <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-5">
             <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
@@ -299,7 +307,7 @@ export default function Home() {
       </section>
 
       {/* Pedigree, for the reader who scans. */}
-      <section className="relative bg-void pb-28 sm:pb-40">
+      <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
             Checkable by someone who does not know me.
@@ -331,10 +339,12 @@ export default function Home() {
         </div>
       </section>
 
+      </div>
+
       {/* Contact: the plasma you leave through. */}
-      <section className="relative w-full overflow-hidden">
+      <section className="relative z-10 w-full overflow-hidden bg-plasma-a">
         <ClosingPlasma
-          className="absolute inset-0 -z-10"
+          className="absolute inset-0"
           mode="dark"
           speed={0.55}
           turbulence={0.9}

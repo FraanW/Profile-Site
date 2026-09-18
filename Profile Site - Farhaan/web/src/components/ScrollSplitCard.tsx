@@ -8,9 +8,10 @@ import { useRef } from "react";
  * Componentry's Scroll Split Card, with the demo copy replaced and the
  * shadcn colour tokens swapped for this site's own.
  *
- * One image splits into three panels and flips to reveal what Farhaan
- * actually does. The image is a placeholder and gets replaced with a
- * starry night.
+ * Van Gogh's The Starry Night splits into three panels and turns over to reveal
+ * what Farhaan actually does. The painting's own cobalt and indigo happen to
+ * sit inside the site's plasma palette, so the section reads as part of the
+ * page rather than as an image dropped into it.
  */
 
 interface ScrollSplitCardItem {
@@ -77,7 +78,9 @@ export function ScrollSplitCard({
   const shadowOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 0.4]);
   const boxShadow = useMotionTemplate`inset 0 1px 1px rgba(255, 255, 255, ${borderOpacity}), inset 0 -24px 48px rgba(0, 0, 0, ${shadowOpacity}), 0 25px 50px -12px rgba(0, 0, 0, ${shadowOpacity})`;
 
-  const cardsY = useTransform(scrollYProgress, [0.8, 1], [0, -200]);
+  // Less lift than the original: the card is taller now, so the old travel
+  // pushed the turned panels off the top of the screen.
+  const cardsY = useTransform(scrollYProgress, [0.8, 1], [0, -110]);
   const textOpacity = useTransform(scrollYProgress, [0.8, 1], [0, 1]);
   const textY = useTransform(scrollYProgress, [0.8, 1], [40, 0]);
   const startTextOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
@@ -87,15 +90,20 @@ export function ScrollSplitCard({
     <div ref={containerRef} className={cn("relative h-[500vh] w-full", className)}>
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden [perspective:1200px]">
         <motion.div
-          className="absolute left-0 right-0 top-[18%] text-center"
+          className="absolute left-0 right-0 top-[4%] text-center"
           style={{ opacity: startTextOpacity, y: startTextY }}
         >
           <p className="smallcaps text-[14px] text-muted">{cue}</p>
         </motion.div>
 
+        {/*
+          Sized to the painting rather than to a convenient rectangle. Starry
+          Night is about 1.26:1, so a 400px-tall card at max-w-4xl would have
+          squashed it to just over half its proper height.
+        */}
         <motion.div
           style={{ scale, y: cardsY, transformStyle: "preserve-3d" }}
-          className="relative flex h-[400px] w-full max-w-4xl px-4"
+          className="relative flex h-[min(64vh,620px)] w-full max-w-3xl px-4"
         >
           {cards.slice(0, 3).map((card, i) => (
             <motion.div
@@ -119,12 +127,18 @@ export function ScrollSplitCard({
                   boxShadow,
                 }}
               >
+                {/*
+                  This sheet is three panels wide and slid so each panel shows
+                  its own third. `cover`, not `100% 100%`: the original stretched
+                  the image to whatever shape the card happened to be, which is
+                  fine for an abstract gradient and ruinous for a painting.
+                */}
                 <div
                   className="absolute inset-0 h-full w-[300%]"
                   style={{
                     left: `${-100 * i}%`,
                     backgroundImage: `url(${imageSrc})`,
-                    backgroundSize: "100% 100%",
+                    backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
                 />
@@ -167,7 +181,7 @@ export function ScrollSplitCard({
 
         {closing && (
           <motion.div
-            className="absolute bottom-[16%] left-0 right-0 px-6 text-center"
+            className="absolute bottom-[5%] left-0 right-0 px-6 text-center"
             style={{ opacity: textOpacity, y: textY }}
           >
             <p className="display mx-auto max-w-[24ch] text-[clamp(1.35rem,3vw,2rem)] text-ivory/85">

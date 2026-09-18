@@ -151,7 +151,9 @@ export default function Home() {
       {/* The split card: one image becomes three skills. */}
       <section className="relative bg-void">
         <ScrollSplitCard
-          imageSrc="https://images.unsplash.com/photo-1773058373644-74e4120bfc77?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          /* Van Gogh, The Starry Night, 1889. Public domain; self-hosted so it
+             cannot break or lag. */
+          imageSrc="/starry-night.jpg"
           cards={skills}
           cue="Keep scrolling"
           closing="Three things, and I do all three on the same project."

@@ -8,7 +8,7 @@ import { OrgMark } from "@/components/OrgMark";
 import { ProcessMorph } from "@/components/ProcessMorph";
 import { ProductGraph } from "@/components/ProductGraph";
 import { ScrollSplitCard } from "@/components/ScrollSplitCard";
-import { ScrollVelocityLogos } from "@/components/ScrollVelocityLogos";
+import { StackRibbon } from "@/components/StackRibbon";
 import { SkillMark } from "@/components/SkillMark";
 import { Starfield } from "@/components/Starfield";
 import {
@@ -304,8 +304,8 @@ export default function Home() {
             actually wants, and how much of it. So read this as range rather than ranking.
           </p>
         </div>
-        {/* Full bleed: the row should run off both edges, not sit in a box. */}
-        <ScrollVelocityLogos className="mt-12" />
+        {/* Full bleed: the ribbon runs off both edges rather than sitting in a box. */}
+        <StackRibbon className="mt-6" />
       </section>
 
       {/* The shelf, previewed. */}

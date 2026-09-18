@@ -154,8 +154,65 @@ body {
   Stack marks. Monochrome at rest so nearly thirty logos read as one material
   rather than as a fruit salad, and each takes its brand colour when pointed at.
 */
+/*
+  One ribbon, constant speed. The track holds two identical copies and slides
+  by exactly half its own width, so the moment it resets is invisible.
+  Everything here runs on the compositor: no rAF, no scroll listener.
+*/
+.stack-ribbon {
+  width: 100%;
+  overflow: hidden;
+  /* Room above each mark for its name, which the overflow would otherwise cut. */
+  padding-block: 4.5rem 0.5rem;
+  /*
+    Fade the marks out at both edges so the row has no hard start or stop.
+    Chrome still wants the prefixed property here; without it the ribbon just
+    ends abruptly at the viewport edge.
+  */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.stack-ribbon-track {
+  display: flex;
+  width: max-content;
+  animation: ribbon 64s linear infinite;
+}
+
+.stack-ribbon-set {
+  display: flex;
+  align-items: center;
+  gap: 4.25rem;
+  padding-right: 4.25rem;
+}
+
+/* Off screen: nothing moves. On hover: hold still so a name can be read. */
+.stack-ribbon[data-running="false"] .stack-ribbon-track,
+.stack-ribbon:hover .stack-ribbon-track {
+  animation-play-state: paused;
+}
+
+@keyframes ribbon {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-ribbon-track {
+    animation: none;
+  }
+  .stack-ribbon {
+    overflow-x: auto;
+  }
+}
+
 .stack-logo {
-  color: color-mix(in srgb, var(--color-ivory) 42%, transparent);
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  color: color-mix(in srgb, var(--color-ivory) 46%, transparent);
   transition: color 220ms ease;
 }
 

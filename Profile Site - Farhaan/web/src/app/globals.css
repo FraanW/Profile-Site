@@ -69,49 +69,57 @@ body {
 }
 
 /*
-  Playfair is a high-contrast face. At display sizes it needs its tracking
-  pulled in hard, or it reads as a word-processor default rather than a
-  deliberate setting.
+  These live in the components layer on purpose. Tailwind's utilities layer
+  is emitted after it, so a utility like leading-[1.18] or text-ink/80 beats
+  them at equal specificity. Sitting outside a layer, they were winning
+  instead, which silently swallowed every override at the call site.
 */
-.display {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 0.94;
-}
+@layer components {
+  /*
+    Playfair is a high-contrast face. At display sizes it needs its tracking
+    pulled in hard, or it reads as a word-processor default rather than a
+    deliberate setting.
+  */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 0.94;
+  }
 
-.display-tight {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
-}
+  .display-tight {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
 
-/*
-  Reading text. Serif wants more line-height than a grotesk would.
+  /*
+    Reading text. Serif wants more line-height than a grotesk would.
 
-  Colour is deliberately NOT set here. It used to hardcode ivory, which was
-  invisible on the projects page, where the site inverts to dark ink on light
-  ground. Inheriting means the landing page picks up ivory from `body` and the
-  projects page picks up ink from its own `main`, with no override needed.
-*/
-.prose-serif {
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.75;
-  max-width: 62ch;
-}
+    Colour is deliberately NOT set here. It used to hardcode ivory, which was
+    invisible on the projects page, where the site inverts to dark ink on light
+    ground. Inheriting means the landing page picks up ivory from `body` and the
+    projects page picks up ink from its own `main`, with no override needed.
+  */
+  .prose-serif {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    max-width: 62ch;
+  }
 
-/* Small-caps stands in for the monospace-label cliché. */
-.smallcaps {
-  font-family: var(--font-body);
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-}
+  /* Small-caps stands in for the monospace-label cliché. */
+  .smallcaps {
+    font-family: var(--font-body);
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
 
-.tabular {
-  font-variant-numeric: tabular-nums;
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 /* Focus: visible, in the accent, never removed. */
@@ -150,10 +158,6 @@ body {
   }
 }
 
-/*
-  Stack marks. Monochrome at rest so nearly thirty logos read as one material
-  rather than as a fruit salad, and each takes its brand colour when pointed at.
-*/
 /*
   One ribbon, constant speed. The track holds two identical copies and slides
   by exactly half its own width, so the moment it resets is invisible.
@@ -207,6 +211,10 @@ body {
   }
 }
 
+/*
+  Monochrome at rest, so thirty marks read as one material rather than as a
+  fruit salad, and each takes its brand colour when pointed at.
+*/
 .stack-logo {
   position: relative;
   display: flex;

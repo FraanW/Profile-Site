@@ -42,3 +42,24 @@ fires on a live motion→reduce preference toggle.
 Components that only ever gate synchronously (`Reveal`, `StatementRule`,
 `Hero`, `CaseTiles`, `RadialGraph`, `NodeCard`, `GraphNode`, `TopBar`,
 `DottedBackground`) never had the bug — the render-gate pattern is the trap.
+
+## Custom CSS classes must live in `@layer components` (Tailwind v4)
+
+**Symptom.** A utility at the call site silently does nothing. `leading-[1.18]`
+on an element that also has `.display` computes to `.display`'s line-height.
+`text-ink/80` on an element with `.prose-serif` renders in `.prose-serif`'s
+colour.
+
+**Cause.** `@import "tailwindcss"` sets up the cascade layers. A bare
+`.display { ... }` written after that import sits *outside* every layer, and
+unlayered rules beat layered ones at equal specificity. Tailwind's utilities
+are in a layer, so they lose.
+
+**Fix.** Put site classes inside `@layer components { ... }`. Utilities are
+emitted after components, so overrides at the call site work again.
+
+**Why it matters more than it sounds.** This does not error, it does not warn,
+and it does not look broken in isolation. It cost two real bugs on Farhaan's
+site before being diagnosed: a quote stuck at headline leading, and the
+projects-page intro paragraph rendering in near-invisible ivory on a light
+ground. Both looked like content mistakes rather than a cascade problem.

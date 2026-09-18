@@ -230,7 +230,12 @@ export default function Home() {
           <figure className="border-l-2 border-signal/60 py-2 pl-8 sm:pl-12">
             {/* Gargantua, since the line reaches this page by way of Interstellar. */}
             <OrgMark mark="blackhole" size={68} className="mb-8 text-signal/75" />
-            <blockquote className="display max-w-[24ch] text-[clamp(1.9rem,5vw,3.4rem)] italic text-ivory">
+            {/*
+              .display sets 0.94, which is right for a headline and too tight
+              for three lines of italic: the descenders on "gentle" and "dying"
+              run into the ascenders below them.
+            */}
+            <blockquote className="display max-w-[24ch] text-[clamp(1.9rem,5vw,3.4rem)] italic leading-[1.18] text-ivory">
               {"“"}
               {quote.text}
               {"”"}
@@ -250,7 +255,7 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-8 px-6 sm:px-10 lg:grid-cols-[1fr_1.6fr]">
           <h2 className="display text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
-            Two halves of the same instinct.
+            How I think about products.
           </h2>
           <div className="space-y-6">
             {about.map((paragraph) => (

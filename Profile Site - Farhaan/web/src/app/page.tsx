@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ClosingPlasma } from "@/components/ClosingPlasma";
 import { OrbitCardStack, type OrbitStackItem } from "@/components/OrbitCardStack";
@@ -280,7 +281,21 @@ export default function Home() {
                 className="grid gap-x-12 gap-y-3 border-b border-rule py-8 lg:grid-cols-[1fr_1.7fr]"
               >
                 <div className="flex items-start gap-4">
-                  <OrgMark mark={role.mark} className="mt-1 shrink-0 text-signal/70" />
+                  {/*
+                    A chip behind each logo. Two of the three ship with a dark
+                    background baked in, which would vanish against this page,
+                    and the third is bright orange. A common surface makes them
+                    read as one set instead of three unrelated stickers.
+                  */}
+                  <span className="mt-0.5 flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-ivory/[0.07] ring-1 ring-ivory/10">
+                    <Image
+                      src={role.logo}
+                      alt={`${role.org} logo`}
+                      width={48}
+                      height={48}
+                      className="h-9 w-9 object-contain"
+                    />
+                  </span>
                   <div>
                     <p className="display text-[22px] text-ivory">{role.org}</p>
                     <p className="mt-1.5 text-[14.5px] text-ivory/70">{role.role}</p>
@@ -347,7 +362,7 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
-            Checkable by someone who does not know me.
+            Credentials.
           </h2>
           <div className="mt-8 grid gap-x-12 gap-y-10 sm:grid-cols-3">
             {signals.map((signal) => (

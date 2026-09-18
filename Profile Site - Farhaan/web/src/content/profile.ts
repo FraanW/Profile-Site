@@ -26,11 +26,16 @@ export const hero = {
  * The record, in the order it happened. Never the word "intern": owner
  * instruction 2026-09-18, and it was never an accurate description of the work
  * anyway. "Founding engineer" is a sanctioned framing in resume/master.md.
+ *
+ * Logos supplied by Farhaan 2026-09-19, replacing the drawn marks that stood in
+ * while none were available. These are other parties' trademarks, used here to
+ * identify where he has worked. If any of them ever objects, the drawn marks in
+ * OrgMark are still there and the swap is one line per row.
  */
 export const experience = [
   {
     org: "Fiserv",
-    mark: "access" as const,
+    logo: "/logos/fiserv.png",
     role: "Cybersecurity analyst, IAM",
     period: "2026 to now",
     where: "Chennai",
@@ -38,7 +43,7 @@ export const experience = [
   },
   {
     org: "Unified Product Graph",
-    mark: "graph" as const,
+    logo: "/logos/upg.png",
     role: "Open source contributor",
     period: "2026 to now",
     where: "Remote",
@@ -46,7 +51,7 @@ export const experience = [
   },
   {
     org: "Venture Cube",
-    mark: "cube" as const,
+    logo: "/logos/venture-cube.png",
     role: "Founding engineer",
     period: "2024 to 2026",
     where: "Dubai, remote",
@@ -106,102 +111,12 @@ export const harness = {
   link: { label: "unifiedproductgraph.org", href: "https://unifiedproductgraph.org" },
 };
 
-export type Project = {
-  name: string;
-  year: string;
-  role: string;
-  summary: string;
-  detail: string;
-  stack: string[];
-  proof: { figure: string; label: string }[];
-  href?: string;
-  hrefLabel?: string;
-};
-
-export const work: Project[] = [
-  {
-    name: "Adloom.ai",
-    year: "2025",
-    role: "Founding engineer",
-    summary: "An AI-driven billboard advertising platform, taken from nothing to real campaigns.",
-    detail:
-      "I built the services and the frontend, then the part that mattered most: a recommendation engine that matched brands to billboard locations using Google Places data, geohash proximity, and semantic search over embeddings. Scouting a campaign's locations went from about five hours to about five minutes. I also ran the market research and built the pitch decks, which fed the seed raise.",
-    stack: ["FastAPI", "React", "PostgreSQL", "AWS EC2, RDS, Amplify"],
-    proof: [
-      { figure: "20,000+", label: "live advertising assets in production" },
-      { figure: "5 hrs to 5 min", label: "campaign location scouting" },
-      { figure: "~60%", label: "less manual sales effort per cycle" },
-    ],
-  },
-  {
-    name: "LedgerLine",
-    year: "2026",
-    role: "Solo, end to end",
-    summary: "A double-entry money ledger built so that it cannot go wrong quietly.",
-    detail:
-      "Balances can never go negative, every movement is double-entry, and tenants are isolated at the database with row-level security rather than in application code that someone can forget to call. I wrote the SQL by hand instead of reaching for an ORM, locked rows pessimistically where concurrency could corrupt a balance, and put a transactional outbox between the ledger and anything downstream. The statement reader is a hybrid: deterministic rules first, embeddings second, a constrained language model last, and it abstains rather than guessing when confidence drops.",
-    stack: ["Java 21", "Spring Boot 3.4", "PostgreSQL with RLS", "Next.js", "LangGraph"],
-    proof: [
-      { figure: "94.3%", label: "statement categorisation accuracy" },
-      { figure: "zero", label: "false accepts, at 100% abstain recall" },
-      { figure: "22", label: "test classes against real containers" },
-    ],
-    href: "https://github.com/FraanW/ledgerline-money-tracker",
-    hrefLabel: "Read the code",
-  },
-  {
-    name: "Deals24.ai",
-    year: "2025",
-    role: "Full-stack engineer",
-    summary: "A distressed real-estate platform with three different people to serve.",
-    detail:
-      "Investors, sellers, and admins each needed their own view of the same deals, and each view had a different idea of what mattered. I built all three end to end, on one FastAPI backend, with access scoped through AWS IAM. The venture raised its round. The company did not make it, which is worth saying plainly: I built the product, not the business, and both facts belong on the same page.",
-    stack: ["FastAPI", "React", "PostgreSQL", "AWS with IAM"],
-    proof: [
-      { figure: "3", label: "role dashboards, built end to end" },
-      { figure: "raised", label: "then closed, and I am not hiding it" },
-    ],
-  },
-  {
-    name: "Unified Product Graph",
-    year: "2026 to now",
-    role: "Core founding engineer",
-    summary: "An open standard for product knowledge, and the tooling that makes it usable.",
-    detail:
-      "Product knowledge usually lives in documents that no machine can read. UPG is an open TypeScript standard that turns it into a graph, and I build the tooling on top: the Model Context Protocol server that lets AI agents read and write that graph safely, the local command line, and parts of the spec itself. I also build the full-stack app for Entopo, an AI-native product creation tool with a canvas, AI, and a graph.",
-    stack: ["TypeScript", "Node.js", "Model Context Protocol", "Next.js"],
-    proof: [
-      { figure: "8", label: "packages published to npm" },
-      { figure: "~28,000", label: "downloads a month" },
-      { figure: "428", label: "commits into the production monorepo" },
-    ],
-    href: "https://github.com/unified-product-graph",
-    hrefLabel: "See the standard",
-  },
-];
-
-export const alsoBuilt = [
-  {
-    name: "Research orchestration platform",
-    line: "Long-running agent research that survives a crash. Session checkpointing, and retrieval under 400ms across ten concurrent sessions.",
-    href: "https://github.com/FraanW/Agentic-Research-Tool",
-  },
-  {
-    name: "ADCEA",
-    line: "Hands a model a raw dataset and gets back a cleaned, feature-engineered, trained baseline without a human in the loop.",
-    href: "https://github.com/FraanW/ADCEA",
-  },
-  {
-    name: "ArtiShine",
-    line: "Artisans photograph their work and get a written story and a social post back. Finalist at the Hack2Skill GenAI hackathon.",
-    href: "https://github.com/Google-Hackathon-Gen/ArtiShine",
-  },
-  {
-    name: "Agentic fuzzy control",
-    line: "The running implementation behind the IEEE paper: a fast fuzzy controller with a slower reasoning loop above it, deciding the rules.",
-    href: "https://github.com/Maderanx/Agentic-Fuzzy-Simulink-IoT",
-  },
-];
+/*
+  The old `work` and `alsoBuilt` arrays lived here and were imported by nothing.
+  They were a second, quietly diverging description of the same projects that
+  content/projects.ts already owns, which is exactly how a site ends up
+  contradicting itself. Deleted 2026-09-19; projects.ts is the only source.
+*/
 
 export const signals = [
   {

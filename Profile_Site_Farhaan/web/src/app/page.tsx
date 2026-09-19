@@ -38,7 +38,7 @@ const skills = [
   {
     title: "AI-native product building",
     description:
-      "Agents, retrieval, and model tooling built into the product rather than bolted onto it. MCP servers, graph APIs, and pipelines that abstain instead of guessing.",
+      "Agents and retrieval designed into the product from the start. I build MCP servers and graph APIs, and pipelines that abstain when they aren't sure.",
     bgColor: "#1b2340",
     textColor: "#f4efe2",
     icon: <SkillMark mark="graph" size={96} />,
@@ -46,7 +46,7 @@ const skills = [
   {
     title: "Product context, research and ideation",
     description:
-      "Market research, pitch decks, system architecture, and deciding what is worth building before a line of it is written. Two of the products I researched raised money.",
+      "Market research, pitch decks, system architecture, and deciding what's worth building before anyone writes a line of it. Two of the products I researched went on to raise money.",
     bgColor: "#f4efe2",
     textColor: "#101219",
     icon: <SkillMark mark="compass" size={96} />,
@@ -54,7 +54,7 @@ const skills = [
   {
     title: "Shipping, deployment and pipelining",
     description:
-      "AWS, CI, containers, migrations, and the unglamorous work of keeping something alive after launch. Dependency sweeps, safe deletions, and provider migrations.",
+      "AWS, CI, containers and migrations. Then the unglamorous part, keeping it alive after launch: dependency sweeps, moving between providers, and knowing what's safe to delete.",
     bgColor: "#0b0d16",
     textColor: "#f4efe2",
     icon: <SkillMark mark="pipeline" size={96} />,
@@ -65,8 +65,7 @@ const findMe: OrbitStackItem[] = [
   {
     label: "GitHub",
     handle: "github.com/FraanW",
-    description:
-      "The code behind most of what is on this site, including the ledger and the open standard.",
+    description: "The code for most of what's on this site.",
     href: identity.github,
     accent: "#c3c9da",
     mark: "github",
@@ -74,8 +73,7 @@ const findMe: OrbitStackItem[] = [
   {
     label: "Email",
     handle: identity.email,
-    description:
-      "The fastest way to reach me. Tell me what you are building and what is in your way.",
+    description: "The fastest way to reach me.",
     href: `mailto:${identity.email}`,
     accent: "#7fd4d0",
     mark: "mail",
@@ -83,7 +81,7 @@ const findMe: OrbitStackItem[] = [
   {
     label: "LinkedIn",
     handle: "in/muhammadfarhaan",
-    description: "The formal version, with the roles and dates written out properly.",
+    description: "Roles and dates, written out properly.",
     href: identity.linkedin,
     accent: "#6b7bff",
     mark: "linkedin",
@@ -210,7 +208,7 @@ export default function Home() {
             />
           </div>
           <p className="prose-serif mx-auto mt-10 text-center text-ivory/70">
-            Most of the value is decided in the first three, before anyone writes code. That is
+            Most of the value is decided in the first three, before anyone writes code. That&rsquo;s
             the part I want to be in the room for.
           </p>
         </div>
@@ -350,8 +348,8 @@ export default function Home() {
             What my tech stack is.
           </h2>
           <p className="prose-serif mt-6 text-ivory/85">
-            The interesting question is never which of these I know. It is which one a problem
-            actually wants, and how much of it. So read this as range rather than ranking.
+            These are the tools I&rsquo;ve worked with, in no particular order. The harder skill is
+            knowing which one a problem needs, and how much of it.
           </p>
         </div>
         {/* Full bleed: the ribbon runs off both edges rather than sitting in a box. */}

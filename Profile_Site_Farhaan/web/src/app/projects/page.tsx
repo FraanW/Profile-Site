@@ -61,13 +61,13 @@ export default function ProjectsPage() {
       </header>
 
       <div className="mx-auto max-w-6xl px-6 pt-16 sm:px-10 sm:pt-24">
-        <h1 className="display max-w-[15ch] text-[clamp(2.6rem,7vw,5rem)]">
-          Take one off the shelf.
+        <h1 className="display max-w-[22ch] text-[clamp(2.6rem,7vw,5rem)]">
+          Take one off the shelf to see what I&rsquo;ve built.
         </h1>
         <p className="prose-serif mt-6 text-ink/80">
-          Hover to read a spine, click to pull it out, click again to open it. Each one says what
-          the problem was, what I chose, and what it cost. The ones that did not work out are here
-          too.
+          Hover over a spine to read it, click to pull the book out, and click again to open it.
+          Each one explains the problem and what I chose to do about it, including what that cost.
+          The ones that didn&rsquo;t work out are here too.
         </p>
       </div>
 

@@ -62,9 +62,9 @@ export const projectBooks: ProjectBook[] = [
     links: [],
     summary: "An AI-driven billboard advertising platform, taken from nothing to real campaigns.",
     body: [
-      "Brands want billboards near the people who will actually buy from them. Nobody could answer that question quickly. A campaign planner would spend most of a working day cross-referencing maps, footfall guesses, and a spreadsheet of available sites.",
-      "I built the services and the frontend, then the part that mattered: a recommendation engine that matched a brand to locations using Google Places data, geohash proximity, and semantic search over embeddings. Scouting went from about five hours to about five minutes.",
-      "Alongside that I built an agentic pipeline for lead generation, which cut the manual sales work per campaign cycle by around 60%. I also ran the market research and built the pitch decks. Those decks fed the seed raise.",
+      "Brands want billboards near the people who will actually buy from them, and nobody could work out where those were quickly. A campaign planner would spend most of a working day cross-referencing maps and footfall guesses against a spreadsheet of available sites.",
+      "I built the services and the frontend. The piece that mattered most was a recommendation engine that matched a brand to locations using Google Places data and geohash proximity, plus semantic search over embeddings. Scouting went from about five hours to about five minutes.",
+      "Alongside that I built an agentic pipeline for lead generation, which cut the manual sales work per campaign cycle by around 60%. I also ran the market research and built the pitch decks that went into the seed raise.",
       "The platform carried more than twenty thousand live advertising assets and real client campaigns while I worked on it.",
     ],
   },
@@ -95,11 +95,11 @@ export const projectBooks: ProjectBook[] = [
     summary: "Upload a bank statement and it becomes a budget you physically cannot overspend.",
     body: [
       "Money Tracker is the product; LedgerLine is the platform underneath it. You upload a bank statement, as CSV or as a password-protected PDF, and it comes back as an envelope budget. The password unlocks the file in memory on the server and is never written down or logged.",
-      "Every budgeting app I have used categorises spending after the fact, which is a diary rather than a budget. This one constrains it up front. Income arrives in Unallocated, you allocate it across envelopes, and draining an envelope below zero is refused rather than recorded. That is not a warning in the interface, it is a rule the database and the ledger enforce together.",
-      "Keeping that promise is the whole engineering problem, because it has to survive two people spending at once. Every movement is a balanced set of entries that sum to zero. Before posting, the service takes row locks in a deterministic order, which is what makes it deadlock-free, recomputes the balance from the entries rather than trusting a stale read, and rejects the whole transfer if any envelope would go negative. Replaying the same spend returns the existing transfer instead of a second one, enforced by a unique constraint rather than by hoping. An adversarial multi-threaded test suite runs all of this against real Postgres in containers.",
+      "Every budgeting app I've used categorises spending after the fact, which makes it more of a diary than a budget. This one limits spending up front. Income lands in Unallocated, you spread it across envelopes, and any spend that would take an envelope below zero is refused. The database and the ledger enforce that rule together, so there's no warning to click past.",
+      "The whole engineering problem is keeping that promise when two people spend at once. Every movement is a balanced set of entries that sum to zero. Before posting, the service takes row locks in a deterministic order so it can't deadlock. It then recomputes the balance from the entries instead of trusting a stale read, and rejects the whole transfer if any envelope would go negative. Replaying the same spend returns the existing transfer, and a unique constraint makes sure of it. An adversarial multi-threaded test suite runs all of this against real Postgres in containers.",
       "I wrote every statement by hand instead of using an ORM. The locking order and the timing are the design here, and an ORM hides exactly the part that has to be precise. Tenants are separated by row-level security set per transaction, so isolation holds even if application code forgets to ask for it.",
       "On top of that sits the part people actually see: a dashboard, envelopes, transactions with search and upload, household members with their own permissions, net worth, and a gallery of 26 different philosophies of tracking money. It ships three persona themes, Gen Z, Millennial and Senior, which restyle every screen through design tokens and follow the user between sessions.",
-      "The statement reader is the piece I am most pleased with. Indian bank merchant strings are noisy, so it runs deterministic rules first, sentence embeddings second, and a constrained language model only as a last resort, and it abstains rather than guessing when confidence drops. 94.3% accuracy with no false accepts, because a wrong category filed silently is worse than a question asked out loud.",
+      "The statement reader is the piece I'm most pleased with. Merchant strings from Indian banks are noisy, so it tries deterministic rules first, then sentence embeddings, and uses a constrained language model only as a last resort. When confidence drops, it abstains instead of guessing. It reaches 94.3% accuracy with no false accepts, because a wrong category filed silently is worse than a question asked out loud.",
     ],
   },
   {
@@ -117,11 +117,11 @@ export const projectBooks: ProjectBook[] = [
       { figure: "raised", label: "then the company closed" },
     ],
     links: [],
-    summary: "A distressed real-estate platform with three different people to serve.",
+    summary: "A platform for distressed real estate, serving three kinds of user.",
     body: [
-      "Investors, sellers, and admins each needed their own view of the same set of deals, and each view disagreed about what mattered. An investor wants yield and risk. A seller wants speed and certainty. An admin wants to see everything and touch very little.",
+      "Investors, sellers and admins each needed their own view of the same deals, and they disagreed about what mattered. Investors look at yield and risk, sellers want speed and certainty, and an admin wants to see everything while touching very little.",
       "I built all three dashboards end to end on one FastAPI backend, with access scoped through AWS IAM so that the boundary between those three views was infrastructure rather than a conditional in a template.",
-      "The venture raised its round. The company did not survive. I am putting both facts on the same page because a portfolio that only lists the raises is not a portfolio, it is marketing. I built the product. I did not build the business, and the business is what ran out of road.",
+      "The venture raised its round, and the company still didn't survive. I'm putting both facts on the same page because a portfolio that lists only the raises is marketing. I built the product. The business, which I didn't build, is what ran out of road.",
     ],
   },
   {
@@ -141,10 +141,10 @@ export const projectBooks: ProjectBook[] = [
     links: [],
     summary: "Small loans for expatriates, designed from the first conversation about it.",
     body: [
-      "Expatriate workers in the UAE are among the least well served borrowers anywhere. They need small amounts quickly, they have thin credit files, and the products aimed at them are usually built by people who have never had to ask for two hundred dirhams before payday.",
+      "Expatriate workers in the UAE are among the least well served borrowers anywhere. They need small amounts quickly and have thin credit files. The products aimed at them are usually built by people who have never had to ask for two hundred dirhams before payday.",
       "This one is mine from the idea outwards. I ran the market research, worked out who it was actually for, and designed the whole thing: the product flow, the system architecture, the transaction workflows, the lending lifecycle, and how an e-wallet would fit into it. The backend architecture was aligned to PCI DSS from the start, because retrofitting payment compliance onto a lending product is how you discover you have to rebuild it.",
       "Then I ran the MVP development process to get it built. I also produced the business research and the pitch deck.",
-      "There is no funding claim attached to this one, and no repository to send you to. It is here because the work was real and because it is the clearest example of me doing the front half of the job rather than the engineering half.",
+      "There's no funding claim attached to this one, and no repository to send you to. It's here because the work was real, and it's the clearest example of me doing the front half of the job instead of the engineering half.",
     ],
   },
   {
@@ -168,9 +168,9 @@ export const projectBooks: ProjectBook[] = [
     ],
     summary: "An open standard for product knowledge, and the tooling that makes it usable.",
     body: [
-      "Product knowledge normally lives in documents that no machine can read: a strategy deck here, a spec there, a decision buried in somebody's messages. UPG is an open TypeScript standard that turns all of it into a graph with a real schema.",
-      "I help build the tooling on top of it, as part of a team. The Model Context Protocol server is the piece I care about most: it lets an AI agent read and write that graph through typed, bounded operations instead of guessing at free text. An agent is only ever as good as the tools you hand it, and that is an API design problem before it is a model problem.",
-      "I have also contributed to the local command line, the data-sync layer, and parts of the spec itself. Eight packages are published to npm and pull around twenty-eight thousand downloads a month, which is the number I am proudest of, because none of it is mine alone.",
+      "Product knowledge normally lives in documents that no machine can read: a strategy deck here, a decision buried in somebody's messages there. UPG is an open TypeScript standard that turns all of it into a graph with a real schema.",
+      "I help build the tooling on top of it, as part of a team. The Model Context Protocol server is the piece I care about most: it lets an AI agent read and write that graph through typed, bounded operations instead of guessing at free text. An agent can only work with the tools you give it, so to me this is an API design problem before it's a model problem.",
+      "I've also contributed to the local command line, the data-sync layer, and parts of the spec itself. Eight packages are published to npm and pull around twenty-eight thousand downloads a month. That's the number I'm proudest of, because none of it is mine alone.",
       "Alongside the standard I help build the full-stack app for Entopo, an AI-native product creation tool with a canvas, AI, and a graph.",
     ],
   },
@@ -191,9 +191,9 @@ export const projectBooks: ProjectBook[] = [
     links: [{ label: "GitHub", href: "https://github.com/FraanW/Agentic-Research-Tool" }],
     summary: "Long-running agent research that survives a crash.",
     body: [
-      "Agentic research tasks run for minutes, sometimes longer. If the process dies at minute nine, restarting from zero is not an inconvenience, it is the whole product failing.",
-      "So this one is built around persistence rather than around the model. Sessions checkpoint as they go, which means a crashed run resumes instead of restarting. Multiple tenants run concurrently without seeing each other's work.",
-      "Retrieval sits on PostgreSQL with pgvector rather than a separate vector database, and stays under 400 milliseconds across ten or more concurrent sessions. One less system to operate, and the data lives next to everything else it needs to join against. Progress streams to the client over WebSockets instead of being polled for.",
+      "Agentic research tasks run for minutes, sometimes longer. If the process dies at minute nine and has to start again from zero, the whole product has failed.",
+      "So I designed it around persistence first and the model second. Sessions checkpoint as they go, so a crashed run picks up where it stopped. Several tenants can run at once without seeing each other's work.",
+      "Retrieval runs on PostgreSQL with pgvector instead of a separate vector database, and stays under 400 milliseconds across ten or more concurrent sessions. That's one less system to operate, and the data lives next to everything else it needs to join against. Progress streams to the client over WebSockets, so nothing has to poll for it.",
     ],
   },
   {
@@ -211,9 +211,9 @@ export const projectBooks: ProjectBook[] = [
     links: [{ label: "GitHub", href: "https://github.com/FraanW/ADCEA" }],
     summary: "Hand it a raw dataset, get back a trained baseline.",
     body: [
-      "The unglamorous majority of machine learning is cleaning. Missing values, outliers, inconsistent encodings, features that need scaling before any model will behave.",
-      "ADCEA does that stretch without a human in the loop: it ingests a dataset, profiles it, cleans it, engineers features, and trains a baseline model through AutoML. Training runs asynchronously, and a React interface shows the profiling results and model comparisons as they arrive.",
-      "It is a breadth project rather than a depth one. It exists to prove I can work outside large language models, in ordinary supervised learning, where the hard part is the data rather than the prompt.",
+      "Most of the work in machine learning is cleaning: missing values, outliers, inconsistent encodings, and features that need scaling before any model will behave.",
+      "ADCEA does that part without a human in the loop: it ingests a dataset, profiles it, cleans it, engineers features, and trains a baseline model through AutoML. Training runs asynchronously, and a React interface shows the profiling results and model comparisons as they arrive.",
+      "It's a breadth project. I built it to show I can work outside large language models, in ordinary supervised learning, where the hard part is the data.",
     ],
   },
   {
@@ -235,7 +235,7 @@ export const projectBooks: ProjectBook[] = [
     summary: "Artisans photograph their work and get a story and a social post back.",
     body: [
       "Craftspeople make objects with real histories and then have to sell them through a feed that rewards copywriting. Most of them have no interest in becoming marketers, and no reason they should have to.",
-      "ArtiShine takes a photograph of a piece and produces the story behind it, then posts it. Buyers get a marketplace where things are discoverable by where they were made, not just by keyword. Both artisans and buyers have accounts, with the permissions that implies.",
+      "ArtiShine takes a photograph of a piece and produces the story behind it, then posts it. Buyers get a marketplace where they can search by where something was made as well as by keyword. Both artisans and buyers have accounts, with the permissions that implies.",
       "It went to the finals of the Hack2Skill GenAI hackathon in November 2025. I wrote 29 of its 56 commits.",
     ],
   },
@@ -260,9 +260,9 @@ export const projectBooks: ProjectBook[] = [
     summary: "A fast control loop, with a slower reasoning loop deciding its rules.",
     body: [
       "A fuzzy controller reacts in real time but cannot reconsider its own rules. A language model can reason about rules but is far too slow and far too unpredictable to sit in a control loop.",
-      "So put them at different speeds. The inner loop stays a classical fuzzy controller, fast and bounded. A supervisory loop above it proposes candidate rule sets, simulates them, ranks them against classical stability constraints, and only then hands one down. The reasoning never touches the real-time path.",
-      "Against static rule-based and fuzzy-only baselines it drew about 78% less energy with about 8% less overshoot. Published at the 2026 International Conference on Networking and Communications.",
-      "The repository is the working implementation, not a reconstruction: the MCP server, both fuzzy inference systems, and the Simulink automation.",
+      "The design runs them at different speeds. The inner loop stays a classical fuzzy controller, fast and bounded. Above it, a supervisory loop proposes candidate rule sets, simulates them, ranks them against classical stability constraints, and only then hands one down, so the reasoning never touches the real-time path.",
+      "Against static rule-based and fuzzy-only baselines it drew about 78% less energy with about 8% less overshoot. The paper was published at the 2026 International Conference on Networking and Communications.",
+      "The repository holds the working implementation itself: the MCP server, both fuzzy inference systems and the Simulink automation.",
     ],
   },
   {
@@ -281,7 +281,7 @@ export const projectBooks: ProjectBook[] = [
     body: [
       "Somebody unwell enough to want advice is rarely in the mood to type. This one listens, searches a dataset of remedies, and answers out loud.",
       "Whisper handles speech to text, FAISS does semantic search over the remedies dataset, a Llama 3.1B model generates the answer, and Coqui speaks it back. Reindexing the dataset lifted retrieval accuracy by around 40%.",
-      "It is the only thing I have built that runs a local model end to end, and the only one where latency is felt as rudeness rather than as a number on a dashboard.",
+      "It's the only thing I've built that runs a local model end to end, and the only one where latency is felt as rudeness rather than as a number on a dashboard.",
     ],
   },
 ];

@@ -13,12 +13,12 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Muhammad Farhaan",
   description:
-    "Product thinker and full-stack engineer. I take ideas from first sketch to production, and build security in rather than bolting it on.",
+    "Product thinker and full-stack engineer. I take ideas from first sketch to production, with security designed in from the start.",
   metadataBase: new URL("https://muhammadfarhaan.dev"),
   openGraph: {
     title: "Muhammad Farhaan",
     description:
-      "Product thinker and full-stack engineer. Ideation to product to scale, and open to building something with you.",
+      "Product thinker and full-stack engineer. I take a product from the first idea to launch and then to scale, and I'm open to building something with you.",
     type: "website",
   },
 };

@@ -11,7 +11,7 @@
 
 > **Status: proposal. Three named directions; owner picks one, then it binds.**
 > Written by Riker, 2026-07-10. Inputs: root `CLAUDE.md`, `shared/persona.md`,
-> `shared/writing-style.md`, `Profile Site - Farhaan/context/profile.md` (Phase 1 locked).
+> `shared/writing-style.md`, `Profile_Site_Farhaan/context/profile.md` (Phase 1 locked).
 > Owner input 2026-07-10: Farhaan wants **Josefin Sans** in the typography. It is honored where
 > it genuinely fits (Direction 1, as the display face) and deliberately not forced into the other
 > two; see Direction 1's rationale for what it buys and costs.

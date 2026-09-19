@@ -8,7 +8,7 @@ Two sites live here:
 
 | Site | Directory | Owner | Status |
 |------|-----------|-------|--------|
-| Farhaan | `Profile Site - Farhaan/` | Muhammad Farhaan | Context phase |
+| Farhaan | `Profile_Site_Farhaan/` | Muhammad Farhaan | Context phase |
 | Shama | `Profile Site - Shama/` | Shama Anjum (Farhaan's friend; **non-binary, they/them — always**) | Design phase (intake pending) |
 
 ## Prime directives
@@ -20,7 +20,7 @@ Two sites live here:
    themselves must have none. Every sentence follows `shared/writing-style.md`. Every design choice
    avoids the templated-portfolio look. The `critic` agent gates both before anything ships.
 3. **NDA discipline.** Farhaan's current work on Entopo is under NDA with Captain San. What may and
-   may not be said is spelled out in `Profile Site - Farhaan/context/profile.md` § NDA guardrails.
+   may not be said is spelled out in `Profile_Site_Farhaan/context/profile.md` § NDA guardrails.
    Never exceed it. UPG is open source — full detail allowed.
 4. **Impress in 30 seconds.** The reader is a founder deciding who builds their MVP, or an engineering
    manager screening candidates. If the first viewport doesn't make them want to scroll, it failed.

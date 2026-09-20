@@ -12,8 +12,15 @@ import type { ProcessStep } from "@/components/ProcessMorph";
 export const identity = {
   name: "Muhammad Farhaan",
   location: "Chennai, India",
-  email: "farhaan@theproductcreator.com",
-  emailAlt: "mdfarhaanhere@gmail.com",
+  /*
+    Swapped 2026-09-21, owner's call. `email` is the one on the contact card and
+    every mailto on the page; `emailAlt` is the quieter one in the footer. The
+    personal address leads now, because the card says "the fastest way to reach
+    me" and that has to be the inbox he actually reads. The Product Creator
+    address stays on the page, one line down.
+  */
+  email: "mdfarhaanhere@gmail.com",
+  emailAlt: "farhaan@theproductcreator.com",
   github: "https://github.com/FraanW",
   linkedin: "https://linkedin.com/in/muhammadfarhaan",
 };

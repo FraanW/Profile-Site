@@ -22,12 +22,19 @@ export const metadata: Metadata = {
   title: "Muhammad Farhaan",
   description:
     "Product thinker and full-stack engineer. I take ideas from first sketch to production, with security designed in from the start.",
-  metadataBase: new URL("https://muhammadfarhaan.dev"),
+  /*
+    The domain he actually owns, bought 2026-09-21. This used to read
+    muhammadfarhaan.dev, which was never registered to him, so every canonical
+    URL and every OG image resolved against a domain he did not control.
+    Relative metadata URLs are all resolved against this, so it has to be right.
+  */
+  metadataBase: new URL("https://mdfarhaan.in"),
   openGraph: {
     title: "Muhammad Farhaan",
     description:
       "Product thinker and full-stack engineer. I take a product from the first idea to launch and then to scale, and I'm open to building something with you.",
     type: "website",
+    url: "https://mdfarhaan.in",
   },
 };
 

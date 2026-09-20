@@ -5,18 +5,19 @@ import { useEffect, useState } from "react";
 /**
  * The night behind the middle of the page.
  *
- * Deliberately quiet. The page already has a plasma, a turning painting, a
- * morphing sequence, a live graph, a 3D shelf and a fanning deck; a starfield
- * that also demanded attention would be the seventh thing shouting. This is a
- * ground, so it stays still enough to read text over.
+ * It twinkles. Owner request, 2026-09-19: the earlier version dimmed a fifth of
+ * the stars so slowly that nobody saw it move. Now most of them dip and flare
+ * on short, uneven cycles, and the brightest few throw a four-point glint as
+ * they flare. Each star still holds steady for most of its cycle, so the sky
+ * reads as alive without becoming something to watch instead of the text.
  *
  * Three performance rules it follows:
  *   - Positions are generated once from a fixed seed, at module scope, so the
  *     server and the client render identical markup and hydration is clean.
- *   - Only a minority of stars animate. Twinkling all of them costs more and
- *     looks worse, because a real sky mostly holds steady.
- *   - Animation is CSS opacity only, which the compositor handles without
- *     touching the main thread, and it stops under reduced motion.
+ *   - A quarter of the stars stay still. A sky where every point moves at once
+ *     reads as noise, not as twinkling.
+ *   - Animation is CSS opacity and transform only, which the compositor handles
+ *     without touching the main thread, and it stops under reduced motion.
  */
 
 function seeded(seed: number) {
@@ -37,6 +38,7 @@ type Star = {
   opacity: number;
   tint: string;
   twinkle: boolean;
+  glint: boolean;
   duration: number;
   delay: number;
 };
@@ -77,9 +79,10 @@ function makeStars(): Star[] {
         r,
         opacity,
         tint,
-        twinkle: random() < 0.22,
-        duration: 4 + random() * 5,
-        delay: random() * 8,
+        twinkle: random() < 0.75,
+        glint: roll > 0.965,
+        duration: 2.6 + random() * 3.4,
+        delay: random() * 6,
       });
     }
   }
@@ -163,7 +166,13 @@ export function Starfield({ watch }: { watch: React.RefObject<HTMLElement | null
       {STARS.map((star, index) => (
         <span
           key={index}
-          className={star.twinkle ? "star star-twinkle" : "star"}
+          className={
+            star.glint
+              ? "star star-twinkle star-glint"
+              : star.twinkle
+                ? "star star-twinkle"
+                : "star"
+          }
           style={
             {
               left: `${star.x}%`,
@@ -175,6 +184,7 @@ export function Starfield({ watch }: { watch: React.RefObject<HTMLElement | null
               "--dur": `${star.duration}s`,
               "--delay": `${star.delay}s`,
               "--peak": star.opacity,
+              "--tint": star.tint,
             } as React.CSSProperties
           }
         />

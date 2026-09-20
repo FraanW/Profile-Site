@@ -6,6 +6,9 @@
  * NDA: nothing about Entopo may exceed entopo.app's public pages.
  */
 
+import type { HeroTitle } from "@/components/HeroAvatar";
+import type { ProcessStep } from "@/components/ProcessMorph";
+
 export const identity = {
   name: "Muhammad Farhaan",
   location: "Chennai, India",
@@ -16,11 +19,77 @@ export const identity = {
 };
 
 export const hero = {
-  headline: "I turn ideas into systems that ship and hold up.",
+  /*
+    "and hold up" cut, owner 2026-09-20. The headline is drawn at up to 100px
+    and ran to four lines on a phone, which pushed the support line and both
+    CTAs under the fold. Three words back is most of a line back.
+
+    The durability claim is not lost with them. It is already on the page three
+    times, and in every one of them it is evidence rather than a boast, which is
+    where writing-style.md wants it: about[1] ("correct under load at three in
+    the morning"), contact.invitation ("already built and needs to hold up
+    better than it does"), and the third skills card. Do not put it back here.
+  */
+  headline: "I turn ideas into systems that ship.",
+  /*
+    Hand-set breaks for the drawn headline, which cannot wrap on its own.
+    StrokeText clips at the column edge rather than wrapping, so these are
+    ceilings, not preferences: 13 characters narrow, 17 wide, measured against
+    Playfair Display at the hero's clamp. Both arrays must match `headline`
+    exactly, or the page draws one sentence and reads another out.
+  */
+  lines: {
+    narrow: ["I turn ideas", "into systems", "that ship."],
+    wide: ["I turn ideas into", "systems that ship."],
+  },
   support:
     "Product thinking and full-stack engineering, with security designed in.",
-  now: "Cybersecurity analyst at Fiserv in Chennai, where I work in IAM and build AI into how the security team works. I also contribute to the open Unified Product Graph.",
 };
+
+/**
+ * The titles the hero types, one after another, and what each one switches
+ * the avatar to. Owner brief, 2026-09-19; the titles are his wording. They
+ * replace the one-line status that used to sit here (Fiserv, IAM, UPG), all of
+ * which is still on the page under "Where I have done it."
+ */
+export const heroTitles: HeroTitle[] = [
+  {
+    title: "Full Stack Engineer",
+    article: "A",
+    pose: "zen",
+    planets: [
+      { label: "Frontend", icon: "browser" },
+      { label: "Backend", icon: "server" },
+      { label: "Database", icon: "database" },
+      { label: "Deployment", icon: "deploy" },
+      { label: "CI/CD", icon: "pipeline" },
+    ],
+  },
+  {
+    title: "Product Thinker",
+    article: "A",
+    pose: "think",
+    planets: [
+      { label: "Product", icon: "cube" },
+      { label: "Personas", icon: "people" },
+      { label: "Features", icon: "checklist" },
+      { label: "Roadmap", icon: "roadmap" },
+      { label: "Ideas", icon: "bulb" },
+    ],
+  },
+  {
+    title: "AI and Cyber Systems Engineer",
+    article: "An",
+    pose: "fix",
+    planets: [
+      { label: "ML", icon: "neural" },
+      { label: "LLMs", icon: "bot" },
+      { label: "Security", icon: "shield" },
+      { label: "Networks", icon: "globe" },
+      { label: "Code", icon: "code" },
+    ],
+  },
+];
 
 /**
  * The record, in the order it happened. Never the word "intern": owner
@@ -59,15 +128,22 @@ export const experience = [
   },
 ];
 
-/** The build sequence, for the morphing sequence component. */
-export const process = [
-  "Identify the problem",
-  "Think",
-  "Ideate",
-  "Plan",
-  "Validate",
-  "Build",
-  "Scale",
+/**
+ * The build sequence, for the morphing sequence component. Each step carries a
+ * pixel icon (owner brief 2026-09-19); the icons live in components/PixelArt.
+ * "Plan" is a treasure map on purpose: it rhymes with the pirate on the shelf.
+ */
+export const process: ProcessStep[] = [
+  { label: "Identify the problem", icon: "magnifier" },
+  { label: "Think", icon: "thought" },
+  { label: "Ideate", icon: "bulb" },
+  { label: "Plan", icon: "map" },
+  { label: "Validate", icon: "check" },
+  { label: "Build", icon: "hammer" },
+  // Ship before Scale, owner's addition 2026-09-19: the rocket is the launch,
+  // and scale is the team that grows around it.
+  { label: "Ship", icon: "rocket" },
+  { label: "Scale", icon: "team" },
 ];
 
 /**
@@ -108,12 +184,32 @@ export const harness = {
     actual point of the section, and makes the reader the second person.
   */
   heading: "Two of us could build what used to take ten.",
-  body: [
-    "AI made it easier to produce things, but no easier to keep them all in your head. One person now ships in a week what used to take a team a quarter, and almost none of it is connected by design, so the documents pile up and the context doesn't.",
+  /*
+    Split in two, owner 2026-09-20: four paragraphs ran long enough that the
+    section looked like homework. The lead is the problem, which is all anyone
+    needs before deciding whether the rest is worth their time, and the three
+    that follow are the answer, behind a toggle. The split is here rather than
+    in the page so the writing and the cut stay in one place.
+  */
+  lead: "AI made it easier to produce things, but no easier to keep them all in your head. One person now ships in a week what used to take a team a quarter, and almost none of it is connected by design, so the documents pile up and the context doesn't.",
+  more: [
     "So I stopped handing agents documents and started handing them a graph. Product knowledge goes into UPG as typed entities with explicit relationships: a persona connects to a need, a need to an opportunity, an opportunity to the solution and the experiment that tested it. The standard has 324 entity types across 37 domains, joined by six kinds of edge.",
     "Then I build the harness on top of it. Agents read the graph through a Model Context Protocol server instead of guessing from prose, so they start out knowing what the product is and what was decided about it last week. The same graph renders as an opportunity solution tree, a business model canvas or a roadmap, so nobody has to rebuild the context to answer a different question.",
     "This is what makes a small team fast: planning stops being a meeting where everyone reloads the same background, because the graph keeps everyone on the same page. With that in place, two people and an idea make a real team.",
   ],
+  /*
+    The line that carries the link, owner 2026-09-20. It does the most work in
+    the collapsed state, which otherwise states a problem, offers a toggle and
+    then drops a bare domain on the reader without ever naming the thing. Now
+    the section names it and points at it whether or not anyone expands it.
+
+    He builds the standard: profile.md line 28, and UPG is open source, so
+    saying so here is inside the guardrails rather than near them.
+
+    His wording was "solves this... see here:". The ellipsis and "see here" both
+    go: writing-style.md would have them out, and the colon points just as well.
+  */
+  closer: "Unified Product Graph solves this, and it is open source:",
   link: { label: "unifiedproductgraph.org", href: "https://unifiedproductgraph.org" },
 };
 
@@ -124,16 +220,38 @@ export const harness = {
   contradicting itself. Deleted 2026-09-19; projects.ts is the only source.
 */
 
+/**
+ * Education, from context/profile.md: B.Tech CSE (IoT), SNU Chennai, CGPA 8.75,
+ * 2022 to 2026; BS Data Science, IIT Madras, 2023 to 2027.
+ *
+ * Owner brief, 2026-09-19: the Chennai degree is the primary one; IIT Madras is
+ * secondary and still in progress, so it sits smaller and says so.
+ */
+export const education = {
+  primary: {
+    degree: "B.Tech, Computer Science and Engineering (IoT)",
+    school: "Shiv Nadar University Chennai",
+    detail: "2022 to 2026, CGPA 8.75",
+  },
+  secondary: {
+    status: "Also, in progress",
+    degree: "BS in Data Science",
+    school: "IIT Madras",
+    detail: "2023 to 2027",
+  },
+};
+
+/**
+ * Shown under Education, headed "I'm proud of these." (the owner's wording,
+ * 2026-09-19, so they register as his own feats rather than as a list). The
+ * dual-degree entry that used to be here is now the Education block itself.
+ */
 export const signals = [
   {
     figure: "IEEE, 2026",
     label: "Agentic fuzzy control: a dual-loop framework for self-adaptive IoT systems",
     note: "About 78% lower energy and 8% lower overshoot against static and fuzzy-only baselines.",
     href: "https://ieeexplore.ieee.org/document/11518407",
-  },
-  {
-    figure: "Two degrees at once",
-    label: "B.Tech in computer science at Shiv Nadar Chennai, CGPA 8.75, and a BS in data science at IIT Madras",
   },
   {
     figure: "Seed funded at university",
@@ -146,7 +264,7 @@ export const contact = {
     Two jobs, both learned the hard way.
 
     First, it must not echo the heading above it, which already carries
-    "half-formed" and "together".
+    "challenging" and "together".
 
     Second, and more important: the heading skews early-stage, and on its own it
     quietly turns away anyone whose product already exists. That is half of
@@ -162,7 +280,7 @@ export const contact = {
     mark on the site, which shared/writing-style.md otherwise bans outright, so
     it is a deliberate exception rather than an oversight. The middle sentence
     changed from "bring it early" to "show me early" so the closing lands as a
-    bookend to the heading's "Bring me something half-formed" instead of being
+    bookend to the heading's "Bring me something challenging" instead of being
     the third "bring" in four lines.
 
     Two earlier drafts failed here. "The stretch before anyone is sure what the

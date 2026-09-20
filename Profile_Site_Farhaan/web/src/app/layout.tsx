@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display } from "next/font/google";
+import { Playfair_Display, Press_Start_2P } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -7,6 +7,14 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
+  display: "swap",
+});
+
+/* The 8-bit face for the playbook loading bar. One weight, labels only. */
+const pressStart = Press_Start_2P({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-press-start",
   display: "swap",
 });
 
@@ -27,7 +35,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={playfair.variable}>
+    <html lang="en" className={`${playfair.variable} ${pressStart.variable}`}>
       <head>
         {/* Erode, from Indian Type Foundry. Not available through next/font. */}
         <link rel="preconnect" href="https://api.fontshare.com" />

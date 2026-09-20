@@ -57,7 +57,7 @@ export const hero = {
  * The titles the hero types, one after another, and what each one switches
  * the avatar to. Owner brief, 2026-09-19; the titles are his wording. They
  * replace the one-line status that used to sit here (Fiserv, IAM, UPG), all of
- * which is still on the page under "Where I have done it."
+ * which is still on the page under "Experience so far."
  */
 export const heroTitles: HeroTitle[] = [
   {

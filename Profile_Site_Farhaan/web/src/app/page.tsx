@@ -244,7 +244,7 @@ export default function Home() {
       <section className="relative z-10 py-28 sm:py-40">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <h2 className="display border-b border-rule pb-5 text-[clamp(1.75rem,4vw,2.75rem)] text-ivory">
-            Where I have done it.
+            Experience so far.
           </h2>
           <ol className="mt-4">
             {experience.map((role) => (
